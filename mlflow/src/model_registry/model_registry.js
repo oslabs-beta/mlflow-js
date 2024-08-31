@@ -1,15 +1,5 @@
 //model_registry.js
 
-let domain = 'http://localhost:'
-const port = 5001;
-if (port) {
-  domain = domain + port;
-}
-
-const version = '2.0';
-
-const MLFLOW_TRACKING_URI = domain + '/api/' + version + '/mlflow';
-
 class ModelRegistry {
   constructor(trackingUri) {
     this.trackingUri = trackingUri;
