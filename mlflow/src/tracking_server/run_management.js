@@ -305,7 +305,7 @@ class RunManagement {
     } else if (!value) {
       throw new Error('value is required');
     }
-    const url = `${this.trackingUri}/runs/set-tag`;
+    const url = `${this.trackingUri}/api/2.0/mlflow/runs/set-tag`;
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -335,7 +335,7 @@ class RunManagement {
     } else if (!key) {
       throw new Error('key is required');
     }
-    const url = `${this.trackingUri}/runs/delete-tag`;
+    const url = `${this.trackingUri}/api/2.0/mlflow/runs/delete-tag`;
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -369,7 +369,7 @@ class RunManagement {
     } else if (!value) {
       throw new Error('value is required');
     }
-    const url = `${this.trackingUri}/runs/log-parameter`;
+    const url = `${this.trackingUri}/api/2.0/mlflow/runs/log-parameter`;
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -402,7 +402,7 @@ class RunManagement {
     } else if (!metric_key) {
       throw new Error('metric_key is required');
     }
-    const url = `${this.trackingUri}/metrics/get-history?run_id=${run_id}&metric_key=${metric_key}&page_token=${page_token}&max_results=${max_results}`;
+    const url = `${this.trackingUri}/api/2.0/mlflow/metrics/get-history?run_id=${run_id}&metric_key=${metric_key}&page_token=${page_token}&max_results=${max_results}`;
     const response = await fetch(url);
     /**
      * data can have the fields:
@@ -450,7 +450,7 @@ class RunManagement {
     order_by,
     page_token
   ) {
-    const url = `${this.trackingUri}/runs/search`;
+    const url = `${this.trackingUri}/api/2.0/mlflow/runs/search`;
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -495,7 +495,7 @@ class RunManagement {
       throw new Error('run_id is required');
     }
     const response = await fetch(
-      `${this.trackingUri}/${this.path}/list?run_id=${run_id}&run_uuid=${run_id}&path=${artifact_path}&page_token=${page_token}`
+      `${this.trackingUri}/${this.path}/api/2.0/mlflow/list?run_id=${run_id}&run_uuid=${run_id}&path=${artifact_path}&page_token=${page_token}`
     );
     /**
      * data can have the fields:

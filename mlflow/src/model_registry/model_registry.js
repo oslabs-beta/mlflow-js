@@ -332,7 +332,7 @@ class ModelRegistry {
       throw new Error("version is required");
     }
 
-    const url = `${this.trackingUri}/registered-models/alias`;
+    const url = `${this.trackingUri}/api/2.0/mlflow/registered-models/alias`;
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -368,7 +368,7 @@ class ModelRegistry {
       throw new Error("alias is required");
     }
 
-    const url = `${this.trackingUri}/registered-models/alias`;
+    const url = `${this.trackingUri}/api/2.0/mlflow/registered-models/alias`;
     const response = await fetch(url, {
       method: "DELETE",
       headers: {
@@ -403,7 +403,7 @@ class ModelRegistry {
     } else if (!alias) {
       throw new Error("alias is required");
     }
-    const url = `${this.trackingUri}/registered-models/alias`;
+    const url = `${this.trackingUri}/api/2.0/mlflow/registered-models/alias`;
     const response = await fetch(`${url}?name=${name}&alias=${alias}`);
 
     /**
