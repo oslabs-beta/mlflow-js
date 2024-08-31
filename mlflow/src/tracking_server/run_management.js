@@ -495,7 +495,7 @@ class RunManagement {
       throw new Error('run_id is required');
     }
     const response = await fetch(
-      `${this.trackingUri}/${this.path}/api/2.0/mlflow/list?run_id=${run_id}&run_uuid=${run_id}&path=${artifact_path}&page_token=${page_token}`
+      `${this.trackingUri}/api/2.0/mlflow/artifacts/list?run_id=${run_id}&run_uuid=${run_id}&path=${artifact_path}&page_token=${page_token}`
     );
     /**
      * data can have the fields:

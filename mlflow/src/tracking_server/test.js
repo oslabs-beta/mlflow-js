@@ -8,20 +8,28 @@ if (port) {
 
 const version = '2.0';
 
-const MLFLOW_TRACKING_URI = domain + '/api/' + version + '/mlflow';
+// const MLFLOW_TRACKING_URI = domain + '/api/' + version + '/mlflow';
+const MLFLOW_TRACKING_URI = domain;
 
-const path = 'artifacts';
-
-let runManagement = new RunManagement(MLFLOW_TRACKING_URI, path);
+let runManagement = new RunManagement(MLFLOW_TRACKING_URI);
+// let runManagement = new RunManagement(MLFLOW_TRACKING_URI);
 // console.log(runManagement.searchRuns(['784321942139901150']));
 
 const test = async () => {
-    // console.log('hi');
+    // searchRuns
     try {
         let data = await runManagement.searchRuns(['784321942139901150']);
-        console.log('data: ', data);
+        console.log('searchRuns data: ', data);
     } catch (err) {
-        console.log('err: ', err);
+        console.log('searchRuns err: ', err);
+    }
+
+    // listArtifacts
+    try {
+        let data = await runManagement.listArtifacts('b3457c87f50440388da9d9ddabb1baaa');
+        console.log('listArtifacts data: ', data);
+    } catch (err) {
+        console.log('listArtifacts err: ', err);
     }
 }
 
@@ -29,7 +37,7 @@ test();
 
 // let runManagement = new RunManagement(MLFLOW_TRACKING_URI, path);
 // console.log(runManagement.listArtifacts('b3457c87f50440388da9d9ddabb1baaa', 'mlflow-artifacts:/784321942139901150/b3457c87f50440388da9d9ddabb1baaa/artifacts/iris_model'));
-// console.log(runManagement.listArtifacts('b3457c87f50440388da9d9ddabb1baaa'));
+// console.log('listArtifacts: ', runManagement.listArtifacts('b3457c87f50440388da9d9ddabb1baaa'));
 // console.log(runManagement.searchRuns(['784321942139901150']));
 // console.log(runManagement.searchRuns());
 // console.log(runManagement.getMetricHistory('b3457c87f50440388da9d9ddabb1baaa', 'accuracy'));
