@@ -30,17 +30,17 @@ async function createExperiment(name, artifact_location = '', tags = []) {
   }
 
   const data = await response.json();
-  // console.log('return from createExperiment: ', data);
-  return data;
+  // console.log('return from createExperiment: ', data.experiment_id);
+  return data.experiment_id;
 }
 
 // test ****************************************************************************************************************************************
 const testCreateExperiment = async () => {
-  const log = await createExperiment('test_experiment_postman21');
+  const log = await createExperiment('test_experiment_postman22');
   return console.log(log);
 };
 // uncomment below ---
-// testCreateExperiment();
+testCreateExperiment();
 
 /**
  * Search experiments.
