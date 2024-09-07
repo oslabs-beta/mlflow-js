@@ -56,8 +56,26 @@ class ModelManager {
    * @param {*} version
    */
   async modelVersionLineage(name, version) {
+    // const test = await runManagement.getRun('b3457c87f50440388da9d9ddabb1baaa');
+
+    // console.log('test: ', test);
+
+    // const test = await runManagement.searchRuns(['784321942139901150']);
+
+    // console.log('test.runs: ', test.runs);
+
+    // const test = await runManagement.listArtifacts('b3457c87f50440388da9d9ddabb1baaa');
+
+    // console.log('test: ', test);
+
+    // const test = await modelRegistry.searchRegisteredModels(`id LIKE 'c91646bf559b40d9a3ee8daf68ee4f45'`)
+
+    // console.log('test: ', test);
+
     // const modelVersion = await modelVersion.getModelVersion(name, version);
+    // const {experiments} = await searchExperiment(1000, '', `attribute.name = '${name}'`);
     const {experiments} = await searchExperiment();
+    // const {experiments} = await searchExperiment(1000, '', `experiment_id = '0'`);
     const expArray = [];
     console.log('experiments: ', experiments);
     for (let i = 0; i < experiments.length; i++) {
@@ -67,8 +85,11 @@ class ModelManager {
         experiments[i].experiment_id,
       ]);
       if (runs) {
-        console.log(`${experiments[i].name} runs: `, runs);
-        // console.log('runs[0].data: ', runs[0].data);
+        // console.log(`${experiments[i].name} runs: `, runs);
+        // console.log('runs[0]: ', runs[0]);
+      }
+      if (runs && i === 1) {
+        // console.log(`${experiments[i].name} runs: `, runs);
       }
       // if (runs) {
       //   for (let x = 0; x < runs.length; x++) {
@@ -82,9 +103,29 @@ class ModelManager {
     // console.log('runs: ', runs);
     for (let z = 0; z < runs.length; z++) {
       // console.log(`runs[${z}].data.metrics: `, runs[z].data.metrics);
+      // console.log(`runs[${z}].data.params: `, runs[z].data.params);
+      // console.log(`runs[${z}].data.tags: `, runs[z].data.tags);
+
+      // Only the runs that use a registered model have runs[z].data.tags[0].key === 'mlflow.log-model.history'
+      if (runs[z].data.tags[0].key === 'mlflow.log-model.history') {
+        // console.log(`runs[${z}].data.tags[0]: `, runs[z].data.tags[0]);
+        // console.log(`runs[${z}].data.tags[0].key: `, runs[z].data.tags[0].key);
+        // console.log(typeof runs[z].data.tags[0].value);
+        // console.log(`runs[${z}].data.tags[0].value: `, runs[z].data.tags[0].value);
+        // console.log('JSON.parse(runs[z].data.tags[0].value): ', JSON.parse(runs[z].data.tags[0].value));
+        // console.log('JSON.parse(runs[z].data.tags[0].value): ', JSON.parse(runs[z].data.tags[0].value));
+        // let obj = {};
+        // obj = JSON.parse(runs[z].data.tags[0].value);
+        // console.log('obj[0].flavors: ', obj[0].flavors);
+      }
+      // console.log(`runs[${z}].data.tags[0]: `, runs[z].data.tags[0]);
     }
   }
 }
 
+console.log('------------------------------------------------------')
+
 const modelManager = new ModelManager('http://localhost:5001');
 modelManager.modelVersionLineage('sk-learn-random-forest-reg-model');
+
+// console.log('getRegisteredModel: ', modelRegistry.getRegisteredModel('sk-learn-random-forest-reg-model'));

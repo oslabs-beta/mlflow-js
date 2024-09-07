@@ -133,11 +133,11 @@ async function getExperiment(experiment_id) {
 
 // test ****************************************************************************************************************************************
 const testGetExperiment = async () => {
-  const log = await getExperiment('977566317259111173');
+  // const log = await getExperiment('784321942139901150');
   console.log(log);
 };
 // uncomment below ---
-// testGetExperiment();
+testGetExperiment();
 
 /**
  * Get metadata for an experiment, querying by experiment name.
@@ -173,7 +173,7 @@ async function getExperimentByName(experiment_name) {
 // test ****************************************************************************************************************************************
 // getExperimentByName('test_experiment_postman16');
 const testGetExperimentByName = async () => {
-  const log = await getExperimentByName('test_experiment_postman16');
+  const log = await getExperimentByName('MLflow Quickstart');
   console.log(log);
 };
 // uncomment below ---
