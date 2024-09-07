@@ -1,4 +1,5 @@
 //model_registry.js
+import apiRequest from '../utils/apiClient.js';
 
 class ModelRegistry {
   constructor(trackingUri) {
@@ -12,23 +13,17 @@ class ModelRegistry {
    * @param {Array<{key: string, value: string}>} [tags=[]] - Optional tags for the model
    * @param {string} [description=''] - Optional description for the model
    * @returns {Promise<Object>} The created registered model object
+   * @throws {Error} - If the API request fails
    */
   async createRegisteredModel(name, tags = [], description = '') {
-    if (!name) {
-      throw new Error('Model name is required');
-    }
-
-    const url = `${this.trackingUri}/api/2.0/mlflow/registered-models/create`;
-
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ name, tags, description }),
-    });
-
-    const data = await response.json();
+    const { response, data } = await apiRequest(
+      this.trackingUri,
+      'registered-models/create',
+      {
+        method: 'POST',
+        body: { name, tags, description },
+      }
+    );
 
     if (!response.ok) {
       throw new Error(
