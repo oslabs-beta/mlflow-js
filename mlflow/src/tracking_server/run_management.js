@@ -1,5 +1,5 @@
 class RunManagement {
-  constructor(trackingUri, path) {
+  constructor(trackingUri) {
     this.trackingUri = trackingUri;
   }
 
