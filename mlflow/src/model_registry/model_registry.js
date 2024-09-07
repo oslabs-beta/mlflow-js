@@ -1,6 +1,16 @@
 //model_registry.js
 import apiRequest from '../utils/apiClient.js';
 
+let domain = 'http://localhost:'
+const port = 5001;
+if (port) {
+  domain = domain + port;
+}
+
+const version = '2.0';
+
+const MLFLOW_TRACKING_URI = domain + '/api/' + version + '/mlflow';
+
 class ModelRegistry {
   constructor(trackingUri) {
     this.trackingUri = trackingUri;
@@ -298,6 +308,113 @@ class ModelRegistry {
         }`
       );
     }
+  }
+
+  /**
+    * Sets an alias for a registered model version.
+   \*
+    * @param {string} name - The name of the registered model (required)
+    * @param {string} alias - The alias to set (required)
+    * @param {string} version - The version number to alias (required)
+    * @returns {Promise<void>}
+   */
+   async setRegisteredModelAlias(name, alias, version) {
+    if (!name) {
+      throw new Error("name is required");
+    } else if (!alias) {
+      throw new Error("alias is required");
+    } else if (!version) {
+      throw new Error("version is required");
+    }
+
+    const url = `${this.trackingUri}/registered-models/alias`;
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, alias, version}),
+    });
+
+    // data is an empty object
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        `Error setting model alias: ${
+          response.statusText
+        }`
+      );
+    }
+    return data;
+  }
+
+  /**
+    * Deletes an alias for a registered model.
+   \*
+    * @param {string} name - The name of the registered model (required)
+    * @param {string} alias - The alias to delete (required)
+    * @returns {Promise<void>}
+   */
+  async deleteRegisteredModelAlias(name, alias) {
+    if (!name) {
+      throw new Error("name is required");
+    } else if (!alias) {
+      throw new Error("alias is required");
+    }
+
+    const url = `${this.trackingUri}/registered-models/alias`;
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, alias}),
+    });
+
+    // data is an empty object
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        `Error deleting model alias: ${
+          response.statusText
+        }`
+      );
+    }
+    return data;
+  }
+
+  /**
+    * Gets a model version by its alias.
+   \*
+    * @param {string} name - The name of the registered model (required)
+    * @param {string} alias - The alias of the model version to retrieve (required)
+    * @returns {Promise<Object>} The model version object
+   */
+  async getModelVersionByAlias(name, alias) {
+    if (!name) {
+      throw new Error("name is required");
+    } else if (!alias) {
+      throw new Error("alias is required");
+    }
+    const url = `${this.trackingUri}/registered-models/alias`;
+    const response = await fetch(`${url}?name=${name}&alias=${alias}`);
+
+    /**
+     * data has the field:
+     * model_version
+     */
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        `Error getting model version by alias: ${
+          data.message || response.statusText
+        }`
+      );
+    }
+    return data;
   }
 }
 export { ModelRegistry };
