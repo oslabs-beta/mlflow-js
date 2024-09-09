@@ -379,7 +379,7 @@ const testSetExperimentTag = async () => {
 
 
 
-async function withStartExperimentRunByExperimentId(experiment_id, run_name = null, metrics = [], params = [], tags = [], model_json) {
+async function withStartExperimentRunByExperimentId(experiment_id, run_name = null, metrics = [], params = [], tags = [], model) {
   // create run
   const run = await runManagement.createRun(experiment_id, run_name, tags);
   const runId = run.info.run_id;
@@ -388,9 +388,9 @@ async function withStartExperimentRunByExperimentId(experiment_id, run_name = nu
   await runManagement.logBatch(runId, metrics, params, tags);
 
   // log model
-  let modelParsed = JSON.parse(model_json);
-  modelParsed.run_id = runId;
-  let modelJson = JSON.stringify(modelParsed);
+  // (model gets passed in as a JS object, not JSON - it gets JSON stringified here after adding a run_id property)
+  model.run_id = runId;
+  let modelJson = JSON.stringify(model);
   await runManagement.logModel(runId, modelJson);
 
   // updateRun to finish it
@@ -427,9 +427,8 @@ const testWithStartExperimentRunByExperimentId = async () => {
     utc_time_created: Date.now(),
     mlflow_version: 'STRING'
   };
-  const modelJson = JSON.stringify(model);
-  const log = await withStartExperimentRunByExperimentId('977566317259111173', undefined, metrics, params, tags, modelJson);
+  const log = await withStartExperimentRunByExperimentId('977566317259111173', undefined, metrics, params, tags, model);
   return console.log(log);
 };
 
-// testWithStartExperimentRunByExperimentId();
+testWithStartExperimentRunByExperimentId();
