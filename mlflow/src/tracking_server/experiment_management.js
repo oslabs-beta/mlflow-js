@@ -1,4 +1,7 @@
 const MLFLOW_TRACKING_URI = 'http://localhost:5001/api/2.0/mlflow';
+import { RunManagement } from "./run_management.js";
+const path = 'artifacts';
+const runManagement = new RunManagement("http://localhost:5001", path);
 
 /**
  * Create an experiment with a name. Returns the ID of the newly created experiment.
@@ -40,7 +43,7 @@ const testCreateExperiment = async () => {
   return console.log(log);
 };
 // uncomment below ---
-testCreateExperiment();
+// testCreateExperiment();
 
 /**
  * Search experiments.
@@ -370,3 +373,63 @@ const testSetExperimentTag = async () => {
 };
 // uncomment below ---
 // testSetExperimentTag();
+
+
+
+
+
+
+async function withStartExperimentRunByExperimentId(experiment_id, run_name = null, metrics = [], params = [], tags = [], model_json) {
+  // create run
+  const run = await runManagement.createRun(experiment_id, run_name, tags);
+  const runId = run.info.run_id;
+
+  // log metric, params, and tags via logBatch
+  await runManagement.logBatch(runId, metrics, params, tags);
+
+  // log model
+  let modelParsed = JSON.parse(model_json);
+  modelParsed.run_id = runId;
+  let modelJson = JSON.stringify(modelParsed);
+  await runManagement.logModel(runId, modelJson);
+
+  // updateRun to finish it
+  const latestRun = await runManagement.updateRun(runId, 'FINISHED');
+
+  return latestRun;
+}
+
+const testWithStartExperimentRunByExperimentId = async () => {
+  const metrics = [
+    {key: 'metric1', value: .111, timestamp: Date.now()},
+    {key: 'metric2', value: .222, timestamp: Date.now()},
+  ];
+  const params = [
+    {key: 'testParam', value: 'testParamValue'}, 
+    {key: 'testParam2', value: 'testParamValue2'}
+  ];
+  const tags = [
+    {key: 'testKey', value: 'testValue'}, 
+    {key: 'testKey2', value: 'testValue2'}
+  ];
+  const model = {
+    artifact_path: 'model',
+    flavors: {
+      python_function: {
+        model_path: 'model.pkl',
+        loader_module: 'mlflow.sklearn',
+        python_version: '3.8.10',
+      },
+    },
+    model_url: 'STRING',
+    model_uuid: 'STRING',
+    // run_id: runId,
+    utc_time_created: Date.now(),
+    mlflow_version: 'STRING'
+  };
+  const modelJson = JSON.stringify(model);
+  const log = await withStartExperimentRunByExperimentId('977566317259111173', 'testRunName6', metrics, params, tags, modelJson);
+  return console.log(log);
+};
+
+// testWithStartExperimentRunByExperimentId();
