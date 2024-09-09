@@ -9,7 +9,8 @@ class ModelRegistry {
    * Creates a new registered model.
    *
    * @param {string} name - The name of the model to register (required)
-   * @param {Array<{key: string, value: string}>} [tags=[]] - Optional tags for the model
+   * @param {Array<{key: string, value: string}>} [tags=[]] - Optional tags for the model.
+   * Must be formatted like: [{"key": "keyName", "value": "valueName"}]
    * @param {string} [description=''] - Optional description for the model
    * @returns {Promise<Object>} The created registered model object
    */
@@ -64,8 +65,6 @@ class ModelRegistry {
       );
     }
 
-    console.log(data);
-    console.log(data.registered_model);
     return data.registered_model;
   }
 
@@ -337,7 +336,7 @@ class ModelRegistry {
     if (!response.ok) {
       throw new Error(
         `Error setting model alias: ${
-          response.statusText
+          data.message || response.statusText
         }`
       );
     }

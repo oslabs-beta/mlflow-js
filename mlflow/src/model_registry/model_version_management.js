@@ -1,8 +1,6 @@
-const trackingUri = "http://localhost:5001"; // MLflow server port
 class ModelVersionManagement {
     constructor(trackingUri) {
       this.trackingUri = trackingUri;
-      console.log(`trackingUri: ${this.trackingUri}`);
     }
   
     /**
@@ -107,10 +105,10 @@ class ModelVersionManagement {
      *
      * @param {string} modelName - the name of the registered model (required)
      * @param {string} version - the version number of the model to update (required)
-     * @param {Object} updates - the fields to update in the model version (required)
+     * @param {string} description - 
      * @returns {Promise<Object>} - the updated model version object
      */
-    async updateModelVersion(modelName, version, updates) {
+    async updateModelVersion(modelName, version, description) {
         // is model name provided?
         if (!modelName) {
             throw new Error('modelName is required');
@@ -122,9 +120,9 @@ class ModelVersionManagement {
         }
 
         // are updates provided? is obj?
-        if (!updates || typeof updates !== 'object') {
-            throw new Error('updates object is required');
-        }
+        // if (!updates || typeof updates !== 'object') {
+        //     throw new Error('updates object is required');
+        // }
 
         // construct url for update model version endpoint
         const url = `${this.trackingUri}/api/2.0/mlflow/model-versions/update`;
@@ -133,7 +131,7 @@ class ModelVersionManagement {
         const body = {
             name: modelName,
             version: version,
-            ...updates // spread updates into body
+            description
         };
 
         // fire off a patch request to update the model version
@@ -177,18 +175,13 @@ class ModelVersionManagement {
         // construct url for delete model version endpoint
         const url = `${this.trackingUri}/api/2.0/mlflow/model-versions/delete`;
 
-        // build request query params
-        const params = new URLSearchParams({
-            name: modelName,
-            version: version
-        });
-
         // fire off a delete request to remove the model version
-        const response = await fetch(`${url}?${params}`, {
+        const response = await fetch(url, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
             },
+            body: JSON.stringify({ name: modelName, version })
         });
 
         // parse the response
@@ -221,12 +214,8 @@ class ModelVersionManagement {
         });
 
         // fire off a get request to search for model versions
-        const response = await fetch(`${url}?${params}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        });
+        const response = await fetch(`${url}?${params}`
+        );
 
         // parse the response
         const data = await response.json();
@@ -439,11 +428,12 @@ class ModelVersionManagement {
         });
 
         // fire off a delete request to remove the tag from the model version
-        const response = await fetch(`${url}?${params}`, {
+        const response = await fetch(url, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
             },
+            body: JSON.stringify({name: modelName, version, key}),
         });
 
         // parse the response
