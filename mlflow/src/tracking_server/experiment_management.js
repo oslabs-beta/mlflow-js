@@ -428,7 +428,7 @@ const testWithStartExperimentRunByExperimentId = async () => {
     mlflow_version: 'STRING'
   };
   const modelJson = JSON.stringify(model);
-  const log = await withStartExperimentRunByExperimentId('977566317259111173', 'testRunName6', metrics, params, tags, modelJson);
+  const log = await withStartExperimentRunByExperimentId('977566317259111173', undefined, metrics, params, tags, modelJson);
   return console.log(log);
 };
 
