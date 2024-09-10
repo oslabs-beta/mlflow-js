@@ -1,7 +1,7 @@
 const MLFLOW_TRACKING_URI = 'http://localhost:5001/api/2.0/mlflow';
-import { RunManagement } from "./run_management.js";
+import { RunManagement } from './run_management.js';
 const path = 'artifacts';
-const runManagement = new RunManagement("http://localhost:5001", path);
+const runManagement = new RunManagement('http://localhost:5001', path);
 
 /**
  * Create an experiment with a name. Returns the ID of the newly created experiment.
@@ -374,14 +374,10 @@ const testSetExperimentTag = async () => {
 // uncomment below ---
 // testSetExperimentTag();
 
-
-
-
-
 /**
  * Full workflow of creating, naming and starting a run under an experiment (referenced by ID),
  * logging metrics, params, and tags, logging the model, and finishing the run.
- * 
+ *
  * @param {string} experiment_id ID of the experiment under which to log the run.  (required)
  * @param {string} run_name Name of the run to be created and run (optional)
  * @param {Array<{key: string, value: number, timestamp: number, step?: number}>} [metrics] The metrics to log (up to 1000 metrics) (optional)
@@ -390,7 +386,14 @@ const testSetExperimentTag = async () => {
  * @param {Object} model The ML model data to log to the run, represented as a Javascript object (required)
  * @returns {Promise<Object>} The created run object with updated metadata
  */
-async function withStartExperimentRunByExperimentId(experiment_id, run_name = null, metrics = [], params = [], tags = [], model) {
+async function withStartExperimentRunByExperimentId(
+  experiment_id,
+  run_name = null,
+  metrics = [],
+  params = [],
+  tags = [],
+  model
+) {
   if (!experiment_id) {
     throw new Error('Experiment ID is required');
   }
@@ -420,16 +423,16 @@ async function withStartExperimentRunByExperimentId(experiment_id, run_name = nu
 // test ****************************************************************************************************************************************
 const testWithStartExperimentRunByExperimentId = async () => {
   const metrics = [
-    {key: 'metric1', value: .111, timestamp: Date.now()},
-    {key: 'metric2', value: .222, timestamp: Date.now()},
+    { key: 'metric1', value: 0.111, timestamp: Date.now() },
+    { key: 'metric2', value: 0.222, timestamp: Date.now() },
   ];
   const params = [
-    {key: 'testParam', value: 'testParamValue'}, 
-    {key: 'testParam2', value: 'testParamValue2'}
+    { key: 'testParam', value: 'testParamValue' },
+    { key: 'testParam2', value: 'testParamValue2' },
   ];
   const tags = [
-    {key: 'testKey', value: 'testValue'}, 
-    {key: 'testKey2', value: 'testValue2'}
+    { key: 'testKey', value: 'testValue' },
+    { key: 'testKey2', value: 'testValue2' },
   ];
   const model = {
     artifact_path: 'model',
@@ -443,20 +446,25 @@ const testWithStartExperimentRunByExperimentId = async () => {
     model_url: 'STRING',
     model_uuid: 'STRING',
     utc_time_created: Date.now(),
-    mlflow_version: 'STRING'
+    mlflow_version: 'STRING',
   };
-  const log = await withStartExperimentRunByExperimentId('977566317259111173', undefined, metrics, params, tags, model);
+  const log = await withStartExperimentRunByExperimentId(
+    '977566317259111173',
+    undefined,
+    metrics,
+    params,
+    tags,
+    model
+  );
   return console.log(log);
 };
 // uncomment below ---
 // testWithStartExperimentRunByExperimentId();
 
-
-
 /**
  * Full workflow of creating, naming and starting a run under an experiment (referenced by name),
  * logging metrics, params, and tags, logging the model, and finishing the run.
- * 
+ *
  * @param {string} experiment_name Name of the experiment under which to log the run.  (required)
  * @param {string} run_name Name of the run to be created and run (optional)
  * @param {Array<{key: string, value: number, timestamp: number, step?: number}>} [metrics] The metrics to log (up to 1000 metrics) (optional)
@@ -465,7 +473,14 @@ const testWithStartExperimentRunByExperimentId = async () => {
  * @param {Object} model The ML model data to log to the run, represented as a Javascript object (required)
  * @returns {Promise<Object>} The created run object with updated metadata
  */
-async function withStartExperimentRunByExperimentName(experiment_name, run_name = null, metrics = [], params = [], tags = [], model) {
+async function withStartExperimentRunByExperimentName(
+  experiment_name,
+  run_name = null,
+  metrics = [],
+  params = [],
+  tags = [],
+  model
+) {
   if (!experiment_name) {
     throw new Error('Experiment name is required');
   }
@@ -503,16 +518,16 @@ async function withStartExperimentRunByExperimentName(experiment_name, run_name 
 // test ****************************************************************************************************************************************
 const testWithStartExperimentRunByExperimentName = async () => {
   const metrics = [
-    {key: 'metric1', value: .9, timestamp: Date.now()},
-    {key: 'metric2', value: .222, timestamp: Date.now()},
+    { key: 'metric1', value: 0.9, timestamp: Date.now() },
+    { key: 'metric2', value: 0.222, timestamp: Date.now() },
   ];
   const params = [
-    {key: 'testParam', value: 'testParamValue'}, 
-    {key: 'testParam2', value: 'testParamValue2'}
+    { key: 'testParam', value: 'testParamValue' },
+    { key: 'testParam2', value: 'testParamValue2' },
   ];
   const tags = [
-    {key: 'testKey', value: 'testValue'}, 
-    {key: 'testKey2', value: 'testValue2'}
+    { key: 'testKey', value: 'testValue' },
+    { key: 'testKey2', value: 'testValue2' },
   ];
   const model = {
     artifact_path: 'model',
@@ -526,26 +541,45 @@ const testWithStartExperimentRunByExperimentName = async () => {
     model_url: 'STRING',
     model_uuid: 'STRING',
     utc_time_created: Date.now(),
-    mlflow_version: 'STRING'
+    mlflow_version: 'STRING',
   };
-  const log = await withStartExperimentRunByExperimentName('experimentSummary test', undefined, metrics, params, tags, model);
+  const log = await withStartExperimentRunByExperimentName(
+    'experimentSummary test',
+    undefined,
+    metrics,
+    params,
+    tags,
+    model
+  );
   return console.log(log);
 };
 // uncomment below ---
 // testWithStartExperimentRunByExperimentName();
 
-
-
+/**
+ * Returns an array of all the passed-in experiment's runs, sorted according to the passed-in metric
+ *
+ * @param {string} experiment_id
+ * @param {string} primaryMetric
+ * @param {string | number} order
+ * @returns Promise<Array<Object>> An array of run objects belonging to the passed-in experiment ID, sorted according to the primary metric
+ */
 async function experimentSummary(experiment_id, primaryMetric, order) {
   // use Search Runs to return all runs whose experiment ID matches the passed in one
   // use Search Runs's order_by field to sort results array by primaryMetric
   let orderString;
-  if (order === 1 || order === 'DESC') orderString = 'DESC'
+  if (order === 1 || order === 'DESC') orderString = 'DESC';
   else if (order === -1 || order === 'ASC') orderString = 'ASC';
   const arg = `metrics.${primaryMetric} ${orderString}`;
-  const data = await runManagement.searchRuns([experiment_id], undefined, undefined, undefined, [arg]);
-  return data.runs
-};
+  const data = await runManagement.searchRuns(
+    [experiment_id],
+    undefined,
+    undefined,
+    undefined,
+    [arg]
+  );
+  return data.runs;
+}
 
 // test ****************************************************************************************************************************************
 const testExperimentSummary = async () => {
