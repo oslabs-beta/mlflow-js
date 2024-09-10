@@ -450,7 +450,7 @@ class RunManagement {
     order_by,
     page_token
   ) {
-    const url = `${this.trackingUri}/runs/search`;
+    const url = `${this.trackingUri}/api/2.0/mlflow/runs/search`;
     const response = await fetch(url, {
       method: 'POST',
       headers: {

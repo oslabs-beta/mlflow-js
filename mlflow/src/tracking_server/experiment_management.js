@@ -400,19 +400,19 @@ async function withStartExperimentRunByExperimentId(experiment_id, run_name = nu
 
   // create run
   const run = await runManagement.createRun(experiment_id, run_name, tags);
-  const runId = run.info.run_id;
+  const run_id = run.info.run_id;
 
   // log metric, params, and tags via logBatch
-  await runManagement.logBatch(runId, metrics, params, tags);
+  await runManagement.logBatch(run_id, metrics, params, tags);
 
   // log model
   // (model gets passed in as a JS object, not JSON - it gets JSON stringified here after adding a run_id property)
-  model.run_id = runId;
-  let modelJson = JSON.stringify(model);
-  await runManagement.logModel(runId, modelJson);
+  model.run_id = run_id;
+  let model_json = JSON.stringify(model);
+  await runManagement.logModel(run_id, model_json);
 
   // updateRun to finish it
-  const latestRun = await runManagement.updateRun(runId, 'FINISHED');
+  const latestRun = await runManagement.updateRun(run_id, 'FINISHED');
 
   return latestRun;
 }
@@ -483,27 +483,27 @@ async function withStartExperimentRunByExperimentName(experiment_name, run_name 
 
   // create run
   const run = await runManagement.createRun(experiment_id, run_name, tags);
-  const runId = run.info.run_id;
+  const run_id = run.info.run_id;
 
   // log metric, params, and tags via logBatch
-  await runManagement.logBatch(runId, metrics, params, tags);
+  await runManagement.logBatch(run_id, metrics, params, tags);
 
   // log model
   // (model gets passed in as a JS object, not JSON - it gets JSON stringified here after adding a run_id property)
-  model.run_id = runId;
-  let modelJson = JSON.stringify(model);
-  await runManagement.logModel(runId, modelJson);
+  model.run_id = run_id;
+  let model_json = JSON.stringify(model);
+  await runManagement.logModel(run_id, model_json);
 
   // updateRun to finish it
-  const latestRun = await runManagement.updateRun(runId, 'FINISHED');
+  const latest_run = await runManagement.updateRun(run_id, 'FINISHED');
 
-  return latestRun;
+  return latest_run;
 }
 
 // test ****************************************************************************************************************************************
 const testWithStartExperimentRunByExperimentName = async () => {
   const metrics = [
-    {key: 'metric1', value: .111, timestamp: Date.now()},
+    {key: 'metric1', value: .9, timestamp: Date.now()},
     {key: 'metric2', value: .222, timestamp: Date.now()},
   ];
   const params = [
@@ -528,8 +528,29 @@ const testWithStartExperimentRunByExperimentName = async () => {
     utc_time_created: Date.now(),
     mlflow_version: 'STRING'
   };
-  const log = await withStartExperimentRunByExperimentName('High level abstraction test', undefined, metrics, params, tags, model);
+  const log = await withStartExperimentRunByExperimentName('experimentSummary test', undefined, metrics, params, tags, model);
   return console.log(log);
 };
 // uncomment below ---
 // testWithStartExperimentRunByExperimentName();
+
+
+
+async function experimentSummary(experiment_id, primaryMetric, order) {
+  // use Search Runs to return all runs whose experiment ID matches the passed in one
+  // use Search Runs's order_by field to sort results array by primaryMetric
+  let orderString;
+  if (order === 1 || order === 'DESC') orderString = 'DESC'
+  else if (order === -1 || order === 'ASC') orderString = 'ASC';
+  const arg = `metrics.${primaryMetric} ${orderString}`;
+  const data = await runManagement.searchRuns([experiment_id], undefined, undefined, undefined, [arg]);
+  return data.runs
+};
+
+// test ****************************************************************************************************************************************
+const testExperimentSummary = async () => {
+  const log = await experimentSummary('787867007534323476', 'metric1', 'DESC');
+  return console.log(log);
+};
+// uncomment below ---
+// testExperimentSummary();
