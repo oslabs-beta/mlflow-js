@@ -559,9 +559,9 @@ const testWithStartExperimentRunByExperimentName = async () => {
 /**
  * Returns an array of all the passed-in experiment's runs, sorted according to the passed-in metric
  *
- * @param {string} experiment_id
- * @param {string} primaryMetric
- * @param {string | number} order
+ * @param {string} experiment_id The experiment whose runs will be evaluated (required)
+ * @param {string} primaryMetric The metric by which the results array will be sorted
+ * @param {string | number} order Sort order for the array: pass in 'DESC' or 1 for descending; 'ASC' or -1 for ascending
  * @returns Promise<Array<Object>> An array of run objects belonging to the passed-in experiment ID, sorted according to the primary metric
  */
 async function experimentSummary(experiment_id, primaryMetric, order) {
