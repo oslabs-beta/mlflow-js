@@ -471,16 +471,30 @@ class RunManagement {
      * next_page_token {string} - Token that can be used to retrieve the next page of run results. A missing token indicates
      * that there are no additional run results to be fetched.
      */
-    const data = await response.json();
+    // const data = await response.json();
+    // if (!response.ok) {
+    //   throw new Error(
+    //     `Error finding run that satisfies expressions: ${
+    //       data.message || response.statusText
+    //     }`
+    //   );
+    // }
+
+    const textResponse = await response.text(); // Read as text first
     if (!response.ok) {
       throw new Error(
-        `Error finding run that satisfies expressions: ${
-          data.message || response.statusText
-        }`
+        `Error finding run that satisfies expressions: ${textResponse}`
       );
     }
 
-    return data;
+    try {
+      const data = JSON.parse(textResponse); // Parse text as JSON
+      return data;
+    } catch (e) {
+      throw new Error(`Failed to parse JSON: ${e.message}`);
+    }
+
+    // return data;
   }
 
   /**
