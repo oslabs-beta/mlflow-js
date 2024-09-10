@@ -201,8 +201,8 @@ class RunManagement {
    * Logs a batch of metrics, params, and tags for a run.
    *
    * @param {string} run_id - The ID of the run to log under (required)
-   * @param {Array<{key: string, value: number, timestamp: number, step?: number}>} [metrics] - The metrics to log (up to 1000 metrics) (optional)
-   * @param {Array<{key: string, value: string}>} [params] - The params to log (up to 100 params) (optional)
+   * @param {Array<{key: string, value: number, timestamp: number, step?: number}>} [metrics=[]] - The metrics to log (up to 1000 metrics) (optional)
+   * @param {Array<{key: string, value: string}>} [params=[]] - The params to log (up to 100 params) (optional)
    * @param {Array<{key: string, value: string}>} [tags=[]] - The tags to log (up to 100 tags) (optional)
    * @returns {Promise<void>} - A promise that resolves when the logging is complete
    */
@@ -450,7 +450,7 @@ class RunManagement {
     order_by,
     page_token
   ) {
-    const url = `${this.trackingUri}/runs/search`;
+    const url = `${this.trackingUri}/api/2.0/mlflow/runs/search`;
     const response = await fetch(url, {
       method: 'POST',
       headers: {
