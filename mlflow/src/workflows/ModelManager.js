@@ -9,7 +9,7 @@ class ModelManager {
   }
 
   /**
-   *
+   * Description - Creates a new registered model and creates the first version of that model.
    * @param {string} name - Name of the registered model. (Required)
    * @param {string} versionSource - URI indicating the location of the model artifacts. (Required)
    * @param {string} versionRun_id - MLflow run ID for correlation, if versionSource was generated
@@ -27,7 +27,7 @@ class ModelManager {
   }
 
   /**
-   *
+   * Description - Updates a registered model's description and tag.
    * @param {string} name - Name of the registered model. (Required)
    * @param {string} tagKey - Name of the tag. (Required)
    * @param {string} tagValue - String value of the tag being logged. (Required)
@@ -49,7 +49,8 @@ class ModelManager {
   }
 
   /**
-   *
+   * Description - Updates the latest version of the specified registered model's description.
+   * And adds a new alias, and tag key/value for that latest version.
    * @param {string} name - Name of the registered model. (Required)
    * @param {string} alias - Name of the alias. (Required)
    * @param {string} description - The description for the model version. (Required)
@@ -80,7 +81,7 @@ class ModelManager {
   }
 
   /**
-   *
+   * Description - Adds a new tag key/value for the latest version of the specified registered model.
    * @param {string} name - Name of the registered model. (Required)
    * @param {string} key - Name of the tag. (Required)
    * @param {string} value - Name of the value of the tag being logged. (Required)
@@ -98,7 +99,7 @@ class ModelManager {
   }
 
   /**
-   *
+   * Description - Adds an alias for the latest version of the specified registered model.
    * @param {string} name - Name of the registered model. (Required)
    * @param {string} alias - Name of the alias. (Required)
    * @returns {Promise<void>} - a promise that resolves when the model version is deleted
@@ -115,7 +116,7 @@ class ModelManager {
   }
 
   /**
-   *
+   * Description - Updates the description of the latest version of a registered model.
    * @param {string} name - Name of the registered model. (Required)
    * @param {string} description - The description for the model version. (Required)
    * @returns {Promise<Object>} - the updated model version object
@@ -136,7 +137,8 @@ class ModelManager {
   }
 
   /**
-   *
+   * Description - Updates the specified version of the specified registered model's description.
+   * And adds a new alias, and tag key/value for that specified version.
    * @param {string} name - Name of the registered model. (Required)
    * @param {string} version - Model version number. (Required)
    * @param {string} alias - Name of the alias. (Required)
@@ -162,7 +164,7 @@ class ModelManager {
   }
 
   /**
-   *
+   * Description - Deletes the latest version of the specified registered model.
    * @param {string} name - the model name
    * @returns {Promise<void>} - a promise that resolves when the model version is deleted
    */
