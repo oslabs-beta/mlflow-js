@@ -5,7 +5,7 @@ import { ModelVersionManagement } from "../model_registry/model_version_manageme
 const modelManager = new ModelManager('http://localhost:5001');
 const modelVersionManagement = new ModelVersionManagement('http://localhost:5001');
 
-const modelName = "WoWaNewModel_____";
+const modelName = "AAAAAA";
 const modelTagKey = `${modelName}TagKey`;
 const modelTagValue = `${modelName}TagValue`;
 const modelDescription = `This is ${modelName}'s description.`;
