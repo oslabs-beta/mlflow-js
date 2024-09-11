@@ -141,7 +141,9 @@ class Abstraction {
       }
 
       // update the new run name
-      await this.RunManagement.setTag(newRunId, 'mlflow.runName', runName);
+      if (runName) {
+        await this.RunManagement.setTag(newRunId, 'mlflow.runName', runName);
+      }
 
       // handle models (reference only)
       const modelVersions =
@@ -208,6 +210,17 @@ class Abstraction {
       throw new Error('Failed to move run.');
     }
   }
+
+  /********************************************************************************************************** */
+
+  /**
+   * Search runs and  export run data to CSV.
+   *
+   * @param {string[]} experimentIds - The IDs of the associated experiments. (required)
+   * @param {string} queryString - SQL-like query string to filter runs to keep. (required)
+   * @returns {Promise<Object>} - An object of run datas in CSV format.
+   */
+  async convertRunDataToCSV() {}
 }
 
 export { Abstraction };
