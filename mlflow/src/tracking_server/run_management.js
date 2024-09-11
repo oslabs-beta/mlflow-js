@@ -1,7 +1,6 @@
 class RunManagement {
-  constructor(trackingUri, path) {
+  constructor(trackingUri) {
     this.trackingUri = trackingUri;
-    this.path = path;
   }
 
   /**
@@ -68,7 +67,7 @@ class RunManagement {
     });
 
     if (!response.ok) {
-      throw new Error(`Error in deleting run: ${response.statusText}`);
+      throw new Error(`Error in deleting run: ${data.message || response.statusText}`);
     }
 
     return await response.json();
@@ -94,7 +93,7 @@ class RunManagement {
     });
 
     if (!response.ok) {
-      throw new Error(`Error in restoring run: ${response.statusText}`);
+      throw new Error(`Error in restoring run: ${data.message || response.statusText}`);
     }
 
     return await response.json();
@@ -191,7 +190,7 @@ class RunManagement {
     });
 
     if (!response.ok) {
-      throw new Error(`Error in logging metric: ${response.statusText}`);
+      throw new Error(`Error in logging metric: ${data.message || response.statusText}`);
     }
 
     return await response.json();
@@ -227,7 +226,7 @@ class RunManagement {
     if (!response.ok) {
       const responseBody = await response.text();
       console.error(`Response body: ${responseBody}`);
-      throw new Error(`Error in logging batch: ${response.statusText}`);
+      throw new Error(`Error in logging batch: ${data.message || response.statusText}`);
     }
 
     return await response.json();
@@ -254,7 +253,7 @@ class RunManagement {
     });
 
     if (!response.ok) {
-      throw new Error(`Error in logging model: ${response.statusText}`);
+      throw new Error(`Error in logging model: ${data.message || response.statusText}`);
     }
 
     return await response.json();
@@ -282,7 +281,7 @@ class RunManagement {
     });
 
     if (!response.ok) {
-      throw new Error(`Error in logging inputs: ${response.statusText}`);
+      throw new Error(`Error in logging inputs: ${data.message || response.statusText}`);
     }
 
     return await response.json();
@@ -305,7 +304,7 @@ class RunManagement {
     } else if (!value) {
       throw new Error('value is required');
     }
-    const url = `${this.trackingUri}/runs/set-tag`;
+    const url = `${this.trackingUri}/api/2.0/mlflow/runs/set-tag`;
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -318,7 +317,7 @@ class RunManagement {
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(`Error logging param: ${response.statusText}`);
+      throw new Error(`Error logging param: ${data.message || response.statusText}`);
     }
     return data;
   }
@@ -335,7 +334,7 @@ class RunManagement {
     } else if (!key) {
       throw new Error('key is required');
     }
-    const url = `${this.trackingUri}/runs/delete-tag`;
+    const url = `${this.trackingUri}/api/2.0/mlflow/runs/delete-tag`;
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -348,7 +347,7 @@ class RunManagement {
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(`Error logging param: ${response.statusText}`);
+      throw new Error(`Error logging param: ${data.message || response.statusText}`);
     }
     return data;
   }
@@ -369,7 +368,7 @@ class RunManagement {
     } else if (!value) {
       throw new Error('value is required');
     }
-    const url = `${this.trackingUri}/runs/log-parameter`;
+    const url = `${this.trackingUri}/api/2.0/mlflow/runs/log-parameter`;
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -380,7 +379,7 @@ class RunManagement {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(`Error logging param: ${response.statusText}`);
+      throw new Error(`Error logging param: ${data.message || response.statusText}`);
     }
     return data;
   }
@@ -402,7 +401,7 @@ class RunManagement {
     } else if (!metric_key) {
       throw new Error('metric_key is required');
     }
-    const url = `${this.trackingUri}/metrics/get-history?run_id=${run_id}&metric_key=${metric_key}&page_token=${page_token}&max_results=${max_results}`;
+    const url = `${this.trackingUri}/api/2.0/mlflow/metrics/get-history?run_id=${run_id}&metric_key=${metric_key}&page_token=${page_token}&max_results=${max_results}`;
     const response = await fetch(url);
     /**
      * data can have the fields:
@@ -495,7 +494,7 @@ class RunManagement {
       throw new Error('run_id is required');
     }
     const response = await fetch(
-      `${this.trackingUri}/${this.path}/list?run_id=${run_id}&run_uuid=${run_id}&path=${artifact_path}&page_token=${page_token}`
+      `${this.trackingUri}/api/2.0/mlflow/artifacts/list?run_id=${run_id}&run_uuid=${run_id}&path=${artifact_path}&page_token=${page_token}`
     );
     /**
      * data can have the fields:
