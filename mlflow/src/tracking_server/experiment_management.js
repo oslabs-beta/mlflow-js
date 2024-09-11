@@ -383,7 +383,7 @@ const testSetExperimentTag = async () => {
  * @param {Array<{key: string, value: number, timestamp: number, step?: number}>} [metrics] The metrics to log (up to 1000 metrics) (optional)
  * @param {Array<{key: string, value: string}>} [params] The params to log (up to 100 params) (optional)
  * @param {Array<{key: string, value: string}>} [tags=[]] The tags to log (up to 100 tags) (optional)
- * @param {Object} model The ML model data to log to the run, represented as a Javascript object (required)
+ * @param {Object} model The ML model data to log to the run, represented as a Javascript object
  * @returns {Promise<Object>} The created run object with updated metadata
  */
 async function withStartExperimentRunByExperimentId(
@@ -396,9 +396,6 @@ async function withStartExperimentRunByExperimentId(
 ) {
   if (!experiment_id) {
     throw new Error('Experiment ID is required');
-  }
-  if (!model) {
-    throw new Error('Model is required');
   }
 
   // create run
@@ -470,7 +467,7 @@ const testWithStartExperimentRunByExperimentId = async () => {
  * @param {Array<{key: string, value: number, timestamp: number, step?: number}>} [metrics] The metrics to log (up to 1000 metrics) (optional)
  * @param {Array<{key: string, value: string}>} [params] The params to log (up to 100 params) (optional)
  * @param {Array<{key: string, value: string}>} [tags=[]] The tags to log (up to 100 tags) (optional)
- * @param {Object} model The ML model data to log to the run, represented as a Javascript object (required)
+ * @param {Object} model The ML model data to log to the run, represented as a Javascript object
  * @returns {Promise<Object>} The created run object with updated metadata
  */
 async function withStartExperimentRunByExperimentName(
@@ -483,9 +480,6 @@ async function withStartExperimentRunByExperimentName(
 ) {
   if (!experiment_name) {
     throw new Error('Experiment name is required');
-  }
-  if (!model) {
-    throw new Error('Model is required');
   }
 
   let experiment_id;
@@ -583,8 +577,8 @@ async function experimentSummary(experiment_id, primaryMetric, order) {
 
 // test ****************************************************************************************************************************************
 const testExperimentSummary = async () => {
-  const log = await experimentSummary('787867007534323476', 'metric1', 'DESC');
+  const log = await experimentSummary('787867007534323476', 'metric1', 'ASC');
   return console.log(log);
 };
 // uncomment below ---
-// testExperimentSummary();
+testExperimentSummary();
