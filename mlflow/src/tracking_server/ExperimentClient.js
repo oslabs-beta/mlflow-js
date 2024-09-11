@@ -154,7 +154,7 @@ class ExperimentClient {
    * Mark an experiment for deletion.
    *
    * @param {string} experiment_id ID of the associated experiment.  (required)
-   * @returns {string} Returns a string i.e. "Experiment ID 99999 successfully deleted"
+   * @returns {void}
    */
   async deleteExperiment(experiment_id) {
     if (!experiment_id) {
@@ -175,15 +175,15 @@ class ExperimentClient {
       );
     }
   
-    // console.log(`Experiment ID ${experiment_id} successfully deleted`);
-    return `Experiment ID ${experiment_id} successfully deleted`;
+    console.log(`Experiment ID ${experiment_id} successfully deleted`);
+    // return `Experiment ID ${experiment_id} successfully deleted`;
   }
   
   /**
    * Restore an experiment marked for deletion.
    *
    * @param {string} experiment_id ID of the associated experiment.  (required)
-   * @returns {string} Returns a string i.e. "Experiment ID 99999 successfully restored"
+   * @returns {void}
    */
   async restoreExperiment(experiment_id) {
     if (!experiment_id) {
@@ -204,8 +204,8 @@ class ExperimentClient {
       );
     }
   
-    // console.log(`Experiment ID ${experiment_id} successfully restored`);
-    return `Experiment ID ${experiment_id} successfully restored`;
+    console.log(`Experiment ID ${experiment_id} successfully restored`);
+    // return `Experiment ID ${experiment_id} successfully restored`;
   }
   
   /**
@@ -213,7 +213,7 @@ class ExperimentClient {
    *
    * @param {string} experiment_id ID of the associated experiment. (required)
    * @param {string} new_name The experiment’s name is changed to the new name. The new name must be unique. (required)
-   * @returns {string} Returns a string i.e. "Experiment ID 99999 successfully updated"
+   * @returns {void}
    */
   async updateExperiment(experiment_id, new_name) {
     if (!experiment_id) {
@@ -237,8 +237,8 @@ class ExperimentClient {
       );
     }
   
-    // console.log(`Experiment ID ${experiment_id} successfully updated - new name is ${new_name}`);
-    return `Experiment ID ${experiment_id} successfully updated - new name is ${new_name}`;
+    console.log(`Experiment ID ${experiment_id} successfully updated - new name is ${new_name}`);
+    // return `Experiment ID ${experiment_id} successfully updated - new name is ${new_name}`;
   }
   
   /**
@@ -247,7 +247,7 @@ class ExperimentClient {
    * @param {string} experiment_id ID of the experiment under which to log the tag. (required)
    * @param {string} key Name of the tag.  (required)
    * @param {string} value String value of the tag being logged.  (required)
-   * @returns {string} Returns a string, i.e. `Set tag to experiment ID 99999 successfully`
+   * @returns {void}
    */
   async setExperimentTag(experiment_id, key, value) {
     if (!experiment_id) {
@@ -274,8 +274,8 @@ class ExperimentClient {
       );
     }
   
-    // console.log(`Set tag to experiment ID ${experiment_id} successfully`);
-    return `Set tag to experiment ID ${experiment_id} successfully`;
+    console.log(`Set tag to experiment ID ${experiment_id} successfully`);
+    // return `Set tag to experiment ID ${experiment_id} successfully`;
   }
 }
 
