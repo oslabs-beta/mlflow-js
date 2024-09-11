@@ -67,7 +67,9 @@ class RunManagement {
     });
 
     if (!response.ok) {
-      throw new Error(`Error in deleting run: ${data.message || response.statusText}`);
+      throw new Error(
+        `Error in deleting run: ${data.message || response.statusText}`
+      );
     }
 
     return await response.json();
@@ -93,7 +95,9 @@ class RunManagement {
     });
 
     if (!response.ok) {
-      throw new Error(`Error in restoring run: ${data.message || response.statusText}`);
+      throw new Error(
+        `Error in restoring run: ${data.message || response.statusText}`
+      );
     }
 
     return await response.json();
@@ -190,7 +194,9 @@ class RunManagement {
     });
 
     if (!response.ok) {
-      throw new Error(`Error in logging metric: ${data.message || response.statusText}`);
+      throw new Error(
+        `Error in logging metric: ${data.message || response.statusText}`
+      );
     }
 
     return await response.json();
@@ -226,7 +232,9 @@ class RunManagement {
     if (!response.ok) {
       const responseBody = await response.text();
       console.error(`Response body: ${responseBody}`);
-      throw new Error(`Error in logging batch: ${data.message || response.statusText}`);
+      throw new Error(
+        `Error in logging batch: ${data.message || response.statusText}`
+      );
     }
 
     return await response.json();
@@ -253,7 +261,9 @@ class RunManagement {
     });
 
     if (!response.ok) {
-      throw new Error(`Error in logging model: ${data.message || response.statusText}`);
+      throw new Error(
+        `Error in logging model: ${data.message || response.statusText}`
+      );
     }
 
     return await response.json();
@@ -281,7 +291,9 @@ class RunManagement {
     });
 
     if (!response.ok) {
-      throw new Error(`Error in logging inputs: ${data.message || response.statusText}`);
+      throw new Error(
+        `Error in logging inputs: ${data.message || response.statusText}`
+      );
     }
 
     return await response.json();
@@ -317,7 +329,9 @@ class RunManagement {
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(`Error logging param: ${data.message || response.statusText}`);
+      throw new Error(
+        `Error logging param: ${data.message || response.statusText}`
+      );
     }
     return data;
   }
@@ -347,7 +361,9 @@ class RunManagement {
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(`Error logging param: ${data.message || response.statusText}`);
+      throw new Error(
+        `Error logging param: ${data.message || response.statusText}`
+      );
     }
     return data;
   }
@@ -379,7 +395,9 @@ class RunManagement {
 
     const data = await response.json();
     if (!response.ok) {
-      throw new Error(`Error logging param: ${data.message || response.statusText}`);
+      throw new Error(
+        `Error logging param: ${data.message || response.statusText}`
+      );
     }
     return data;
   }
