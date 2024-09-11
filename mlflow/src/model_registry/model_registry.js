@@ -1,15 +1,5 @@
 //model_registry.js
-import apiRequest from '../utils/apiClient.js';
-
-let domain = 'http://localhost:'
-const port = 5001;
-if (port) {
-  domain = domain + port;
-}
-
-const version = '2.0';
-
-const MLFLOW_TRACKING_URI = domain + '/api/' + version + '/mlflow';
+import apiRequest from '../utils/apiClient.ts';
 
 class ModelRegistry {
   constructor(trackingUri) {
@@ -26,14 +16,21 @@ class ModelRegistry {
    * @throws {Error} - If the API request fails
    */
   async createRegisteredModel(name, tags = [], description = '') {
-    const { response, data } = await apiRequest(
-      this.trackingUri,
-      'registered-models/create',
-      {
-        method: 'POST',
-        body: { name, tags, description },
-      }
-    );
+    if (!name) {
+      throw new Error('Model name is required');
+    }
+
+    const url = `${this.trackingUri}/api/2.0/mlflow/registered-models/create`;
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name, tags, description }),
+    });
+
+    const data = await response.json();
 
     if (!response.ok) {
       throw new Error(
@@ -318,33 +315,29 @@ class ModelRegistry {
     * @param {string} version - The version number to alias (required)
     * @returns {Promise<void>}
    */
-   async setRegisteredModelAlias(name, alias, version) {
+  async setRegisteredModelAlias(name, alias, version) {
     if (!name) {
-      throw new Error("name is required");
+      throw new Error('name is required');
     } else if (!alias) {
-      throw new Error("alias is required");
+      throw new Error('alias is required');
     } else if (!version) {
-      throw new Error("version is required");
+      throw new Error('version is required');
     }
 
     const url = `${this.trackingUri}/registered-models/alias`;
     const response = await fetch(url, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name, alias, version}),
+      body: JSON.stringify({ name, alias, version }),
     });
 
     // data is an empty object
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(
-        `Error setting model alias: ${
-          response.statusText
-        }`
-      );
+      throw new Error(`Error setting model alias: ${response.statusText}`);
     }
     return data;
   }
@@ -358,29 +351,25 @@ class ModelRegistry {
    */
   async deleteRegisteredModelAlias(name, alias) {
     if (!name) {
-      throw new Error("name is required");
+      throw new Error('name is required');
     } else if (!alias) {
-      throw new Error("alias is required");
+      throw new Error('alias is required');
     }
 
     const url = `${this.trackingUri}/registered-models/alias`;
     const response = await fetch(url, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name, alias}),
+      body: JSON.stringify({ name, alias }),
     });
 
     // data is an empty object
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(
-        `Error deleting model alias: ${
-          response.statusText
-        }`
-      );
+      throw new Error(`Error deleting model alias: ${response.statusText}`);
     }
     return data;
   }
@@ -394,9 +383,9 @@ class ModelRegistry {
    */
   async getModelVersionByAlias(name, alias) {
     if (!name) {
-      throw new Error("name is required");
+      throw new Error('name is required');
     } else if (!alias) {
-      throw new Error("alias is required");
+      throw new Error('alias is required');
     }
     const url = `${this.trackingUri}/registered-models/alias`;
     const response = await fetch(`${url}?name=${name}&alias=${alias}`);
