@@ -1,15 +1,5 @@
 //model_registry.js
 
-let domain = 'http://localhost:'
-const port = 5001;
-if (port) {
-  domain = domain + port;
-}
-
-const version = '2.0';
-
-const MLFLOW_TRACKING_URI = domain + '/api/' + version + '/mlflow';
-
 class ModelRegistry {
   constructor(trackingUri) {
     this.trackingUri = trackingUri;
@@ -19,7 +9,8 @@ class ModelRegistry {
    * Creates a new registered model.
    *
    * @param {string} name - The name of the model to register (required)
-   * @param {Array<{key: string, value: string}>} [tags=[]] - Optional tags for the model
+   * @param {Array<{key: string, value: string}>} [tags=[]] - Optional tags for the model.
+   * Must be formatted like: [{"key": "keyName", "value": "valueName"}]
    * @param {string} [description=''] - Optional description for the model
    * @returns {Promise<Object>} The created registered model object
    */
@@ -74,8 +65,6 @@ class ModelRegistry {
       );
     }
 
-    console.log(data);
-    console.log(data.registered_model);
     return data.registered_model;
   }
 
@@ -332,7 +321,7 @@ class ModelRegistry {
       throw new Error("version is required");
     }
 
-    const url = `${this.trackingUri}/registered-models/alias`;
+    const url = `${this.trackingUri}/api/2.0/mlflow/registered-models/alias`;
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -347,7 +336,7 @@ class ModelRegistry {
     if (!response.ok) {
       throw new Error(
         `Error setting model alias: ${
-          response.statusText
+          data.message || response.statusText
         }`
       );
     }
@@ -368,7 +357,7 @@ class ModelRegistry {
       throw new Error("alias is required");
     }
 
-    const url = `${this.trackingUri}/registered-models/alias`;
+    const url = `${this.trackingUri}/api/2.0/mlflow/registered-models/alias`;
     const response = await fetch(url, {
       method: "DELETE",
       headers: {
@@ -403,7 +392,7 @@ class ModelRegistry {
     } else if (!alias) {
       throw new Error("alias is required");
     }
-    const url = `${this.trackingUri}/registered-models/alias`;
+    const url = `${this.trackingUri}/api/2.0/mlflow/registered-models/alias`;
     const response = await fetch(`${url}?name=${name}&alias=${alias}`);
 
     /**
