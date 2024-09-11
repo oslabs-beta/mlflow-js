@@ -1,2 +1,3 @@
 node_modules
 src/tracking_server/ExperimentClient_testFile.js
+src/workflows/ExperimentManager_testFile.js
