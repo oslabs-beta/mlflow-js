@@ -1,5 +1,5 @@
 // usage_example.js
-import { ModelRegistry } from '../src/model_registry/model_registry.js';
+import { ModelRegistryClient } from '../src/model_registry/ModelRegistryClient.ts';
 
 async function main() {
   const trackingUri = 'http://localhost:5001';

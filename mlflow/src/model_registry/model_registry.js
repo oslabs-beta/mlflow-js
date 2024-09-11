@@ -335,15 +335,9 @@ class ModelRegistry {
     const data = await response.json();
 
     if (!response.ok) {
-<<<<<<< HEAD
-      throw new Error(`Error setting model alias: ${response.statusText}`);
-=======
       throw new Error(
-        `Error setting model alias: ${
-          data.message || response.statusText
-        }`
+        `Error setting model alias: ${data.message || response.statusText}`
       );
->>>>>>> dev
     }
     return data;
   }

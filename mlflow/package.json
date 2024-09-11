@@ -1,16 +1,27 @@
 {
   "name": "mlflow",
   "version": "1.0.0",
+  "description": "JavaScript/Typescript library for MLflow",
+  "main": "lib/index.js",
   "type": "module",
-  "description": "JavaScript library for MLflow",
-  "main": "",
+  "types": "lib/index.d.ts",
   "scripts": {
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "mlflow",
-    "machine learning"
+    "machine learning",
+    "typescript"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.5.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
+  },
+  "engines": {
+    "node": ">=22.7.0"
+  }
 }

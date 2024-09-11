@@ -4,7 +4,7 @@ interface RequestOptions {
   params?: Record<string, string>;
 }
 
-interface ApiResponse<T> {
+interface ApiResponse<T = any> {
   response: Response;
   data: T;
 }
@@ -17,7 +17,7 @@ interface ApiResponse<T> {
  * @param options - Request options
  * @returns A promise that resolves to the response and data
  */
-async function apiRequest<T>(
+async function apiRequest<T = any>(
   baseUrl: string,
   endpoint: string,
   options: RequestOptions
