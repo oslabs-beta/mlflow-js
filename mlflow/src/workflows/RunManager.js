@@ -105,8 +105,14 @@ class RunManager {
 
       const newRunId = newRun.info.run_id;
 
+      const endTime = originalRun.info.end_time || undefined;
+
       // copy run information
-      await this.RunClient.updateRun(newRunId, originalRun.info.status);
+      await this.RunClient.updateRun(
+        newRunId,
+        originalRun.info.status,
+        endTime
+      );
       if (originalRun.info.lifecycle_stage !== 'active') {
         await this.RunClient.setTag(
           newRunId,
