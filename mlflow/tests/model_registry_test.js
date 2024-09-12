@@ -1,11 +1,16 @@
-import ModelRegistry from '../src/model_registry/model_registry.js';
-// import ModelRegistryClient from '../lib/model_registry/ModelRegistryClient.js';
-// import ApiRequest from '../lib/utils/ApiRequest.js';
+// import ModelRegistry from '../src/model_registry/model_registry.js';
+import ModelRegistryClient from '../lib/model_registry/ModelRegistryClient.js';
+
+/** questions/issues:
+ * 1. need to manually change the import path by adding .js extension in the complied js file,
+ * since ts doesn't take extension and when ts is getting compiled, .js is not added automatically;
+ * 2. await error below with this imported compiled file: await' has no effect on the type of this expression.ts(80007)
+ *  */
 
 async function main() {
   const trackingUri = 'http://localhost:5001';
-  const modelRegistry = new ModelRegistry(trackingUri);
-  // const modelRegistry = new ModelRegistryClient(trackingUri);
+  // const modelRegistry = new ModelRegistry(trackingUri);
+  const modelRegistry = new ModelRegistryClient(trackingUri);
 
   try {
     // Create a new registered model
