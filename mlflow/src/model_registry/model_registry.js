@@ -406,4 +406,4 @@ class ModelRegistry {
     return data;
   }
 }
-export { ModelRegistry };
+export default ModelRegistry;

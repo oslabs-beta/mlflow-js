@@ -1,15 +1,54 @@
 {
   "compilerOptions": {
-    "module": "ES6",
-    "target": "ES6",
-    "noImplicitAny": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
+    // Basic Options
+    "target": "ES2018",
+    "module": "ESNext",
+    "lib": ["ES2018"],
     "outDir": "./lib",
-    "rootDir": "./src"
+    "rootDir": "./src",
+
+    // Module Resolution Options
+    "moduleResolution": "node",
+    "baseUrl": "./src",
+    "paths": {
+      "*": ["*"]
+    },
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+
+    // Strict Type-Checking Options
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+
+    // Additional Checks
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+
+    // Experimental Options
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
+    // Advanced Options
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+
+    // Source Map Options
+    "sourceMap": false,
+
+    // Other Options
+    "declaration": true,
+    "removeComments": false,
+    "allowJs": false
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "tests/**/*"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }

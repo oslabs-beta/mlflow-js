@@ -7,3 +7,6 @@ node_modules/
 # Python / MLflow specific
 .venv/
 mlruns/
+
+# Temp
+lib/

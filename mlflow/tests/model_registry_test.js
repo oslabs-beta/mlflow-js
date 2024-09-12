@@ -1,9 +1,11 @@
-// usage_example.js
-import { ModelRegistryClient } from '../src/model_registry/ModelRegistryClient.ts';
+import ModelRegistry from '../src/model_registry/model_registry.js';
+// import ModelRegistryClient from '../lib/model_registry/ModelRegistryClient.js';
+// import ApiRequest from '../lib/utils/ApiRequest.js';
 
 async function main() {
   const trackingUri = 'http://localhost:5001';
   const modelRegistry = new ModelRegistry(trackingUri);
+  // const modelRegistry = new ModelRegistryClient(trackingUri);
 
   try {
     // Create a new registered model
