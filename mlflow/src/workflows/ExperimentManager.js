@@ -76,7 +76,9 @@ class ExperimentManager {
       throw new Error('Experiment name is required');
     }
 
-    let experiment_id = await experimentClient.createExperiment(experiment_name);
+    let experiment_id = await experimentClient.createExperiment(
+      experiment_name
+    );
 
     // create run
     const run = await runManagement.createRun(experiment_id, run_name, tags);

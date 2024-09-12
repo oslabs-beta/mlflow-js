@@ -16,26 +16,26 @@ class ExperimentClient {
     if (!name) {
       throw new Error('Experiment name is required');
     }
-  
+
     const url = `${this.trackingUri}/api/2.0/mlflow/experiments/create`;
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, artifact_location, tags }),
     });
-  
+
     if (!response.ok) {
       const errorBody = await response.json();
       throw new Error(
         `Error creating experiment from tracking server, status: ${response.status}.  ${errorBody.message}`
       );
     }
-  
+
     const data = await response.json();
     // console.log('return from createExperiment: ', data.experiment_id);
     return data.experiment_id;
   }
-  
+
   /**
    * Search experiments.
    *
@@ -60,7 +60,7 @@ class ExperimentClient {
     if (!max_results) {
       throw new Error('Max results is required');
     }
-  
+
     const url = `${this.trackingUri}/api/2.0/mlflow/experiments/search`;
     const response = await fetch(url, {
       method: 'POST',
@@ -73,19 +73,19 @@ class ExperimentClient {
         view_type,
       }),
     });
-  
+
     if (!response.ok) {
       const errorBody = await response.json();
       throw new Error(
         `Error searching for experiment from tracking server, status: ${response.status}.  ${errorBody.message}`
       );
     }
-  
+
     const data = await response.json();
     // console.log('return from searchExperiment: ', data);
     return data;
   }
-  
+
   /**
    * Get metadata for an experiment, querying by experiment ID. This method works on deleted experiments.
    *
@@ -96,25 +96,25 @@ class ExperimentClient {
     if (!experiment_id) {
       throw new Error('Experiment ID is required');
     }
-  
+
     const url = `${this.trackingUri}/api/2.0/mlflow/experiments/get?experiment_id=${experiment_id}`;
     const response = await fetch(url, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     });
-  
+
     if (!response.ok) {
       const errorBody = await response.json();
       throw new Error(
         `Error getting experiment from tracking server, status: ${response.status}.  ${errorBody.message}`
       );
     }
-  
+
     const data = await response.json();
     // console.log('return from getExperiment: ', data.experiment);
     return data.experiment;
   }
-  
+
   /**
    * Get metadata for an experiment, querying by experiment name.
    * This endpoint will return deleted experiments,
@@ -128,25 +128,25 @@ class ExperimentClient {
     if (!experiment_name) {
       throw new Error('Experiment name is required');
     }
-  
+
     const url = `${this.trackingUri}/api/2.0/mlflow/experiments/get-by-name?experiment_name=${experiment_name}`;
     const response = await fetch(url, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     });
-  
+
     if (!response.ok) {
       const errorBody = await response.json();
       throw new Error(
         `Error getting experiment by name from tracking server, status: ${response.status}.  ${errorBody.message}`
       );
     }
-  
+
     const data = await response.json();
     // console.log('return from getExperimentByName: ', data.experiment);
     return data.experiment;
   }
-  
+
   /**
    * Mark an experiment for deletion.
    *
@@ -157,25 +157,25 @@ class ExperimentClient {
     if (!experiment_id) {
       throw new Error('Experiment ID is required');
     }
-  
+
     const url = `${this.trackingUri}/api/2.0/mlflow/experiments/delete`;
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ experiment_id }),
     });
-  
+
     if (!response.ok) {
       const errorBody = await response.json();
       throw new Error(
         `Error deleting experiment from tracking server, status: ${response.status}.  ${errorBody.message}`
       );
     }
-  
+
     console.log(`Experiment ID ${experiment_id} successfully deleted`);
     // return `Experiment ID ${experiment_id} successfully deleted`;
   }
-  
+
   /**
    * Restore an experiment marked for deletion.
    *
@@ -186,25 +186,25 @@ class ExperimentClient {
     if (!experiment_id) {
       throw new Error('Experiment ID is required');
     }
-  
+
     const url = `${this.trackingUri}/api/2.0/mlflow/experiments/restore`;
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ experiment_id }),
     });
-  
+
     if (!response.ok) {
       const errorBody = await response.json();
       throw new Error(
         `Error restoring experiment from tracking server, status: ${response.status}.  ${errorBody.message}`
       );
     }
-  
+
     console.log(`Experiment ID ${experiment_id} successfully restored`);
     // return `Experiment ID ${experiment_id} successfully restored`;
   }
-  
+
   /**
    * Update experiment name.
    *
@@ -219,25 +219,27 @@ class ExperimentClient {
     if (!new_name) {
       throw new Error('New name is required');
     }
-  
+
     const url = `${this.trackingUri}/api/2.0/mlflow/experiments/update`;
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ experiment_id, new_name }),
     });
-  
+
     if (!response.ok) {
       const errorBody = await response.json();
       throw new Error(
         `Error updating experiment from tracking server, status: ${response.status}.  ${errorBody.message}`
       );
     }
-  
-    console.log(`Experiment ID ${experiment_id} successfully updated - new name is ${new_name}`);
+
+    console.log(
+      `Experiment ID ${experiment_id} successfully updated - new name is ${new_name}`
+    );
     // return `Experiment ID ${experiment_id} successfully updated - new name is ${new_name}`;
   }
-  
+
   /**
    * Set a tag on an experiment.
    *
@@ -256,21 +258,21 @@ class ExperimentClient {
     if (!value) {
       throw new Error('Value is required');
     }
-  
+
     const url = `${this.trackingUri}/api/2.0/mlflow/experiments/set-experiment-tag`;
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ experiment_id, key, value }),
     });
-  
+
     if (!response.ok) {
       const errorBody = await response.json();
       throw new Error(
         `Error setting tag from tracking server, status: ${response.status}.  ${errorBody.message}`
       );
     }
-  
+
     console.log(`Set tag to experiment ID ${experiment_id} successfully`);
     // return `Set tag to experiment ID ${experiment_id} successfully`;
   }
