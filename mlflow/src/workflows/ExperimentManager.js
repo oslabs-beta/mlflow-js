@@ -10,7 +10,7 @@ class ExperimentManager {
   }
 
   /**
-   * Full workflow of creating, naming and starting a run under an experiment (referenced by ID),
+   * Full workflow of creating, naming and starting a run under an existing experiment (referenced by ID),
    * logging metrics, params, and tags, logging the model, and finishing the run.
    *
    * @param {string} experiment_id ID of the experiment under which to log the run.  (required)
@@ -21,7 +21,7 @@ class ExperimentManager {
    * @param {Object} model The ML model data to log to the run, represented as a Javascript object (optional)
    * @returns {Promise<Object>} The created run object with updated metadata
    */
-  async withStartExperimentRunByExperimentId(
+  async runExistingExperiment(
     experiment_id,
     run_name = null,
     metrics = [],
@@ -53,7 +53,7 @@ class ExperimentManager {
   }
 
   /**
-   * Full workflow of creating, naming and starting a run under an experiment (referenced by name),
+   * Full workflow of creating, naming and starting a run under a new experiment,
    * logging metrics, params, and tags, logging the model, and finishing the run.
    *
    * @param {string} experiment_name Name of the experiment under which to log the run.  (required)
@@ -64,7 +64,7 @@ class ExperimentManager {
    * @param {Object} model The ML model data to log to the run, represented as a Javascript object (optional)
    * @returns {Promise<Object>} The created run object with updated metadata
    */
-  async withStartExperimentRunByExperimentName(
+  async runNewExperiment(
     experiment_name,
     run_name = null,
     metrics = [],
@@ -76,13 +76,7 @@ class ExperimentManager {
       throw new Error('Experiment name is required');
     }
 
-    let experiment_id;
-    try {
-      const exp = await experimentClient.getExperimentByName(experiment_name);
-      experiment_id = exp.experiment_id;
-    } catch {
-      experiment_id = await experimentClient.createExperiment(experiment_name);
-    }
+    let experiment_id = await experimentClient.createExperiment(experiment_name);
 
     // create run
     const run = await runManagement.createRun(experiment_id, run_name, tags);
