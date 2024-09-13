@@ -1,5 +1,5 @@
-// import ModelRegistry from '../src/model_registry/model_registry.js';
-import ModelRegistryClient from '../lib/model_registry/ModelRegistryClient.js';
+// import ModelRegistry from '../src/model-registry/model_registry.js';
+import ModelRegistryClient from '../lib/model-registry/ModelRegistryClient.js';
 
 /** issue:
  * need to manually change the import path by adding .js extension in the complied js file,
