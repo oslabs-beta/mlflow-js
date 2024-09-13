@@ -1,3 +1,12 @@
-node_modules
-src/tracking_server/ExperimentClient_testFile.js
-src/workflows/ExperimentManager_testFile.js
+# Dependencies
+node_modules/
+
+# Misc
+.DS_Store
+
+# Python / MLflow specific
+.venv/
+mlruns/
+
+# Temp
+lib/
