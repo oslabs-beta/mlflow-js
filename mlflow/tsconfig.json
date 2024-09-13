@@ -49,6 +49,10 @@
     "removeComments": false,
     "allowJs": false
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*",
+    "tests/RunManager_testFile.js",
+    "tests/RunClient_testFile.js"
+  ],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

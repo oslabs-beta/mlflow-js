@@ -1,5 +1,5 @@
-import { RunManager } from './RunManager.js';
-import { RunClient } from '../tracking_server/RunClient.js';
+import { RunManager } from '../src/workflows/RunManager.js';
+import { RunClient } from '../src/tracking_server/RunClient.js';
 
 const trackingUri = 'http://127.0.0.1:5000';
 const path = '/api/2.0/mlflow';
@@ -8,14 +8,15 @@ const path = '/api/2.0/mlflow';
 const ab = new RunManager(trackingUri);
 const myRunClient = new RunClient(trackingUri);
 
-// testing searchRuns method
+// // testing searchRuns method
 // const runs = await myRunClient.searchRuns(
 //   ['284209273010848955'],
-//   'metrics.loss > 0.2'
+//   'metrics.loss > 0.2',
+//   'loss'
 // );
 // console.log('Search runs result: ', runs);
 
-// // dry run (simulation)
+// // // dry run (simulation)
 // try {
 //   const result = await ab.cleanupRuns(
 //     ['284209273010848955'],
