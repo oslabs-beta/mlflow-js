@@ -1,6 +1,6 @@
-import { RunManagement } from "./run_management.js";
+import { RunManagement } from '../src/tracking_server/run_management.js';
 
-let domain = 'http://localhost:'
+let domain = 'http://localhost:';
 const port = 5001;
 if (port) {
   domain = domain + port;
@@ -16,14 +16,14 @@ let runManagement = new RunManagement(MLFLOW_TRACKING_URI, path);
 // console.log(runManagement.searchRuns(['784321942139901150']));
 
 const test = async () => {
-    // console.log('hi');
-    try {
-        let data = await runManagement.searchRuns(['784321942139901150']);
-        console.log('data: ', data);
-    } catch (err) {
-        console.log('err: ', err);
-    }
-}
+  // console.log('hi');
+  try {
+    let data = await runManagement.searchRuns(['784321942139901150']);
+    console.log('data: ', data);
+  } catch (err) {
+    console.log('err: ', err);
+  }
+};
 
 test();
 
@@ -36,7 +36,6 @@ test();
 // console.log(runManagement.logParam('b3457c87f50440388da9d9ddabb1baaa','test2', '008'));
 // console.log(runManagement.setTag('b3457c87f50440388da9d9ddabb1baaa', 'testTag1', 'testTag1Val'))
 // console.log(runManagement.deleteTag('b3457c87f50440388da9d9ddabb1baaa', 'testTag1'))
-
 
 // let modelRegistry = new ModelRegistry(MLFLOW_TRACKING_URI);
 // console.log(modelRegistry.setRegisteredModelAlias('tracking-quickstart', 'aliasTest', '1'));
