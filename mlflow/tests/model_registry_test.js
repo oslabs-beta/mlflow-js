@@ -1,10 +1,9 @@
 // import ModelRegistry from '../src/model_registry/model_registry.js';
 import ModelRegistryClient from '../lib/model_registry/ModelRegistryClient.js';
 
-/** questions/issues:
- * 1. need to manually change the import path by adding .js extension in the complied js file,
- * since ts doesn't take extension and when ts is getting compiled, .js is not added automatically;
- * 2. await error below with this imported compiled file: await' has no effect on the type of this expression.ts(80007)
+/** issue:
+ * need to manually change the import path by adding .js extension in the complied js file,
+ * since ts file doesn't accept extension, and when ts is being compiled, extension is not added automatically;
  *  */
 
 async function main() {
@@ -14,10 +13,11 @@ async function main() {
 
   try {
     // Create a new registered model
-    const createdModel = await modelRegistry.createRegisteredModel;
-    'MyModel1',
+    const createdModel = await modelRegistry.createRegisteredModel(
+      'MyModel1',
       [{ key: 'framework', value: 'pytorch' }],
-      'My first registered model';
+      'My first registered model'
+    );
     console.log('Created model:', createdModel);
 
     // // Get the registered model
