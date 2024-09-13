@@ -1,16 +1,16 @@
-import { MLflowHousekeeper } from '../src/workflows/MLflowHousekeeper';
-import { ExperimentManagement } from '../src/tracking_server/experiment_management';
-import { RunManagement } from '../src/tracking_server/run_management';
-import { ModelRegistry } from '../src/model_registry/model_registry';
-import { ModelVersionManagement } from '../src/model_registry/model_version_management';
+import { MLflowHousekeeper } from '../src/workflows/MLflowHousekeeper.js';
+import { ExperimentManagement } from '../src/tracking_server/experiment_management.js';
+import { RunManagement } from '../src/tracking_server/run_management.js';
+import { ModelRegistry } from '../src/model_registry/model_registry.js';
+import { ModelVersionManagement } from '../src/model_registry/model_version_management.js';
 import fs from 'fs';
 
-jest.mock('../tracking_server/experiment_management');
-jest.mock('../tracking_server/run_management');
-jest.mock('../model_registry/model_registry');
-jest.mock('../model_registry/model_version_management');
+// Correct the paths in jest.mock statements to match the file structure
+jest.mock('../src/tracking_server/experiment_management.js');
+jest.mock('../src/tracking_server/run_management.js');
+jest.mock('../src/model_registry/model_registry.js');
+jest.mock('../src/model_registry/model_version_management.js');
 jest.mock('fs');
-
 describe('MLflowHousekeeper', () => {
   let housekeeper;
   const trackingUri = 'http://localhost:5000';
