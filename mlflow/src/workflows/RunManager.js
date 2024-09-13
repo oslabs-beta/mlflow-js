@@ -1,5 +1,5 @@
-import { RunClient } from '../tracking_server/RunClient.js';
-import { ModelVersionManagement } from '../model_registry/model_version_management.js';
+import { RunClient } from '../tracking/RunClient.js';
+import { ModelVersionManagement } from '../model-registry/model_version_management.js';
 
 class RunManager {
   constructor(trackingUri) {

@@ -1,4 +1,4 @@
-import { RunManagement } from '../src/tracking_server/run_management.js';
+import { RunManagement } from '../src/tracking/run_management.js';
 
 let domain = 'http://localhost:';
 const port = 5001;

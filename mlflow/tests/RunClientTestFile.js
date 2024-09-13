@@ -1,4 +1,4 @@
-import { RunClient } from '../src/tracking_server/RunClient.js';
+import { RunClient } from '../src/tracking/RunClient.js';
 
 const myRunClient = new RunClient('http://127.0.0.1:5000');
 
