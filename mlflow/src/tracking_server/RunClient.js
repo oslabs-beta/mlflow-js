@@ -479,7 +479,7 @@ class RunClient {
    * @param {string} run_id - ID of the run whose artifacts to list. (required)
    * @param {string} artifact_path - Filter artifacts matching this path (a relative path from the root artifact directory).
    * @param {string} page_token  - Token indicating the page of artifact results to fetch.
-   * @returns {Promise<Object>} - A promise that resolves with a list artifacts for the specified run.t
+   * @returns {Promise<Object>} - A promise that resolves with a list artifacts for the specified run.
    */
   async listArtifacts(run_id, artifact_path = '', page_token = '') {
     if (!run_id) {

@@ -9,7 +9,8 @@ class RunManager {
   }
 
   /**
-   * Delete runs that do not meet certain criteria and return the deleted runs.
+   * Delete runs that do not meet certain criteria and return deleted runs.
+   * Dry run is set to true by default. To delete, set dry run to false.
    *
    * @param {string[]} experimentIds - The IDs of the associated experiments. (required)
    * @param {string} queryString - SQL-like query string to filter runs to keep. (required)
@@ -84,7 +85,8 @@ class RunManager {
   /********************************************************************************************************** */
 
   /**
-   * Copy run from one experiment to another without artifactss and models. Artifacts and models detail tagged in new run as reference.
+   * Copy run from one experiment to another without artifactss and models.
+   * Artifacts and models detail tagged in new run as reference.
    *
    * @param {string} runId - The ID of the run to be copied. (required)
    * @param {string} targetExperimentId - The ID of the target experiment. (required)
