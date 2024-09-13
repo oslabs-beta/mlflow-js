@@ -1,5 +1,5 @@
 import { RunManager } from '../src/workflows/RunManager.js';
-import { RunClient } from '../src/tracking_server/RunClient.js';
+import { RunClient } from '../src/tracking/RunClient.js';
 
 const trackingUri = 'http://127.0.0.1:5000';
 const path = '/api/2.0/mlflow';

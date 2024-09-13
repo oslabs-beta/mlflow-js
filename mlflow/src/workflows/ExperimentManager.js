@@ -1,5 +1,5 @@
-import { ExperimentClient } from '../tracking_server/ExperimentClient.js';
-import { RunManagement } from '../tracking_server/run_management.js';
+import { ExperimentClient } from '../tracking/ExperimentClient.js';
+import { RunManagement } from '../tracking/run_management.js';
 const MLFLOW_TRACKING_URI = 'http://localhost:5001';
 const experimentClient = new ExperimentClient(MLFLOW_TRACKING_URI);
 const runManagement = new RunManagement(MLFLOW_TRACKING_URI);
