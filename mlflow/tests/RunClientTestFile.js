@@ -1,21 +1,21 @@
-import { RunManagement } from './run_management.js';
+import { RunClient } from '../src/tracking_server/RunClient.js';
 
-const myRunManagement = new RunManagement('http://127.0.0.1:5000');
+const myRunClient = new RunClient('http://127.0.0.1:5000');
 
 async function testCreateRun(experiment_id) {
   try {
-    const run = await myRunManagement.createRun(experiment_id);
+    const run = await myRunClient.createRun(experiment_id);
     console.log('Created run:', run);
   } catch (error) {
     console.error('Error:', error.message);
   }
 }
 
-// testCreateRun('415858823387303182');
+// testCreateRun('463611670721534538');
 
 async function testDeleteRun(run_id) {
   try {
-    const run = await myRunManagement.deleteRun(run_id);
+    const run = await myRunClient.deleteRun(run_id);
     console.log(`Run ID ${run_id} deleted`);
   } catch (error) {
     console.error('Error:', error.message);
@@ -26,7 +26,7 @@ async function testDeleteRun(run_id) {
 
 async function testRestoreRun(run_id) {
   try {
-    const run = await myRunManagement.restoreRun(run_id);
+    const run = await myRunClient.restoreRun(run_id);
     console.log(`Run ID ${run_id} restored`);
   } catch (error) {
     console.error('Error:', error.message);
@@ -37,7 +37,7 @@ async function testRestoreRun(run_id) {
 
 async function testGetRun(run_id) {
   try {
-    const run = await myRunManagement.getRun(run_id);
+    const run = await myRunClient.getRun(run_id);
     console.log('Fetched run ID: ', run);
   } catch (error) {
     console.error('Error:', error.message);
@@ -46,11 +46,12 @@ async function testGetRun(run_id) {
 
 // testGetRun('0577e22f02e24d24b62949625306c256');
 
-async function testUpdateRun(run_id, status, run_name) {
+async function testUpdateRun(run_id, status, end_time, run_name) {
   try {
-    const updatedRun = await myRunManagement.updateRun(
+    const updatedRun = await myRunClient.updateRun(
       run_id,
       status,
+      end_time,
       run_name
     );
     console.log('Updated run: ', updatedRun);
@@ -59,15 +60,16 @@ async function testUpdateRun(run_id, status, run_name) {
   }
 }
 
-// testUpdateRun(
-//   '0577e22f02e24d24b62949625306c256',
+// await myRunClient.updateRun(
+//   '9acc6e77bc0c4273ab2105e8e6adc38b',
 //   'FINISHED',
-//   'victorious-bee-311'
+//   '1631234567890',
+//   'hey'
 // );
 
 async function testLogMetric(run_id, key, value) {
   try {
-    const loggedMetric = await myRunManagement.logMetric(run_id, key, value);
+    const loggedMetric = await myRunClient.logMetric(run_id, key, value);
     console.log('Metric logged successfully');
   } catch (error) {
     console.error('Error: ', error.message);
@@ -78,7 +80,7 @@ async function testLogMetric(run_id, key, value) {
 
 async function testLogBatch(run_id, metrics, params, tags) {
   try {
-    await myRunManagement.logBatch(run_id, metrics, params, tags);
+    await myRunClient.logBatch(run_id, metrics, params, tags);
   } catch (error) {
     console.error('Error in testLogBatch: ', error);
   }
@@ -107,7 +109,7 @@ async function testLogModel(run_id, model_json) {
   try {
     const modelJson = JSON.stringify(model_json);
 
-    await myRunManagement.logModel(run_id, modelJson);
+    await myRunClient.logModel(run_id, modelJson);
     console.log('Model logged successfully.');
   } catch (error) {
     console.error('Error: ', error);
@@ -133,7 +135,7 @@ async function testLogModel(run_id, model_json) {
 
 async function testLogInputs(run_id, datasets) {
   try {
-    await myRunManagement.logInputs(run_id, datasets);
+    await myRunClient.logInputs(run_id, datasets);
     console.log('Datasets logged successfully.');
   } catch (error) {
     console.error('Error logging datasets: ', error.message);
