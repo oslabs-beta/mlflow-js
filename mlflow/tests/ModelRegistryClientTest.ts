@@ -1,4 +1,5 @@
-import ModelRegistryClient from '../src/model_registry/ModelRegistryClient';
+// note: npx tsx <file>
+import ModelRegistryClient from '../src/model-registry/ModelRegistryClient';
 
 async function testModelRegistryClient() {
   const client = new ModelRegistryClient('http://localhost:5001');

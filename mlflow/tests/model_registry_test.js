@@ -2,9 +2,8 @@
 import ModelRegistryClient from '../lib/model-registry/ModelRegistryClient.js';
 
 /** issue:
- * need to manually change the import path by adding .js extension in the complied js file,
- * since ts file doesn't accept extension, and when ts is being compiled, extension is not added automatically;
- *  */
+ * need to manually add .js extension in the complied ModelRegistryClient.js file
+ */
 
 async function main() {
   const trackingUri = 'http://localhost:5001';
