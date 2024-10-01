@@ -1,5 +1,5 @@
 import ModelRegistryClient from '../src/model-registry/ModelRegistryClient';
-import apiRequest from '../src/utils/ApiRequest';
+import { apiRequest } from '../src/utils/apiRequest';
 
 async function createRun(
   client: ModelRegistryClient,
