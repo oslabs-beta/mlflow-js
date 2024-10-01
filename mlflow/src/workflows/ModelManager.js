@@ -1,6 +1,8 @@
 import { ModelRegistry } from '../model-registry/model_registry.js';
 import { ModelVersionManagement } from '../model-registry/model_version_management.js';
 
+console.log('typeof ModeVersion: ', typeof ModelVersionManagement);
+
 class ModelManager {
   constructor(trackingUri) {
     this.trackingUri = trackingUri;
