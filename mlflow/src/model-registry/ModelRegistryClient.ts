@@ -1,4 +1,4 @@
-import apiRequest from '../utils/ApiRequest';
+import { apiRequest } from '../utils/apiRequest';
 
 class ModelRegistryClient {
   private baseUrl: string;
@@ -11,8 +11,8 @@ class ModelRegistryClient {
    * Creates a new registered model.
    *
    * @param name - The name of the model to register (required)
-   * @param tags - Optional tags for the model
-   * @param description - Optional description for the model
+   * @param tags - Tags for the model
+   * @param description - Description for the model
    * @returns The created registered model object
    * @throws Error if the API request fails
    */
