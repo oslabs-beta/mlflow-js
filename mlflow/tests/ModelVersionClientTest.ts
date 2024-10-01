@@ -12,13 +12,13 @@ async function testModelVersionClient() {
   
     try {
       // Test creating a registered model
-      console.log('Creating a new registered model...');
-      const newModel = await client.createModelVersion(
+      console.log('Creating a new registered model version...');
+      const newModelVersion = await client.createModelVersion(
         'test-modelVersion12321',
         "mlflow-artifacts:/784321942139901150/b3457c87f50440388da9d9ddabb1baaa/artifacts/iris_model",
         "b3457c87f50440388da9d9ddabb1baaa"
       );
-      console.log('Created model:', newModel);
+      console.log('Created model version:', newModelVersion);
   
       // Test getting the registered model
     //   console.log('\nGetting the registered model...');

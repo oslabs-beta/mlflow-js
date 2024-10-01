@@ -3,12 +3,10 @@ import ModelRegistryClient from "../model-registry/ModelRegistryClient";
 import ModelVersionClient from "../model-registry/ModelVersionClient";
 
 class ModelManager {
-  private baseUrl: string;
   private modelRegistry: ModelRegistryClient;
   private modelVersion: ModelVersionClient;
 
   constructor(trackingUri: string) {
-    this.baseUrl = trackingUri;
     this.modelRegistry = new ModelRegistryClient(trackingUri);
     this.modelVersion = new ModelVersionClient(trackingUri);
     // this.runClient = new RunClient(trackingUri);
