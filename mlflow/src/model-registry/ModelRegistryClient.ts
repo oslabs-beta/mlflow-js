@@ -46,6 +46,7 @@ class ModelRegistryClient {
    *
    * @param name - The name of the registered model to retrieve (required)
    * @returns The registered model object
+   * @throws Error - If the API request fails
    */
   async getRegisteredModel(name: string): Promise<any> {
     const { response, data } = await apiRequest(
