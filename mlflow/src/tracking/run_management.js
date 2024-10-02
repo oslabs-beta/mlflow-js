@@ -10,7 +10,7 @@ class RunClient {
    * @param {string} [run_name] - Name of the run.
    * @param {number} [start_time] - Unix timestamp in milliseconds of when the run started.
    * @param {Array<{key: string, value: string}>} [tags=[]] - Additional metadata for the run.
-   * @returns {Promise<Object>} - A promise that resolves with the created run object.
+   * @returns {Promise<object>} - A promise that resolves with the created run object.
    */
   async createRun(
     experiment_id,
@@ -73,6 +73,8 @@ class RunClient {
     if (!response.ok) {
       throw new Error(`Error deleting run: ${response.statusText}`);
     }
+
+    return;
   }
 
   /**
@@ -97,13 +99,15 @@ class RunClient {
     if (!response.ok) {
       throw new Error(`Error restoring run: ${response.statusText}`);
     }
+
+    return;
   }
 
   /**
    * Get metadata, metrics, params, and tags for a run. In the case where multiple metrics with the same key are logged for a run, return only the value with the latest timestamp. If there are multiple values with the latest timestamp, return the maximum of these values.
    *
    * @param {string} run_id - ID of the run to fetch. (required)
-   * @returns {Promise<Object>} - A promise that resolves with the fetched run object.
+   * @returns {Promise<object>} - A promise that resolves with the fetched run object.
    */
   async getRun(run_id) {
     if (!run_id) {
@@ -131,7 +135,7 @@ class RunClient {
    * @param {string} [status] - Updated status of the run.
    * @param {number} [end_time] - Unix timestamp in milliseconds of when the run ended.
    * @param {string} [run_name] - Updated name of the run.
-   * @returns {Promise<Object>} - A promise that resolves with the updated metadata of the run object.
+   * @returns {Promise<object>} - A promise that resolves with the updated metadata of the run object.
    */
   async updateRun(run_id, status = null, end_time = null, run_name = null) {
     if (!run_id) {
@@ -192,6 +196,8 @@ class RunClient {
     if (!response.ok) {
       throw new Error(`Error logging metric: ${response.statusText}`);
     }
+
+    return;
   }
 
   /**
@@ -224,6 +230,8 @@ class RunClient {
     if (!response.ok) {
       throw new Error(`Error logging batch: ${response.statusText}`);
     }
+
+    return;
   }
 
   /**
@@ -231,7 +239,7 @@ class RunClient {
    *
    * @param {string} run_id - ID of the run to log under. (required)
    * @param {string} model_json - MLmodel file in json format. (required)
-   * @returns {Promise<Void>} - A promise that resolves when the logging is complete.
+   * @returns {Promise<void>} - A promise that resolves when the logging is complete.
    */
   async logModel(run_id, model_json) {
     if (!run_id || model_json) {
@@ -249,6 +257,8 @@ class RunClient {
     if (!response.ok) {
       throw new Error(`Error logging model: ${response.statusText}`);
     }
+
+    return;
   }
 
   /**
@@ -275,6 +285,8 @@ class RunClient {
     if (!response.ok) {
       throw new Error(`Error in logging inputs: ${response.statusText}`);
     }
+
+    return;
   }
 
   /**
@@ -285,7 +297,7 @@ class RunClient {
    * are guaranteed to support key values up to 250 bytes in size. (required)
    * @param {string} value - String value of the tag being logged. Maximum size depends on storage
    * backend. All storage backends are guaranteed to support key values up to 5000 bytes in size. (required)
-   * @returns {Promise<Void>} - A promise that resolves when the logging is complete.
+   * @returns {Promise<void>} - A promise that resolves when the logging is complete.
    */
   async setTag(run_id, key, value) {
     if (!run_id) {
@@ -307,6 +319,8 @@ class RunClient {
     if (!response.ok) {
       throw new Error(`Error setting tag: ${response.statusText}`);
     }
+
+    return;
   }
 
   /**
@@ -314,7 +328,7 @@ class RunClient {
    *
    * @param {string} run_id - ID of the run that the tag was logged under. (required)
    * @param {string} key - Name of the tag. Maximum size is 255 bytes. (required)
-   * @returns {Promise<Void>} - A promise that resolves when the deletion is complete.
+   * @returns {Promise<void>} - A promise that resolves when the deletion is complete.
    */
   async deleteTag(run_id, key) {
     if (!run_id) {
@@ -336,10 +350,10 @@ class RunClient {
 
     if (!response.ok) {
       throw new Error(
-        `Error logging param: ${data.message || response.statusText}`
+        `Error deleting tag: ${data.message || response.statusText}`
       );
     }
-    return data;
+    return;
   }
 
   /**
@@ -348,8 +362,7 @@ class RunClient {
    * @param {string} run_id - ID of the run under which to log the param. (required))
    * @param {string} key - Name of the param. Maximum size is 255 bytes. (required)
    * @param {string} value  - String value of the param being logged. Maximum size is 6000 bytes. (required)
-   * @returns {Promise<Void>} - A promise that resolves when the logging is complete.
-   * Note: A param can be logged only once for a run
+   * @returns {Promise<void>} - A promise that resolves when the logging is complete.
    */
   async logParam(run_id, key, value) {
     if (!run_id) {
@@ -379,11 +392,11 @@ class RunClient {
    * @param {string} run_id - ID of the run from which to fetch metric values. (required)
    * @param {string} metric_key - Name of the metric. (required)
    * @param {string} page_token - Token indicating the page of metric history to fetch.
-   * @param {INT32} max_results - Maximum number of logged instances of a metric for a run to return per call.
+   * @param {number} max_results - Maximum number of logged instances of a metric for a run to return per call.
    * Backend servers may restrict the value of max_results depending on performance requirements. Requests that do not
    * specify this value will behave as non-paginated queries where all metric history values for a given metric
    * within a run are returned in a single response.
-   * @returns {Promise<Object>} - A promise that resolves with the values for the specified metric.
+   * @returns {Promise<object>} - A promise that resolves with the values for the specified metric.
    */
   async getMetricHistory(run_id, metric_key, page_token, max_results) {
     if (!run_id) {
@@ -412,24 +425,26 @@ class RunClient {
   }
 
   /**
+   * Search for runs that satisfy expressions. Search expressions can use Metric and Param keys.
    *
-   * @param {Array<{key: string, value: string}>} experiment_ids - List of experiment IDs to search over.
+   * @param {Array<string>} experiment_ids - List of experiment IDs to search over.
    * @param {string} filter - A filter expression over params, metrics, and tags, that allows returning a subset of runs.
    * The syntax is a subset of SQL that supports ANDing together binary operations between a param, metric, or tag and a constant.
    * Example: metrics.rmse < 1 and params.model_class = 'LogisticRegression'
    * You can select columns with special characters (hyphen, space, period, etc.) by using
    * double quotes: metrics."model class" = 'LinearRegression' and tags."user-name" = 'Tomas'
    * Supported operators are =, !=, >, >=, <, and <=.
-   * @param {ViewType} run_view_type - Whether to display only active, only deleted, or all runs. Defaults to active runs.
-   * @param {INT32} max_results  - Maximum number of runs desired. If unspecified, defaults to 1000. All servers are
+   * @param {string} run_view_type - Whether to display only active, only deleted, or all runs. Defaults to active runs.
+   * @param {number} max_results  - Maximum number of runs desired. If unspecified, defaults to 1000. All servers are
    * guaranteed to support a max_results theshold of at least 50,000 but may support more. Callers of this endpoint are
    * encouraged to pass max_results explicitly and leverage page_token to iterate through experiments.
-   * @param {Array<{key: string, value: string}>} order_by - List of columns to be ordered by, including attributes, params, metrics,
+   * @param {Array<string>} order_by - List of columns to be ordered by, including attributes, params, metrics,
    * and tags with an optional "DESC" or "ASC" annotation, where "ASC" is the default.
    * Example: ["params.input DESC","metrics.alpha ASC", "metrics.rmse"] Tiebreaks are done by start_time DESC followed by run_id for
    * runs with the same start time (and this is the default ordering criterion if order_by is not provided).
-   * @param {string} page_token
-   * @returns {Promise<Object} - A promise that resovles with the runs that match the search criteria.
+   * @param {string} page_token - Token that can be used to retrieve the next page of run results. A missing token indicates that
+   * there are no additional run results to be fetched.
+   * @returns {Promise<object>} - A promise that resovles with the runs that match the search criteria.
    */
   async searchRuns(
     experiment_ids,
@@ -477,16 +492,16 @@ class RunClient {
    * List artifacts for a run. Takes an optional artifact_path prefix which if specified, the response contains only artifacts with the specified prefix.
    *
    * @param {string} run_id - ID of the run whose artifacts to list. (required)
-   * @param {string} artifact_path - Filter artifacts matching this path (a relative path from the root artifact directory).
+   * @param {string} path - Filter artifacts matching this path (a relative path from the root artifact directory).
    * @param {string} page_token  - Token indicating the page of artifact results to fetch.
-   * @returns {Promise<Object>} - A promise that resolves with a list artifacts for the specified run.
+   * @returns {Promise<object>} - A promise that resolves with a list artifacts for the specified run.
    */
-  async listArtifacts(run_id, artifact_path = '', page_token = '') {
+  async listArtifacts(run_id, path = '', page_token = '') {
     if (!run_id) {
       throw new Error('run_id is required');
     }
     const response = await fetch(
-      `${this.trackingUri}/api/2.0/mlflow/artifacts/list?run_id=${run_id}&run_uuid=${run_id}&path=${artifact_path}&page_token=${page_token}`
+      `${this.trackingUri}/api/2.0/mlflow/artifacts/list?run_id=${run_id}&run_uuid=${run_id}&path=${path}&page_token=${page_token}`
     );
     /**
      * data can have the fields:
