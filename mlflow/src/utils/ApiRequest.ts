@@ -17,7 +17,7 @@ interface ApiResponse<T = any> {
  * @param options - Request options
  * @returns A promise that resolves to the response and data
  */
-async function apiRequest<T = any>(
+export async function apiRequest<T = any>(
   baseUrl: string,
   endpoint: string,
   options: RequestOptions
@@ -47,4 +47,4 @@ async function apiRequest<T = any>(
   return { response, data };
 }
 
-export default apiRequest;
+
