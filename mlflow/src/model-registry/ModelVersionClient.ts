@@ -1,4 +1,4 @@
-import { apiRequest } from 'utils/ApiRequest';
+import { apiRequest } from '../utils/ApiRequest';
 
 class ModelVersionClient {
   private baseUrl: string;
