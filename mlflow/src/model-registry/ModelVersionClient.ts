@@ -1,3 +1,4 @@
+import { ApiError } from '../utils/apiError';
 import { apiRequest } from '../utils/apiRequest';
 
 class ModelVersionClient {
@@ -39,8 +40,9 @@ class ModelVersionClient {
 
     // is response ok? else throw error
     if (!response.ok) {
-      throw new Error(
-        `Error creating model version: ${data.message || response.statusText}`
+      throw new ApiError(
+        `Error creating model version: ${data.message || response.statusText}`,
+        response.status
       );
     }
 
@@ -68,8 +70,9 @@ class ModelVersionClient {
 
     // is response ok? else throw error
     if (!response.ok) {
-      throw new Error(
-        `Error fetching model version: ${data.message || response.statusText}`
+      throw new ApiError(
+        `Error fetching model version: ${data.message || response.statusText}`,
+        response.status
       );
     }
 
@@ -102,8 +105,9 @@ class ModelVersionClient {
 
     // is response ok? else throw error
     if (!response.ok) {
-      throw new Error(
-        `Error updating model version: ${data.message || response.statusText}`
+      throw new ApiError(
+        `Error updating model version: ${data.message || response.statusText}`,
+        response.status
       );
     }
 
@@ -153,8 +157,9 @@ class ModelVersionClient {
 
     // is response ok? else throw error
     if (!response.ok) {
-      throw new Error(
-        `Error searching model versions: ${data.message || response.statusText}`
+      throw new ApiError(
+        `Error searching model versions: ${data.message || response.statusText}`,
+        response.status
       );
     }
 
@@ -185,8 +190,9 @@ class ModelVersionClient {
 
     // is response ok? else throw error
     if (!response.ok) {
-      throw new Error(
-        `Error fetching download uri: ${data.message || response.statusText}`
+      throw new ApiError(
+        `Error fetching download uri: ${data.message || response.statusText}`,
+        response.status
       );
     }
 
@@ -224,10 +230,11 @@ class ModelVersionClient {
 
     // is response ok? else throw error
     if (!response.ok) {
-      throw new Error(
+      throw new ApiError(
         `Error transitioning model version stage: ${
           data.message || response.statusText
-        }`
+        }`,
+        response.status
       );
     }
 
@@ -263,10 +270,11 @@ class ModelVersionClient {
 
     // is response ok? else throw error
     if (!response.ok) {
-      throw new Error(
+      throw new ApiError(
         `Error setting model version tag: ${
           data.message || response.statusText
-        }`
+        }`,
+        response.status
       );
     }
 
@@ -300,10 +308,11 @@ class ModelVersionClient {
 
     // is response ok? else throw error
     if (!response.ok) {
-      throw new Error(
+      throw new ApiError(
         `Error deleting model version tag: ${
           data.message || response.statusText
-        }`
+        }`,
+        response.status
       );
     }
 
@@ -331,8 +340,9 @@ class ModelVersionClient {
 
     // is response ok? else throw error
     if (!response.ok) {
-      throw new Error(
-        `Error deleting model version: ${data.message || response.statusText}`
+      throw new ApiError(
+        `Error deleting model version: ${data.message || response.statusText}`,
+        response.status
       );
     }
 
