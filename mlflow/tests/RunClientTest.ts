@@ -14,13 +14,6 @@ async function createExperiment(
     }
   );
 
-  console.log('Response status:', response.status);
-  console.log(
-    'Response headers:',
-    Object.fromEntries(response.headers.entries())
-  );
-  console.log('Response body:', data);
-
   if (!response.ok) {
     throw new Error(
       `Error creating experiment: ${data.message || response.statusText}`
@@ -40,12 +33,11 @@ async function testRunClient(): Promise<void> {
     console.log('Created experiment ID: ', experiment_id);
 
     console.log('Creating run...');
-    // const run = await client.createRun(experiment_id);
     const run = await client.createRun(experiment_id);
     console.log('Created run: ', run);
 
     // deleteRun
-    const runId = (run as any).info.run_id;
+    const runId = run.info.run_id;
     console.log(`Deleting run ID: ${runId}...`);
     await client.deleteRun(runId);
     console.log('Deleted run: ', runId);
@@ -79,9 +71,9 @@ async function testRunClient(): Promise<void> {
     console.log('Creating another run...');
     const run2 = await client.createRun(experiment_id);
     console.log('Created run2: ', run2);
-    const run2Id = (run2 as any).info.run_id;
+    const run2Id = run2.info.run_id;
 
-    console.log(`Loggning batch for run ID: ${run2Id}...`);
+    console.log(`Logging batch for run ID: ${run2Id}...`);
     await client.logBatch(
       run2Id,
       [
@@ -151,7 +143,7 @@ async function testRunClient(): Promise<void> {
     console.log('Creating another run...');
     const run3 = await client.createRun(experiment_id);
     console.log('Created run3: ', run3);
-    const run3Id = (run3 as any).info.run_id;
+    const run3Id = run3.info.run_id;
 
     console.log(`Setting tag for run ID ${run3Id}...`);
     await client.setTag(run3Id, 'accuracy', '0.99');
