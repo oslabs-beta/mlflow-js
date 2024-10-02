@@ -1,7 +1,7 @@
 import ModelVersionClient from '../src/model-registry/ModelVersionClient';
 import ModelRegistryClient from '../src/model-registry/ModelRegistryClient';
 
-// To test: cd /home/kchia/github/mlflow-js/mlflow
+// To test:
 // npx tsx tests/ModelVersionClientTest.ts
 
 async function testModelVersionClient() {
