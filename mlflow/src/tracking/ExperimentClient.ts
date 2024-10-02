@@ -1,5 +1,5 @@
 class ExperimentClient {
-  constructor(trackingUri) {
+  constructor(trackingUri: string) {
     this.trackingUri = trackingUri;
   }
 
