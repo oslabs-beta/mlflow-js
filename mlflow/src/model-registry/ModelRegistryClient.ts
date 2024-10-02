@@ -1,4 +1,5 @@
-import { apiRequest } from '../utils/apiRequest';
+// import { apiRequest } from '../utils/apiRequest';
+import { apiRequest } from "utils/ApiRequest";
 
 class ModelRegistryClient {
   private baseUrl: string;

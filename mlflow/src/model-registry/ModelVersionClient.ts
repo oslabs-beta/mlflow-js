@@ -1,4 +1,4 @@
-import { apiRequest } from "utils/ApiRequest";
+import { apiRequest } from 'utils/ApiRequest';
 
 class ModelVersionClient {
   private baseUrl: string;
@@ -109,35 +109,6 @@ class ModelVersionClient {
 
     // return the updated model version obj
     return data.model_version;
-  }
-
-  /**
-   * Description - deletes a specific model version.
-   * @param {string} modelName - the name of the registered model (Required)
-   * @param {string} version - the version number of the model to delete (Required)
-   * @returns {Promise<void>} 
-   * @throws {ApiError} If the API request fails
-   */
-  async deleteModelVersion(modelName: string, version: string): Promise<void> {
-    // fire off a delete request to remove the model version
-    const { response, data } = await apiRequest(
-      this.baseUrl,
-      'model-versions/delete',
-      {
-        method: 'DELETE',
-        body: { name: modelName, version },
-      }
-    );
-
-    // is response ok? else throw error
-    if (!response.ok) {
-      throw new Error(
-        `Error deleting model version: ${data.message || response.statusText}`
-      );
-    }
-
-    // return nothing, just resolve
-    return;
   }
 
   /**
@@ -271,7 +242,7 @@ class ModelVersionClient {
    * @param {string} version - the version number of the model to tag (required)
    * @param {string} key - the key of the tag (required)
    * @param {string} value - the value of the tag (required)
-   * @returns {Promise<void>} 
+   * @returns {Promise<void>}
    * @throws {ApiError} If the API request fails
    */
   async setModelVersionTag(
@@ -309,7 +280,7 @@ class ModelVersionClient {
    * @param {string} modelName - the name of the registered model (required)
    * @param {string} version - the version number of the model to untag (required)
    * @param {string} key - the key of the tag to delete (required)
-   * @returns {Promise<void>} 
+   * @returns {Promise<void>}
    * @throws {ApiError} If the API request fails
    */
   async deleteModelVersionTag(
@@ -333,6 +304,35 @@ class ModelVersionClient {
         `Error deleting model version tag: ${
           data.message || response.statusText
         }`
+      );
+    }
+
+    // return nothing, just resolve
+    return;
+  }
+
+  /**
+   * Description - deletes a specific model version.
+   * @param {string} modelName - the name of the registered model (Required)
+   * @param {string} version - the version number of the model to delete (Required)
+   * @returns {Promise<void>}
+   * @throws {ApiError} If the API request fails
+   */
+  async deleteModelVersion(modelName: string, version: string): Promise<void> {
+    // fire off a delete request to remove the model version
+    const { response, data } = await apiRequest(
+      this.baseUrl,
+      'model-versions/delete',
+      {
+        method: 'DELETE',
+        body: { name: modelName, version },
+      }
+    );
+
+    // is response ok? else throw error
+    if (!response.ok) {
+      throw new Error(
+        `Error deleting model version: ${data.message || response.statusText}`
       );
     }
 
