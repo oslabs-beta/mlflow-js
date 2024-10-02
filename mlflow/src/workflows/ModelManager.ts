@@ -197,46 +197,46 @@ class ModelManager {
    *                                  value of the specified metric. (Required)
    * @param {string} modelName - The name of the new model that will be created. (Required)
    */
-  async createModelFromRunWithBestMetric(
-    experiment_ids: string[],
-    filterMetric: string,
-    metricMinOrMax: string,
-    modelName: string
-  ) {
-    const { runs } = await this.runClient.searchRuns(
-      experiment_ids,
-      `metrics.${filterMetric} != -99999`
-    );
-    let num;
-    if (metricMinOrMax === 'min') {
-      num = Infinity;
-    } else if (metricMinOrMax === 'max') {
-      num = -Infinity;
-    }
-    let bestRun;
-    for (let i = 0; i < runs.length; i++) {
-      for (let x = 0; x < runs[i].data.metrics.length; x++) {
-        if (runs[i].data.metrics[x].key === `${filterMetric}`) {
-          if (metricMinOrMax === 'min' && num > runs[i].data.metrics[x].value) {
-            num = runs[i].data.metrics[x].value;
-            bestRun = runs[i];
-          } else if (
-            metricMinOrMax === 'max' &&
-            num < runs[i].data.metrics[x].value
-          ) {
-            num = runs[i].data.metrics[x].value;
-            bestRun = runs[i];
-          }
-        }
-      }
-    }
-    await this.modelRegistry.createRegisteredModel(modelName);
-    await this.modelVersion.createModelVersion(
-      modelName,
-      bestRun.info.artifact_uri,
-      bestRun.info.run_id
-    );
-  }
+  // async createModelFromRunWithBestMetric(
+  //   experiment_ids: string[],
+  //   filterMetric: string,
+  //   metricMinOrMax: string,
+  //   modelName: string
+  // ) {
+  //   const { runs } = await this.runClient.searchRuns(
+  //     experiment_ids,
+  //     `metrics.${filterMetric} != -99999`
+  //   );
+  //   let num;
+  //   if (metricMinOrMax === 'min') {
+  //     num = Infinity;
+  //   } else if (metricMinOrMax === 'max') {
+  //     num = -Infinity;
+  //   }
+  //   let bestRun;
+  //   for (let i = 0; i < runs.length; i++) {
+  //     for (let x = 0; x < runs[i].data.metrics.length; x++) {
+  //       if (runs[i].data.metrics[x].key === `${filterMetric}`) {
+  //         if (metricMinOrMax === 'min' && num > runs[i].data.metrics[x].value) {
+  //           num = runs[i].data.metrics[x].value;
+  //           bestRun = runs[i];
+  //         } else if (
+  //           metricMinOrMax === 'max' &&
+  //           num < runs[i].data.metrics[x].value
+  //         ) {
+  //           num = runs[i].data.metrics[x].value;
+  //           bestRun = runs[i];
+  //         }
+  //       }
+  //     }
+  //   }
+  //   await this.modelRegistry.createRegisteredModel(modelName);
+  //   await this.modelVersion.createModelVersion(
+  //     modelName,
+  //     bestRun.info.artifact_uri,
+  //     bestRun.info.run_id
+  //   );
+  // }
 }
 
 export { ModelManager };
