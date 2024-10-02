@@ -1,29 +1,15 @@
+import { run } from 'node:test';
 import { apiRequest } from '../utils/apiRequest';
-
-interface InputTag {
-  key: string;
-  value: string;
-}
-
-interface Dataset {
-  name: string;
-  digest: string;
-  source_type: string;
-  source: string;
-  schema?: string;
-  profile?: string;
-}
-
-interface DatasetInput {
-  tags: InputTag[];
-  dataset: Dataset;
-}
 
 class RunClient {
   private baseUrl: string;
 
   constructor(trackingUri: string) {
     this.baseUrl = trackingUri;
+  }
+
+  getBaseUrl(): string {
+    return this.baseUrl;
   }
 
   /**
@@ -273,7 +259,20 @@ class RunClient {
    * @throws Error - If the API request fails.
    */
 
-  async logInputs(run_id: string, datasets: DatasetInput[]): Promise<void> {
+  async logInputs(
+    run_id: string,
+    datasets: Array<{
+      tags?: Array<{ key: string; value: string }>;
+      dataset: {
+        name: string;
+        digest: string;
+        source_type: string;
+        source: string;
+        schema?: string;
+        profile?: string;
+      };
+    }>
+  ): Promise<void> {
     const { response, data } = await apiRequest(
       this.baseUrl,
       'runs/log-inputs',
@@ -482,17 +481,22 @@ class RunClient {
    * @returns A promise that resolves with a list artifacts for the specified run.
    * @throws Error - If the API request fails.
    */
+
   async listArtifacts(
     run_id: string,
-    path: string,
-    page_token: string
+    path?: string,
+    page_token?: string
   ): Promise<object> {
+    const params: Record<string, string> = { run_id };
+    if (path !== undefined) params.path = path;
+    if (page_token !== undefined) params.page_token = page_token;
+
     const { response, data } = await apiRequest(
       this.baseUrl,
       'artifacts/list',
       {
         method: 'GET',
-        params: { run_id, path, page_token },
+        params,
       }
     );
 
