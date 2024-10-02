@@ -11,7 +11,10 @@
     "moduleResolution": "node",
     "baseUrl": "./src",
     "paths": {
-      "*": ["*"]
+      "@model-registry/*": ["model-registry/*"],
+      "@tracking/*": ["tracking/*"],
+      "@utils/*": ["utils/*"],
+      "@workflows/*": ["workflows/*"]
     },
     "esModuleInterop": true,
     "resolveJsonModule": true,
