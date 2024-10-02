@@ -8,15 +8,12 @@ async function testModelVersionClient() {
   const client = new ModelVersionClient('http://localhost:5001');
   const modelRegistryClient = new ModelRegistryClient('http://localhost:5001');
   const timestamp = Date.now();
-  const modelVersionName = `testVersion-${timestamp}`;
   const modelName = `test-model-${timestamp}`;
-  const renamedBaseName = `renamed-test-model-${timestamp}`;
   const artifactSource = 'mlflow-artifacts:/784321942139901150/b3457c87f50440388da9d9ddabb1baaa/artifacts/iris_model';
   const run_id = 'b3457c87f50440388da9d9ddabb1baaa';
   const modelVersionDescription1 = 'This is test version 1 description';
   const modelVersionKey = 'version_1_key';
   const modelVersionValue = 'version_1_value';
-  // const customAlias = `test-alias-v1-${timestamp}`;
 
   try {
     // Creating a new registered model to test on
