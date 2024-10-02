@@ -9,12 +9,14 @@
 
     // Module Resolution Options
     "moduleResolution": "node",
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "@model-registry/*": ["model-registry/*"],
-      "@tracking/*": ["tracking/*"],
-      "@utils/*": ["utils/*"],
-      "@workflows/*": ["workflows/*"]
+      "@src/*": ["src/*"],
+      "@model-registry/*": ["src/model-registry/*"],
+      "@tracking/*": ["src/tracking/*"],
+      "@utils/*": ["src/utils/*"],
+      "@workflows/*": ["src/workflows/*"],
+      "@tests/*": ["tests/*"]
     },
     "esModuleInterop": true,
     "resolveJsonModule": true,
