@@ -6,7 +6,7 @@ async function createExperiment(
   name: string
 ): Promise<string> {
   const { response, data } = await apiRequest(
-    client.getBaseUrl(),
+    (client as any).baseUrl,
     'experiments/create',
     {
       method: 'POST',
@@ -36,7 +36,7 @@ async function testRunClient(): Promise<void> {
   try {
     // createRun
     console.log('Creating experiment...');
-    const experiment_id = await createExperiment(client, 'Experiment 5');
+    const experiment_id = await createExperiment(client, 'Experiment 8');
     console.log('Created experiment ID: ', experiment_id);
 
     console.log('Creating run...');
