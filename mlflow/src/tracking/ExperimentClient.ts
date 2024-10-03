@@ -1,4 +1,5 @@
-import { apiRequest } from '../utils/apiRequest';
+import { ApiError } from '@utils/apiError';
+import { apiRequest } from '@utils/apiRequest';
 
 class ExperimentClient {
   trackingUri: string;
@@ -14,6 +15,7 @@ class ExperimentClient {
    * @param {string} artifact_location Optional location where all artifacts for the experiment are stored.  If not provided, the remote server will select an appropriate default.
    * @param {Array<{key: string, value: string}>} tags Optional collection of tags to set on the experiment.
    * @returns {Promise<Object>} Returns the ID of the newly created experiment in an object.
+   * @throws {ApiError} If the API request fails
    */
   async createExperiment(
     name: string, 
@@ -33,22 +35,15 @@ class ExperimentClient {
       }
     );
 
-    // const url = `${this.trackingUri}/api/2.0/mlflow/experiments/create`;
-    // const response = await fetch(url, {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ name, artifact_location, tags }),
-    // });
-
     if (!response.ok) {
-      const errorBody = await response.json();
-      throw new Error(
-        `Error creating experiment from tracking server, status: ${response.status}.  ${errorBody.message}`
+      throw new ApiError(
+        `Error creating experiment from tracking server: ${
+          data.message || response.statusText
+        }`,
+        response.status
       );
     }
-
-    // const data = await response.json();
-    // console.log('return from createExperiment: ', data.experiment_id);
+   
     return data.experiment_id;
   }
 
@@ -56,20 +51,21 @@ class ExperimentClient {
    * Search experiments.
    *
    * @param {string} filter A filter expression over experiment attributes and tags that allows returning a subset of experiments.  The syntax is a subset of SQL.  (required)
-   * @param {int64} max_results Maximum number of experiments desired.  (required)
+   * @param {number} max_results Maximum number of experiments desired.  (required)
    * @param {string} page_token Optional token indicating the page of experiments to fetch.
    * @param {string[]} order_by Optional list of columns for ordering search results.
    * @param {string} view_type Optional qualifier for type of experiments to be returned.  See https://mlflow.org/docs/latest/rest-api.html#mlflowviewtype
    * @returns {Promise<Object>} Returns object containing an array of experiment objects matching the filter,
    *    and optionally a next_page_token that can be used to retrieve the next page of experiments.
+   * @throws {ApiError} If the API request fails
    */
   async searchExperiment(
     filter: string,
     max_results: number,
     page_token?: string,
     order_by?: string[],
-    view_type = ''
-  ) {
+    view_type?: string
+  ): Promise<any> {
     if (!filter) {
       throw new Error('Filter is required');
     }
@@ -77,28 +73,24 @@ class ExperimentClient {
       throw new Error('Max results is required');
     }
 
-    const url = `${this.trackingUri}/api/2.0/mlflow/experiments/search`;
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        filter,
-        max_results,
-        page_token,
-        order_by,
-        view_type,
-      }),
-    });
+    const { response, data } = await apiRequest(
+      this.trackingUri,
+      'experiments/search',
+      {
+        method: 'POST',
+        body: { filter, max_results, page_token, order_by, view_type },
+      }
+    );
 
     if (!response.ok) {
-      const errorBody = await response.json();
-      throw new Error(
-        `Error searching for experiment from tracking server, status: ${response.status}.  ${errorBody.message}`
+      throw new ApiError(
+        `Error searching for experiment from tracking server: ${
+          data.message || response.statusText
+        }`,
+        response.status
       );
     }
 
-    const data = await response.json();
-    // console.log('return from searchExperiment: ', data);
     return data;
   }
 
@@ -107,27 +99,33 @@ class ExperimentClient {
    *
    * @param {string} experiment_id ID of the associated experiment.  (required)
    * @returns {Promise<Object>} Returns object containing the matched experiment.
+   * @throws {ApiError} If the API request fails
    */
-  async getExperiment(experiment_id) {
+  async getExperiment(
+    experiment_id: string
+  ): Promise<any> {
     if (!experiment_id) {
       throw new Error('Experiment ID is required');
     }
 
-    const url = `${this.trackingUri}/api/2.0/mlflow/experiments/get?experiment_id=${experiment_id}`;
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    });
+    const { response, data } = await apiRequest(
+      this.trackingUri,
+      'experiments/get',
+      {
+        method: 'GET',
+        params: { experiment_id }
+      }
+    );
 
     if (!response.ok) {
-      const errorBody = await response.json();
-      throw new Error(
-        `Error getting experiment from tracking server, status: ${response.status}.  ${errorBody.message}`
+      throw new ApiError(
+        `Error getting experiment from tracking server: ${
+          data.message || response.statusText
+        }`,
+        response.status
       );
     }
 
-    const data = await response.json();
-    // console.log('return from getExperiment: ', data.experiment);
     return data.experiment;
   }
 
@@ -139,27 +137,33 @@ class ExperimentClient {
    *
    * @param {string} experiment_name ID of the associated experiment.  (required)
    * @returns {Promise<Object>} Returns object containing the matched experiment.
+   * @throws {ApiError} If the API request fails
    */
-  async getExperimentByName(experiment_name) {
+  async getExperimentByName(
+    experiment_name: string
+  ): Promise<any> {
     if (!experiment_name) {
       throw new Error('Experiment name is required');
     }
 
-    const url = `${this.trackingUri}/api/2.0/mlflow/experiments/get-by-name?experiment_name=${experiment_name}`;
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    });
+    const { response, data } = await apiRequest(
+      this.trackingUri,
+      'experiments/get-by-name',
+      {
+        method: 'GET',
+        params: { experiment_name }
+      }
+    );
 
     if (!response.ok) {
-      const errorBody = await response.json();
-      throw new Error(
-        `Error getting experiment by name from tracking server, status: ${response.status}.  ${errorBody.message}`
+      throw new ApiError(
+        `Error getting experiment by name from tracking server: ${
+          data.message || response.statusText
+        }`,
+        response.status
       );
     }
 
-    const data = await response.json();
-    // console.log('return from getExperimentByName: ', data.experiment);
     return data.experiment;
   }
 
@@ -168,28 +172,34 @@ class ExperimentClient {
    *
    * @param {string} experiment_id ID of the associated experiment.  (required)
    * @returns {void}
+   * @throws {ApiError} If the API request fails
    */
-  async deleteExperiment(experiment_id) {
+  async deleteExperiment(
+    experiment_id: string
+  ): Promise<void> {
     if (!experiment_id) {
       throw new Error('Experiment ID is required');
     }
 
-    const url = `${this.trackingUri}/api/2.0/mlflow/experiments/delete`;
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ experiment_id }),
-    });
+    const { response, data } = await apiRequest(
+      this.trackingUri,
+      'experiments/delete',
+      {
+        method: 'POST',
+        body: { experiment_id },
+      }
+    );
 
     if (!response.ok) {
-      const errorBody = await response.json();
-      throw new Error(
-        `Error deleting experiment from tracking server, status: ${response.status}.  ${errorBody.message}`
+      throw new ApiError(
+        `Error deleting experiment from tracking server: ${
+          data.message || response.statusText
+        }`,
+        response.status
       );
     }
 
     console.log(`Experiment ID ${experiment_id} successfully deleted`);
-    // return `Experiment ID ${experiment_id} successfully deleted`;
   }
 
   /**
@@ -197,28 +207,34 @@ class ExperimentClient {
    *
    * @param {string} experiment_id ID of the associated experiment.  (required)
    * @returns {void}
+   * @throws {ApiError} If the API request fails
    */
-  async restoreExperiment(experiment_id) {
+  async restoreExperiment(
+    experiment_id: string
+  ): Promise<any> {
     if (!experiment_id) {
       throw new Error('Experiment ID is required');
     }
 
-    const url = `${this.trackingUri}/api/2.0/mlflow/experiments/restore`;
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ experiment_id }),
-    });
+    const { response, data } = await apiRequest(
+      this.trackingUri,
+      'experiments/restore',
+      {
+        method: 'POST',
+        body: { experiment_id },
+      }
+    );
 
     if (!response.ok) {
-      const errorBody = await response.json();
-      throw new Error(
-        `Error restoring experiment from tracking server, status: ${response.status}.  ${errorBody.message}`
+      throw new ApiError(
+        `Error restoring experiment from tracking server: ${
+          data.message || response.statusText
+        }`,
+        response.status
       );
     }
 
     console.log(`Experiment ID ${experiment_id} successfully restored`);
-    // return `Experiment ID ${experiment_id} successfully restored`;
   }
 
   /**
@@ -227,8 +243,12 @@ class ExperimentClient {
    * @param {string} experiment_id ID of the associated experiment. (required)
    * @param {string} new_name The experiment’s name is changed to the new name. The new name must be unique. (required)
    * @returns {void}
+   * @throws {ApiError} If the API request fails
    */
-  async updateExperiment(experiment_id, new_name) {
+  async updateExperiment(
+    experiment_id: string, 
+    new_name: string
+  ): Promise<void> {
     if (!experiment_id) {
       throw new Error('Experiment ID is required');
     }
@@ -236,24 +256,27 @@ class ExperimentClient {
       throw new Error('New name is required');
     }
 
-    const url = `${this.trackingUri}/api/2.0/mlflow/experiments/update`;
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ experiment_id, new_name }),
-    });
+    const { response, data } = await apiRequest(
+      this.trackingUri,
+      'experiments/update',
+      {
+        method: 'POST',
+        body: { experiment_id, new_name },
+      }
+    );
 
     if (!response.ok) {
-      const errorBody = await response.json();
-      throw new Error(
-        `Error updating experiment from tracking server, status: ${response.status}.  ${errorBody.message}`
+      throw new ApiError(
+        `Error updating experiment from tracking server: ${
+          data.message || response.statusText
+        }`,
+        response.status
       );
     }
 
     console.log(
       `Experiment ID ${experiment_id} successfully updated - new name is ${new_name}`
     );
-    // return `Experiment ID ${experiment_id} successfully updated - new name is ${new_name}`;
   }
 
   /**
@@ -263,8 +286,13 @@ class ExperimentClient {
    * @param {string} key Name of the tag.  (required)
    * @param {string} value String value of the tag being logged.  (required)
    * @returns {void}
+   * @throws {ApiError} If the API request fails
    */
-  async setExperimentTag(experiment_id, key, value) {
+  async setExperimentTag(
+    experiment_id: string, 
+    key: string, 
+    value: string
+  ): Promise<void> {
     if (!experiment_id) {
       throw new Error('Experiment ID is required');
     }
@@ -275,23 +303,26 @@ class ExperimentClient {
       throw new Error('Value is required');
     }
 
-    const url = `${this.trackingUri}/api/2.0/mlflow/experiments/set-experiment-tag`;
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ experiment_id, key, value }),
-    });
+    const { response, data } = await apiRequest(
+      this.trackingUri,
+      'experiments/set-experiment-tag',
+      {
+        method: 'POST',
+        body: { experiment_id, key, value },
+      }
+    );
 
     if (!response.ok) {
-      const errorBody = await response.json();
-      throw new Error(
-        `Error setting tag from tracking server, status: ${response.status}.  ${errorBody.message}`
+      throw new ApiError(
+        `Error setting tag from tracking server: ${
+          data.message || response.statusText
+        }`,
+        response.status
       );
     }
 
     console.log(`Set tag to experiment ID ${experiment_id} successfully`);
-    // return `Set tag to experiment ID ${experiment_id} successfully`;
   }
 }
 
-export { ExperimentClient };
+export default ExperimentClient;
