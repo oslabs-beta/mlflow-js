@@ -94,7 +94,7 @@ async function testCopyRun(): Promise<any> {
     console.log('Creating a new experiment and log batch for the new run...');
     const experiment_id1 = await createExperiment(
       myRunClient,
-      'Test Copy Run 5'
+      'Test Copy Run 1'
     );
 
     // create a new run in the newly created experiment
@@ -175,7 +175,7 @@ async function testCopyRun(): Promise<any> {
     console.log('Create a target experiment...');
     const experiment_id2 = await createExperiment(
       myRunClient,
-      'Test Copy Run 6'
+      'Test Copy Run 2'
     );
 
     // copy previous run to this newly created experiment

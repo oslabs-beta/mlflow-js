@@ -214,21 +214,30 @@ class RunManager {
       );
       if (modelVersions && modelVersions.length > 0) {
         for (const model of modelVersions) {
-          await this.runClient.setTag(
-            newRunId,
-            `original_model_${model.name}`,
-            JSON.stringify({
-              name: model.name,
-              version: model.version,
-              current_stage: model.current_stage,
-              source: model.source,
-            })
-          );
+          if (
+            typeof model === 'object' &&
+            model !== null &&
+            'name' in model &&
+            'version' in model &&
+            'current_stage' in model &&
+            'source' in model
+          ) {
+            await this.runClient.setTag(
+              newRunId,
+              `original_model_${model.name}`,
+              JSON.stringify({
+                name: model.name,
+                version: model.version,
+                current_stage: model.current_stage,
+                source: model.source,
+              })
+            );
+          }
         }
         await this.runClient.setTag(
           newRunId,
           'mlflow.note.models',
-          'Models not copied -see original run'
+          'Models not copied, see original run.'
         );
       }
 
