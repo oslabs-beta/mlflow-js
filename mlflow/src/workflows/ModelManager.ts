@@ -21,6 +21,7 @@ class ModelManager {
    * @param {string} versionRun_id - MLflow run ID for correlation, if versionSource was generated
    * by an experiment run in MLflow tracking server.
    * @returns {Promise<Object>} - the updated model version object
+   * @throws {ApiError | Error} If request fails
    */
   async createRegisteredModelWithVersion(
     name: string,
@@ -55,6 +56,7 @@ class ModelManager {
    * @param {string} tagValue - String value of the tag being logged. (Required)
    * @param {string} description - Description of the registered model.
    * @returns {Promise<Registered Model>} - the updated registered model object
+   * @throws {ApiError | Error} If request fails
    */
   async updateRegisteredModelDescriptionAndTag(
     name: string,
@@ -90,6 +92,7 @@ class ModelManager {
    * @param {string} key - Name of the tag. (Required)
    * @param {string} value - Name of the value of the tag being logged. (Required)
    * @returns {Promise<Model Version>} - the updated model version object
+   * @throws {ApiError | Error} If request fails
    */
   async updateAllLatestModelVersion(
     name: string,
@@ -131,6 +134,7 @@ class ModelManager {
    * @param {string} key - Name of the tag. (Required)
    * @param {string} value - Name of the value of the tag being logged. (Required)
    * @returns {Promise<void>} - a promise that resolves when the model version is deleted
+   * @throws {ApiError | Error} If request fails
    */
   async setLatestModelVersionTag(
     name: string,
@@ -163,6 +167,7 @@ class ModelManager {
    * @param {string} name - Name of the registered model. (Required)
    * @param {string} alias - Name of the alias. (Required)
    * @returns {Promise<void>} - a promise that resolves when the model version is deleted
+   * @throws {ApiError | Error} If request fails
    */
   async setLatestModelVersionAlias(name: string, alias: string): Promise<void> {
     try {
@@ -191,6 +196,7 @@ class ModelManager {
    * @param {string} name - Name of the registered model. (Required)
    * @param {string} description - The description for the model version. (Required)
    * @returns {Promise<Model Version>} - the updated model version object
+   * @throws {ApiError | Error} If request fails
    */
   async updateLatestModelVersion(
     name: string,
@@ -231,6 +237,7 @@ class ModelManager {
    * @param {string} value - Name of the value of the tag being logged. (Required)
    * @param {string} description - The description for the model version. (Required)
    * @returns {Promise<Model Version>} - the updated model version object
+   * @throws {ApiError | Error} If request fails
    */
   async updateAllModelVersion(
     name: string,
@@ -238,7 +245,7 @@ class ModelManager {
     alias: string,
     key: string,
     value: string,
-    description: string,
+    description: string
   ): Promise<object> {
     try {
       await this.modelRegistry.setRegisteredModelAlias(name, alias, version);
@@ -265,6 +272,7 @@ class ModelManager {
    *
    * @param {string} name - the model name
    * @returns - a promise that resolves when the model version is deleted
+   * @throws {ApiError | Error} If request fails
    */
   async deleteLatestModelVersion(name: string): Promise<void> {
     try {
@@ -287,9 +295,6 @@ class ModelManager {
     }
   }
 
-  // Set it up so they can specify if they want the specified metric that is the greatest value, or the lowest value
-
-  // Probably make it so it can also make a new model version if there's already a version of that modelName
   /**
    * Looks through the runs with the given experiment id and through their metrics
    * looking for the specified metric that has the highest or lowest value (can be specified).
@@ -301,6 +306,8 @@ class ModelManager {
    * @param {string} metricMinOrMax - A string specifying if we want the minimum or maximum
    *                                  value of the specified metric. (Required)
    * @param {string} modelName - The name of the new model that will be created. (Required)
+   * @returns {Promise<void>}
+   * @throws {ApiError | Error} If request fails
    */
   // async createModelFromRunWithBestMetric(
   //   experiment_ids: string[],
@@ -345,6 +352,7 @@ class ModelManager {
   //       bestRun.info.artifact_uri,
   //       bestRun.info.run_id
   //     );
+  // return
   //   } catch (error) {
   //     if (error instanceof ApiError) {
   //       console.error(`API Error (${error.statusCode}): ${error.message}`);
