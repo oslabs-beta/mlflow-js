@@ -1,4 +1,5 @@
-import { apiRequest } from '../utils/apiRequest';
+import { ApiError } from '@utils/apiError';
+import { apiRequest } from '@utils/apiRequest';
 
 class ModelRegistryClient {
   private baseUrl: string;
@@ -31,10 +32,11 @@ class ModelRegistryClient {
     );
 
     if (!response.ok) {
-      throw new Error(
+      throw new ApiError(
         `Error creating registered model: ${
           data.message || response.statusText
-        }`
+        }`,
+        response.status
       );
     }
 
@@ -59,10 +61,14 @@ class ModelRegistryClient {
     );
 
     if (!response.ok) {
-      throw new Error(
-        `Error getting registered model: ${data.message || response.statusText}`
+      throw new ApiError(
+        `Error getting registered model: ${
+          data.message || response.statusText
+        }`,
+        response.status
       );
     }
+
     return data.registered_model;
   }
 
@@ -85,12 +91,14 @@ class ModelRegistryClient {
     );
 
     if (!response.ok) {
-      throw new Error(
+      throw new ApiError(
         `Error renaming registered model: ${
           data.message || response.statusText
-        }`
+        }`,
+        response.status
       );
     }
+
     return data.registered_model;
   }
 
@@ -116,10 +124,11 @@ class ModelRegistryClient {
     );
 
     if (!response.ok) {
-      throw new Error(
+      throw new ApiError(
         `Error updating registered model: ${
           data.message || response.statusText
-        }`
+        }`,
+        response.status
       );
     }
 
@@ -144,10 +153,11 @@ class ModelRegistryClient {
     );
 
     if (!response.ok) {
-      throw new Error(
+      throw new ApiError(
         `Error deleting registered model: ${
           data.message || response.statusText
-        }`
+        }`,
+        response.status
       );
     }
 
@@ -173,8 +183,9 @@ class ModelRegistryClient {
     );
 
     if (!response.ok) {
-      throw new Error(
-        `Error getting latest versions: ${data.message || response.statusText}`
+      throw new ApiError(
+        `Error getting latest versions: ${data.message || response.statusText}`,
+        response.status
       );
     }
 
@@ -213,10 +224,11 @@ class ModelRegistryClient {
     );
 
     if (!response.ok) {
-      throw new Error(
+      throw new ApiError(
         `Error searching registered models: ${
           data.message || response.statusText
-        }`
+        }`,
+        response.status
       );
     }
 
@@ -247,10 +259,11 @@ class ModelRegistryClient {
     );
 
     if (!response.ok) {
-      throw new Error(
+      throw new ApiError(
         `Error setting registered model tag: ${
           data.message || response.statusText
-        }`
+        }`,
+        response.status
       );
     }
 
@@ -276,10 +289,11 @@ class ModelRegistryClient {
     );
 
     if (!response.ok) {
-      throw new Error(
+      throw new ApiError(
         `Error deleting registered model tag: ${
           data.message || response.statusText
-        }`
+        }`,
+        response.status
       );
     }
 
@@ -310,10 +324,11 @@ class ModelRegistryClient {
     );
 
     if (!response.ok) {
-      throw new Error(
+      throw new ApiError(
         `Error setting registered model alias: ${
           data.message || response.statusText
-        }`
+        }`,
+        response.status
       );
     }
 
@@ -339,10 +354,11 @@ class ModelRegistryClient {
     );
 
     if (!response.ok) {
-      throw new Error(
+      throw new ApiError(
         `Error deleting registered model alias: ${
           data.message || response.statusText
-        }`
+        }`,
+        response.status
       );
     }
 
@@ -368,10 +384,11 @@ class ModelRegistryClient {
     );
 
     if (!response.ok) {
-      throw new Error(
+      throw new ApiError(
         `Error getting model version by alias: ${
           data.message || response.statusText
-        }`
+        }`,
+        response.status
       );
     }
 
