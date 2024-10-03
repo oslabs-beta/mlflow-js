@@ -1,4 +1,7 @@
+import { apiRequest } from '../utils/apiRequest';
+
 class ExperimentClient {
+  trackingUri: string;
   constructor(trackingUri: string) {
     this.trackingUri = trackingUri;
   }
@@ -12,17 +15,30 @@ class ExperimentClient {
    * @param {Array<{key: string, value: string}>} tags Optional collection of tags to set on the experiment.
    * @returns {Promise<Object>} Returns the ID of the newly created experiment in an object.
    */
-  async createExperiment(name: string, artifact_location?: string, tags?: string[]) {
+  async createExperiment(
+    name: string, 
+    artifact_location?: string, 
+    tags?: Array<{key: string, value: string}>
+  ): Promise<any> {
     if (!name) {
       throw new Error('Experiment name is required');
     }
 
-    const url = `${this.trackingUri}/api/2.0/mlflow/experiments/create`;
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, artifact_location, tags }),
-    });
+    const { response, data } = await apiRequest(
+      this.trackingUri,
+      'experiments/create',
+      {
+        method: 'POST',
+        body: { name, artifact_location, tags },
+      }
+    );
+
+    // const url = `${this.trackingUri}/api/2.0/mlflow/experiments/create`;
+    // const response = await fetch(url, {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({ name, artifact_location, tags }),
+    // });
 
     if (!response.ok) {
       const errorBody = await response.json();
@@ -31,7 +47,7 @@ class ExperimentClient {
       );
     }
 
-    const data = await response.json();
+    // const data = await response.json();
     // console.log('return from createExperiment: ', data.experiment_id);
     return data.experiment_id;
   }
@@ -42,16 +58,16 @@ class ExperimentClient {
    * @param {string} filter A filter expression over experiment attributes and tags that allows returning a subset of experiments.  The syntax is a subset of SQL.  (required)
    * @param {int64} max_results Maximum number of experiments desired.  (required)
    * @param {string} page_token Optional token indicating the page of experiments to fetch.
-   * @param {Array<string>} order_by Optional list of columns for ordering search results.
+   * @param {string[]} order_by Optional list of columns for ordering search results.
    * @param {string} view_type Optional qualifier for type of experiments to be returned.  See https://mlflow.org/docs/latest/rest-api.html#mlflowviewtype
    * @returns {Promise<Object>} Returns object containing an array of experiment objects matching the filter,
    *    and optionally a next_page_token that can be used to retrieve the next page of experiments.
    */
   async searchExperiment(
-    filter,
-    max_results,
-    page_token = '',
-    order_by = [],
+    filter: string,
+    max_results: number,
+    page_token?: string,
+    order_by?: string[],
     view_type = ''
   ) {
     if (!filter) {
