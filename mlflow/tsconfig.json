@@ -15,8 +15,7 @@
       "@model-registry/*": ["src/model-registry/*"],
       "@tracking/*": ["src/tracking/*"],
       "@utils/*": ["src/utils/*"],
-      "@workflows/*": ["src/workflows/*"],
-      "@tests/*": ["tests/*"]
+      "@workflows/*": ["src/workflows/*"]
     },
     "esModuleInterop": true,
     "resolveJsonModule": true,
