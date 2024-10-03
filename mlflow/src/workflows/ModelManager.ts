@@ -99,7 +99,6 @@ class ModelManager {
     value: string
   ): Promise<object> {
     try {
-      // complex operation
       const data = await this.modelRegistry.getLatestModelVersions(name);
       if (!data) {
         throw new Error('Model has no version to update.');
@@ -139,7 +138,6 @@ class ModelManager {
     value: string
   ): Promise<void> {
     try {
-      // complex operation
       const data = await this.modelRegistry.getLatestModelVersions(name);
       if (!data) {
         throw new Error('Model has no version to set tag for.');
@@ -168,7 +166,6 @@ class ModelManager {
    */
   async setLatestModelVersionAlias(name: string, alias: string): Promise<void> {
     try {
-      // complex operation
       const data = await this.modelRegistry.getLatestModelVersions(name);
       if (!data) {
         throw new Error('Model has no version to set alias for.');
@@ -200,7 +197,6 @@ class ModelManager {
     description: string
   ): Promise<object> {
     try {
-      // complex operation
       const data = await this.modelRegistry.getLatestModelVersions(name);
       if (!data) {
         throw new Error('Model has no version to set description for.');
@@ -231,21 +227,20 @@ class ModelManager {
    * @param {string} name - Name of the registered model. (Required)
    * @param {string} version - Model version number. (Required)
    * @param {string} alias - Name of the alias. (Required)
-   * @param {string} description - The description for the model version. (Required)
    * @param {string} key key - Name of the tag. (Required)
    * @param {string} value - Name of the value of the tag being logged. (Required)
+   * @param {string} description - The description for the model version. (Required)
    * @returns {Promise<Model Version>} - the updated model version object
    */
   async updateAllModelVersion(
     name: string,
     version: string,
     alias: string,
-    description: string,
     key: string,
-    value: string
+    value: string,
+    description: string,
   ): Promise<object> {
     try {
-      // complex operation
       await this.modelRegistry.setRegisteredModelAlias(name, alias, version);
       await this.modelVersion.setModelVersionTag(name, version, key, value);
       const response = await this.modelVersion.updateModelVersion(
@@ -273,7 +268,6 @@ class ModelManager {
    */
   async deleteLatestModelVersion(name: string): Promise<void> {
     try {
-      // complex operation
       const data = await this.modelRegistry.getLatestModelVersions(name);
       if (!data) {
         throw new Error('Model has no version to delete.');
@@ -315,7 +309,6 @@ class ModelManager {
   //   modelName: string
   // ): Promise<any> {
   //   try {
-  //     // complex operation
   //     const { runs } = await this.runClient.searchRuns(
   //       experiment_ids,
   //       `metrics.${filterMetric} != -99999`
