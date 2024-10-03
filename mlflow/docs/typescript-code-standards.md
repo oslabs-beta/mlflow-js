@@ -36,28 +36,34 @@
    */
   ```
 
-## Error Handling
+## Error Handling Guide
+
 - For simple API calls, use the ApiError class:
-  ```typescript
- if (!response.ok) {
+
+```typescript
+if (!response.ok) {
   throw new ApiError(
     `Error: ${data.message || response.statusText}`,
     response.status
   );
 }
-  ```
+```
+
 - For complex functions, use try/catch blocks:
-  ```typescript
+
+```typescript
 try {
   // complex operation
 } catch (error) {
   if (error instanceof ApiError) {
     console.error(`API Error (${error.statusCode}): ${error.message}`);
+    throw error;
   } else {
     console.error('An unexpected error occurred:', error);
+    throw new Error;
   }
 }
-  ```
+```
 
 ## Asynchronous Code
 - Use async/await for asynchronous operations
