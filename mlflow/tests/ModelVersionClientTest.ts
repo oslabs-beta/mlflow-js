@@ -1,16 +1,37 @@
+import { apiRequest } from '../src/utils/apiRequest';
 import ModelVersionClient from '../src/model-registry/ModelVersionClient';
 import ModelRegistryClient from '../src/model-registry/ModelRegistryClient';
 
 // To test:
 // npx tsx tests/ModelVersionClientTest.ts
 
+async function createRun(
+  client: ModelRegistryClient,
+  experimentId: string
+): Promise<any> {
+  const { response, data } = await apiRequest(
+    (client as any).baseUrl,
+    'runs/create',
+    {
+      method: 'POST',
+      body: { experiment_id: experimentId },
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      `Error creating run: ${data.message || response.statusText}`
+    );
+  }
+
+  return data.run;
+}
+
 async function testModelVersionClient() {
   const client = new ModelVersionClient('http://localhost:5001');
   const modelRegistryClient = new ModelRegistryClient('http://localhost:5001');
   const timestamp = Date.now();
   const modelName = `test-model-${timestamp}`;
-  const artifactSource = 'mlflow-artifacts:/784321942139901150/b3457c87f50440388da9d9ddabb1baaa/artifacts/iris_model';
-  const run_id = 'b3457c87f50440388da9d9ddabb1baaa';
   const modelVersionDescription1 = 'This is test version 1 description';
   const modelVersionKey = 'version_1_key';
   const modelVersionValue = 'version_1_value';
@@ -23,12 +44,16 @@ async function testModelVersionClient() {
       'This is a test model'
     );
 
+    console.log('\n5. Creating a run...');
+    const run = await createRun(modelRegistryClient, '0'); // Using '0' as the default experiment ID
+    console.log('Created run:', run);
+
     // 1. Creating a registered model version
     console.log('1. Creating a new registered model version...');
     const createdModelVersion = await client.createModelVersion(
       modelName,
-      artifactSource,
-      run_id,
+      run.info.artifact_uri,
+      run.info.run_id,
       [{ key: 'test-tag', value: 'test-value' }],
     );
     console.log('Created model version: ', createdModelVersion);
