@@ -1,5 +1,6 @@
-import RunClient from '../tracking/RunClient';
-import ModelVersionClient from '../model-registry/ModelVersionClient';
+import RunClient from '@src/tracking/RunClient';
+import ModelVersionClient from '@src/model-registry/ModelVersionClient';
+import { ApiError } from '@src/utils/apiError';
 
 interface Run {
   info: {
@@ -114,11 +115,16 @@ class RunManager {
 
         pageToken = searchResult.page_token;
       } while (pageToken);
+
+      return { deletedRuns, total: deletedRuns.length, dryRun };
     } catch (error) {
-      console.error('Error during run cleanup: ', error);
-      throw new Error('Failed to cleanup runs.');
+      if (error instanceof ApiError) {
+        console.error(`API Error (${error.statusCode}): ${error.message}`);
+      } else {
+        console.error('An unexpected error occurred: ', error);
+      }
+      throw error;
     }
-    return { deletedRuns, total: deletedRuns.length, dryRun };
   }
 
   /**
@@ -255,8 +261,12 @@ class RunManager {
         targetExperimentId: targetExperimentId,
       };
     } catch (error) {
-      console.error('Error copying run: ', error);
-      throw new Error('Failed to copy run.');
+      if (error instanceof ApiError) {
+        console.error(`API Error (${error.statusCode}): ${error.message}`);
+      } else {
+        console.error('An unexpected error occurred: ', error);
+      }
+      throw error;
     }
   }
 }

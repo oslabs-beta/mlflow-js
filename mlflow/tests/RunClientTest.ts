@@ -29,31 +29,31 @@ async function testRunClient(): Promise<void> {
   try {
     // createRun
     console.log('Creating experiment...');
-    const experiment_id = await createExperiment(client, 'Experiment 8');
+    const experiment_id = await createExperiment(client, 'Experiment 9');
     console.log('Created experiment ID: ', experiment_id);
 
-    console.log('Creating run...');
+    console.log('1. Creating run...');
     const run = await client.createRun(experiment_id);
     console.log('Created run: ', run);
 
     // deleteRun
     const runId = run.info.run_id;
-    console.log(`Deleting run ID: ${runId}...`);
+    console.log(`\n2. Deleting run ID: ${runId}...`);
     await client.deleteRun(runId);
     console.log('Deleted run: ', runId);
 
     // restoreRun
-    console.log(`Restoring run ID: ${runId}...`);
+    console.log(`\n3. Restoring run ID: ${runId}...`);
     await client.restoreRun(runId);
     console.log('Restored run: ', runId);
 
     // getRun
-    console.log(`Fetching run ID: ${runId}...`);
+    console.log(`\n4. Fetching run ID: ${runId}...`);
     const fetchedRun = await client.getRun(runId);
     console.log('Fetched run: ', fetchedRun);
 
     // updateRun
-    console.log(`Updating run for run ID: ${runId}...`);
+    console.log(`\n5. Updating run for run ID: ${runId}...`);
     const updatedRun = await client.updateRun(
       runId,
       'FINISHED',
@@ -63,7 +63,7 @@ async function testRunClient(): Promise<void> {
     console.log('Updated run: ', updatedRun);
 
     // logMetric
-    console.log(`Logging metric for run ID: ${runId}...`);
+    console.log(`\n6. Logging metric for run ID: ${runId}...`);
     await client.logMetric(runId, 'accuracy', 0.9);
     console.log('Logged metric');
 
@@ -73,7 +73,7 @@ async function testRunClient(): Promise<void> {
     console.log('Created run2: ', run2);
     const run2Id = run2.info.run_id;
 
-    console.log(`Logging batch for run ID: ${run2Id}...`);
+    console.log(`\n7. Logging batch for run ID: ${run2Id}...`);
     await client.logBatch(
       run2Id,
       [
@@ -92,7 +92,7 @@ async function testRunClient(): Promise<void> {
     console.log('Logged batch');
 
     // logModel
-    console.log(`Logging model for run ID: ${run2Id}...`);
+    console.log(`\n8. Logging model for run ID: ${run2Id}...`);
     const model = {
       artifact_path: 'pytorch_dnn',
       flavors: {
@@ -120,7 +120,7 @@ async function testRunClient(): Promise<void> {
     console.log('Logged model');
 
     // logInputs
-    console.log(`Logging inputs for run ID: ${run2Id}...`);
+    console.log(`\n9. Logging inputs for run ID: ${run2Id}...`);
     const datasets = [
       {
         tags: [
@@ -145,17 +145,17 @@ async function testRunClient(): Promise<void> {
     console.log('Created run3: ', run3);
     const run3Id = run3.info.run_id;
 
-    console.log(`Setting tag for run ID ${run3Id}...`);
+    console.log(`\n10. Setting tag for run ID ${run3Id}...`);
     await client.setTag(run3Id, 'accuracy', '0.99');
     console.log('Finished setting tag');
 
     // deleteTag
-    console.log(`Deleting tag for run ID: ${run3Id}...`);
+    console.log(`\n11. Deleting tag for run ID: ${run3Id}...`);
     await client.deleteTag(run3Id, 'accuracy');
     console.log('Deleted tag');
 
     // logParam
-    console.log(`Logging param for run ID: ${run3Id}...`);
+    console.log(`\n12. Logging param for run ID: ${run3Id}...`);
     await client.logParam(run3Id, 'learning_rate', '0.001');
     console.log('Logged param');
 
@@ -164,12 +164,14 @@ async function testRunClient(): Promise<void> {
     await client.logMetric(run3Id, 'accuracy', 0.95);
     console.log('Logged metric');
 
-    console.log(`Fetching metric history for run ID: ${run3Id}...`);
+    console.log(`\n13. Fetching metric history for run ID: ${run3Id}...`);
     const metricHistory = await client.getMetricHistory(run3Id, 'accuracy');
     console.log('Fetched metric history: ', metricHistory);
 
     // searchRuns
-    console.log(`Searching runs for experiment ID: 643644329517739250...`);
+    console.log(
+      `\n14. Searching runs for experiment ID: 643644329517739250...`
+    );
     const searchedRuns = await client.searchRuns(
       ['643644329517739250'],
       'metrics.accuracy<0.9'
@@ -177,7 +179,7 @@ async function testRunClient(): Promise<void> {
     console.log('Searched runs: ', searchedRuns);
 
     // listArtifacts
-    console.log(`Listing artifacts for run ID ${run3Id}...`);
+    console.log(`\n15. Listing artifacts for run ID ${run3Id}...`);
     const artifacts = await client.listArtifacts(run3Id);
     console.log('Artifacts: ', artifacts);
   } catch (error) {

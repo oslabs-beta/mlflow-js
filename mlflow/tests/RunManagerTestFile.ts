@@ -48,10 +48,10 @@ async function testCleanupRuns(): Promise<any> {
     console.log('Creating runs...');
     const run1 = await myRunClient.createRun(experiment_id1);
     const run2 = await myRunClient.createRun(experiment_id1);
-    console.log('Created runs for Test Cleanup Run 3');
+    console.log('Created runs for Test Cleanup Run 1');
     const run3 = await myRunClient.createRun(experiment_id2);
     const run4 = await myRunClient.createRun(experiment_id2);
-    console.log('Created runs for Test Cleanup Run 4');
+    console.log('Created runs for Test Cleanup Run 2');
 
     // log metrics
     const run1_id = run1.info.run_id;
@@ -94,7 +94,7 @@ async function testCopyRun(): Promise<any> {
     console.log('Creating a new experiment and log batch for the new run...');
     const experiment_id1 = await createExperiment(
       myRunClient,
-      'Test Copy Run 1'
+      'Test Copy Run 5'
     );
 
     // create a new run in the newly created experiment
@@ -175,7 +175,7 @@ async function testCopyRun(): Promise<any> {
     console.log('Create a target experiment...');
     const experiment_id2 = await createExperiment(
       myRunClient,
-      'Test Copy Run 2'
+      'Test Copy Run 6'
     );
 
     // copy previous run to this newly created experiment
@@ -183,7 +183,7 @@ async function testCopyRun(): Promise<any> {
     const copiedRun = await myRunManager.copyRun(runId, experiment_id2);
     console.log('Copied run: ', copiedRun);
   } catch (error) {
-    console.error('Error: ', error.message);
+    if (error) console.error('Error: ', error.message);
   }
 }
 
