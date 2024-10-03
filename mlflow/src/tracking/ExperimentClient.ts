@@ -1,5 +1,7 @@
-import { ApiError } from '@utils/apiError';
-import { apiRequest } from '@utils/apiRequest';
+// import { ApiError } from '@utils/apiError';
+import { ApiError } from '../utils/apiError';
+// import { apiRequest } from '@utils/apiRequest';
+import { apiRequest } from '../utils/apiRequest';
 
 class ExperimentClient {
   trackingUri: string;
@@ -197,7 +199,7 @@ class ExperimentClient {
         }`,
         response.status
       );
-    }
+    };
 
     console.log(`Experiment ID ${experiment_id} successfully deleted`);
   }
