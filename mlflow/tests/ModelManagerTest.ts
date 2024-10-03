@@ -24,8 +24,6 @@ async function createRun(
   return data.run;
 }
 
-// npx tsx tests/ModelManagerTest.ts
-
 async function testModelManager() {
   const modelRegistryClient = new ModelRegistryClient('http://localhost:5001');
   const modelManager = new ModelManager('http://localhost:5001');
@@ -115,6 +113,8 @@ async function testModelManager() {
     modelName
   );
   console.log(`Deleted Latest version of ${modelName}`);
+
+  console.log('9. ')
 }
 
 testModelManager();
