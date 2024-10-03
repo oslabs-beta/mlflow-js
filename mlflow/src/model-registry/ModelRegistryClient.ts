@@ -1,5 +1,5 @@
-import { ApiError } from '../utils/apiError';
-import { apiRequest } from '../utils/apiRequest';
+import { ApiError } from '@utils/apiError';
+import { apiRequest } from '@utils/apiRequest';
 
 class ModelRegistryClient {
   private baseUrl: string;
