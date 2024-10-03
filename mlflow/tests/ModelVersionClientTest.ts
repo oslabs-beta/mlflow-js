@@ -2,9 +2,6 @@ import { apiRequest } from '../src/utils/apiRequest';
 import ModelVersionClient from '../src/model-registry/ModelVersionClient';
 import ModelRegistryClient from '../src/model-registry/ModelRegistryClient';
 
-// To test:
-// npx tsx tests/ModelVersionClientTest.ts
-
 async function createRun(
   client: ModelRegistryClient,
   experimentId: string
