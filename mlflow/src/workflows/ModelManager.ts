@@ -1,7 +1,7 @@
-// import RunClient from '../tracking/RunClient';
-import ModelRegistryClient from '../model-registry/ModelRegistryClient';
-import ModelVersionClient from '../model-registry/ModelVersionClient';
-import { ApiError } from 'utils/apiError';
+// import RunClient from '@tracking/RunClient';
+import ModelRegistryClient from '@model-registry/ModelRegistryClient';
+import ModelVersionClient from '@model-registry/ModelVersionClient';
+import { ApiError } from '@utils/apiError';
 
 class ModelManager {
   private modelRegistry: ModelRegistryClient;
