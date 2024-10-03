@@ -9,7 +9,8 @@ class ModelVersionClient {
   }
 
   /**
-   * Description - Creates a new version of a model
+   * Creates a new version of a model
+   * 
    * @param {string} modelName - the name of the registered model (required)
    * @param {string} source - the source path where the model artifacts are stored (required)
    * @param {string} run_id - the id of the run that generated this version (optional)
@@ -51,7 +52,8 @@ class ModelVersionClient {
   }
 
   /**
-   * Description - Gets the specified version of the model
+   * Gets the specified version of the model
+   * 
    * @param {string} modelName - the name of the registered model (Required)
    * @param {string} version - the version number of the model to fetch (Required)
    * @returns {Promise<ModelVersion>} - the created model version object
@@ -81,7 +83,8 @@ class ModelVersionClient {
   }
 
   /**
-   * Description - updates a specific model version.
+   * Updates a specific model version.
+   * 
    * @param {string} modelName - the name of the registered model (Required)
    * @param {string} version - the version number of the model to update (Required)
    * @param {string} description - The description of the model version (Optional)
@@ -116,7 +119,8 @@ class ModelVersionClient {
   }
 
   /**
-   * Description - searches for model versions based on provided filters.
+   * Searches for model versions based on provided filters.
+   * 
    * @param {string} filter - the filter criteria for searching model versions (Optional)
    * @param {number} maxResults - the maximum number of results to return (Optional)
    * @param {string[]} order_by - List of columns to be ordered by (Optional)
@@ -168,7 +172,8 @@ class ModelVersionClient {
   }
 
   /**
-   * Description - retrieves the download uri for model version artifacts.
+   * Retrieves the download uri for model version artifacts.
+   * 
    * @param {string} modelName - the name of the registered model (Required)
    * @param {string} version - the version number of the model to fetch the uri for (Required)
    * @returns {Promise<ArtifactUri>} - the uri for downloading the model version artifacts
@@ -201,8 +206,8 @@ class ModelVersionClient {
   }
 
   /**
-   * transitions a model version to a different stage.
-   *
+   * Transitions a model version to a different stage.
+   * 
    * @param {string} modelName - the name of the registered model (Required)
    * @param {string} version - the version number of the model to transition (Required)
    * @param {string} stage - the stage to transition the model version to (e.g., 'staging', 'production') (Required)
@@ -243,8 +248,8 @@ class ModelVersionClient {
   }
 
   /**
-   * sets a tag on a specific model version.
-   *
+   * Sets a tag on a specific model version.
+   * 
    * @param {string} modelName - the name of the registered model (required)
    * @param {string} version - the version number of the model to tag (required)
    * @param {string} key - the key of the tag (required)
@@ -283,7 +288,7 @@ class ModelVersionClient {
   }
 
   /**
-   * deletes a tag from a specific model version.
+   * Deletes a tag from a specific model version.
    *
    * @param {string} modelName - the name of the registered model (required)
    * @param {string} version - the version number of the model to untag (required)
@@ -321,7 +326,8 @@ class ModelVersionClient {
   }
 
   /**
-   * Description - deletes a specific model version.
+   * Deletes a specific model version.
+   * 
    * @param {string} modelName - the name of the registered model (Required)
    * @param {string} version - the version number of the model to delete (Required)
    * @returns {Promise<void>}
