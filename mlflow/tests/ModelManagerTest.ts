@@ -114,7 +114,7 @@ async function testModelManager() {
   const deletedModelVersion = await modelManager.deleteLatestModelVersion(
     modelName
   );
-  console.log(`Deleted Latest version of ${modelName}`)
+  console.log(`Deleted Latest version of ${modelName}`);
 }
 
 testModelManager();
