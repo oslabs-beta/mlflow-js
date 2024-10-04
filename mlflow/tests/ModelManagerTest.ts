@@ -115,10 +115,10 @@ async function testModelManager() {
   console.log(`Deleted Latest version of ${modelName}`);
 
   console.log('9. Creating model from run with best metric...');
-  // const bestModel = await modelManager.createModelFromRunWithBestMetric(
+  const bestModel = await modelManager.createModelFromRunWithBestMetric(
   
-  // );
-  // console.log(`Created ${modelName} from run with best metric`);
+  );
+  console.log(`Created ${modelName} from run with best metric`);
 }
 
 testModelManager();
