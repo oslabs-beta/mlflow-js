@@ -46,6 +46,7 @@ mlflow-js/
 │   └── index.ts
 ├── tests/
 ├── lib/
+│   └── index.js
 ├── examples/
 └── docs/
 ```
