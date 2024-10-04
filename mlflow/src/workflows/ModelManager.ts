@@ -1,4 +1,4 @@
-// import RunClient from '@tracking/RunClient';
+import RunClient from '@tracking/RunClient';
 import ModelRegistryClient from '@model-registry/ModelRegistryClient';
 import ModelVersionClient from '@model-registry/ModelVersionClient';
 import { ApiError } from '@utils/apiError';
@@ -6,11 +6,12 @@ import { ApiError } from '@utils/apiError';
 class ModelManager {
   private modelRegistry: ModelRegistryClient;
   private modelVersion: ModelVersionClient;
+  private runClient: RunClient;
 
   constructor(trackingUri: string) {
     this.modelRegistry = new ModelRegistryClient(trackingUri);
     this.modelVersion = new ModelVersionClient(trackingUri);
-    // this.runClient = new RunClient(trackingUri);
+    this.runClient = new RunClient(trackingUri);
   }
 
   /**
@@ -309,58 +310,58 @@ class ModelManager {
    * @returns {Promise<void>}
    * @throws {ApiError | Error} If request fails
    */
-  // async createModelFromRunWithBestMetric(
-  //   experiment_ids: string[],
-  //   filterMetric: string,
-  //   metricMinOrMax: string,
-  //   modelName: string
-  // ): Promise<any> {
-  //   try {
-  //     const { runs } = await this.runClient.searchRuns(
-  //       experiment_ids,
-  //       `metrics.${filterMetric} != -99999`
-  //     );
-  //     let num;
-  //     if (metricMinOrMax === 'min') {
-  //       num = Infinity;
-  //     } else if (metricMinOrMax === 'max') {
-  //       num = -Infinity;
-  //     }
-  //     let bestRun;
-  //     for (let i = 0; i < runs.length; i++) {
-  //       for (let x = 0; x < runs[i].data.metrics.length; x++) {
-  //         if (runs[i].data.metrics[x].key === `${filterMetric}`) {
-  //           if (
-  //             metricMinOrMax === 'min' &&
-  //             num > runs[i].data.metrics[x].value
-  //           ) {
-  //             num = runs[i].data.metrics[x].value;
-  //             bestRun = runs[i];
-  //           } else if (
-  //             metricMinOrMax === 'max' &&
-  //             num < runs[i].data.metrics[x].value
-  //           ) {
-  //             num = runs[i].data.metrics[x].value;
-  //             bestRun = runs[i];
-  //           }
-  //         }
-  //       }
-  //     }
-  //     await this.modelRegistry.createRegisteredModel(modelName);
-  //     await this.modelVersion.createModelVersion(
-  //       modelName,
-  //       bestRun.info.artifact_uri,
-  //       bestRun.info.run_id
-  //     );
-  // return
-  //   } catch (error) {
-  //     if (error instanceof ApiError) {
-  //       console.error(`API Error (${error.statusCode}): ${error.message}`);
-  //     } else {
-  //       console.error('An unexpected error occurred:', error);
-  //     }
-  //   }
-  // }
+  async createModelFromRunWithBestMetric(
+    experiment_ids: string[],
+    filterMetric: string,
+    metricMinOrMax: string,
+    modelName: string
+  ): Promise<any> {
+    try {
+      const { runs } = await this.runClient.searchRuns(
+        experiment_ids,
+        `metrics.${filterMetric} != -99999`
+      );
+      let num;
+      if (metricMinOrMax === 'min') {
+        num = Infinity;
+      } else if (metricMinOrMax === 'max') {
+        num = -Infinity;
+      }
+      let bestRun;
+      for (let i = 0; i < runs.length; i++) {
+        for (let x = 0; x < runs[i].data.metrics.length; x++) {
+          if (runs[i].data.metrics[x].key === `${filterMetric}`) {
+            if (
+              metricMinOrMax === 'min' &&
+              num > runs[i].data.metrics[x].value
+            ) {
+              num = runs[i].data.metrics[x].value;
+              bestRun = runs[i];
+            } else if (
+              metricMinOrMax === 'max' &&
+              num < runs[i].data.metrics[x].value
+            ) {
+              num = runs[i].data.metrics[x].value;
+              bestRun = runs[i];
+            }
+          }
+        }
+      }
+      await this.modelRegistry.createRegisteredModel(modelName);
+      await this.modelVersion.createModelVersion(
+        modelName,
+        bestRun.info.artifact_uri,
+        bestRun.info.run_id
+      );
+  return
+    } catch (error) {
+      if (error instanceof ApiError) {
+        console.error(`API Error (${error.statusCode}): ${error.message}`);
+      } else {
+        console.error('An unexpected error occurred:', error);
+      }
+    }
+  }
 }
 
 export { ModelManager };
