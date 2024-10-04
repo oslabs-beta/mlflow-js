@@ -1,11 +1,14 @@
-import { ExperimentClient } from '../tracking/ExperimentClient.js';
-import { RunManagement } from '../tracking/run_management.js';
-const experimentClient = new ExperimentClient(MLFLOW_TRACKING_URI);
-const runManagement = new RunManagement(MLFLOW_TRACKING_URI);
+import ExperimentClient from '@tracking/ExperimentClient';
+import { RunClient } from '@tracking/RunClient';
 
 class ExperimentManager {
-  constructor(trackingUri) {
+  private trackingUri: string;
+  private experimentClient: ExperimentClient;
+  private runClient: RunClient;
+  constructor(trackingUri: string) {
     this.trackingUri = trackingUri;
+    this.experimentClient = new ExperimentClient(trackingUri);
+    this.runClient = new RunClient(trackingUri);
   }
 
   /**
@@ -17,36 +20,38 @@ class ExperimentManager {
    * @param {Array<{key: string, value: number, timestamp: number, step?: number}>} [metrics] The metrics to log (up to 1000 metrics) (optional)
    * @param {Array<{key: string, value: string}>} [params] The params to log (up to 100 params) (optional)
    * @param {Array<{key: string, value: string}>} [tags] The tags to log (up to 100 tags) (optional)
-   * @param {Object} model The ML model data to log to the run, represented as a Javascript object (optional)
+   * @param {{artifact_path: string, flavors: Object, model_url: string, model_uuid: string, utc_time_created: number, mlflow_version: string}} model The ML model data to log to the run, represented as a Javascript object (optional)
    * @returns {Promise<Object>} The created run object with updated metadata
    */
   async runExistingExperiment(
-    experiment_id,
-    run_name = null,
-    metrics = [],
-    params = [],
-    tags = [],
-    model
+    experiment_id: string,
+    run_name?: string,
+    metrics?: Array<{key: string, value: number, timestamp: number, step?: number}>,
+    params?: Array<{key: string, value: string}>,
+    tags?: Array<{key: string, value: string}>,
+    model?: {artifact_path: string, flavors: Object, model_url: string, model_uuid: string, utc_time_created: number, mlflow_version: string, run_id?: string}
   ) {
     if (!experiment_id) {
       throw new Error('Experiment ID is required');
     }
 
     // create run
-    const run = await runManagement.createRun(experiment_id, run_name, tags);
+    const run = await this.runClient.createRun(experiment_id, run_name, tags);
     const run_id = run.info.run_id;
 
     // log metric, params, and tags via logBatch
-    await runManagement.logBatch(run_id, metrics, params, tags);
+    await this.runClient.logBatch(run_id, metrics, params, tags);
 
     // log model
     // (model gets passed in as a JS object, not JSON - it gets JSON stringified here after adding a run_id property)
-    model.run_id = run_id;
-    let model_json = JSON.stringify(model);
-    await runManagement.logModel(run_id, model_json);
+    if (model) {
+      model.run_id = run_id;
+      let model_json = JSON.stringify(model);
+      await this.runClient.logModel(run_id, model_json);
+    }
 
     // updateRun to finish it
-    const latestRun = await runManagement.updateRun(run_id, 'FINISHED');
+    const latestRun = await this.runClient.updateRun(run_id, 'FINISHED');
 
     return latestRun;
   }
@@ -75,25 +80,25 @@ class ExperimentManager {
       throw new Error('Experiment name is required');
     }
 
-    let experiment_id = await experimentClient.createExperiment(
+    let experiment_id = await this.experimentClient.createExperiment(
       experiment_name
     );
 
     // create run
-    const run = await runManagement.createRun(experiment_id, run_name, tags);
+    const run = await this.runClient.createRun(experiment_id, run_name, tags);
     const run_id = run.info.run_id;
 
     // log metric, params, and tags via logBatch
-    await runManagement.logBatch(run_id, metrics, params, tags);
+    await this.runClient.logBatch(run_id, metrics, params, tags);
 
     // log model
     // (model gets passed in as a JS object, not JSON - it gets JSON stringified here after adding a run_id property)
     model.run_id = run_id;
     let model_json = JSON.stringify(model);
-    await runManagement.logModel(run_id, model_json);
+    await this.runClient.logModel(run_id, model_json);
 
     // updateRun to finish it
-    const latest_run = await runManagement.updateRun(run_id, 'FINISHED');
+    const latest_run = await this.runClient.updateRun(run_id, 'FINISHED');
 
     return latest_run;
   }
@@ -113,7 +118,7 @@ class ExperimentManager {
     if (order === 1 || order === 'DESC') orderString = 'DESC';
     else if (order === -1 || order === 'ASC') orderString = 'ASC';
     const arg = `metrics.${primaryMetric} ${orderString}`;
-    const data = await runManagement.searchRuns(
+    const data = await this.runClient.searchRuns(
       [experiment_id],
       undefined,
       undefined,
@@ -124,4 +129,4 @@ class ExperimentManager {
   }
 }
 
-export { ExperimentManager };
+export default ExperimentManager;
