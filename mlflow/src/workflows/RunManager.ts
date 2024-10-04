@@ -1,6 +1,6 @@
-import RunClient from '@src/tracking/RunClient';
-import ModelVersionClient from '@src/model-registry/ModelVersionClient';
-import { ApiError } from '@src/utils/apiError';
+import RunClient from '@tracking/RunClient';
+import ModelVersionClient from '@model-registry/ModelVersionClient';
+import { ApiError } from '@utils/apiError';
 
 interface Run {
   info: {

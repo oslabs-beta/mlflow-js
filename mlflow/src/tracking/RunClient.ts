@@ -1,5 +1,5 @@
-import { ApiError } from '@src/utils/apiError';
-import { apiRequest } from '@src/utils/apiRequest';
+import { ApiError } from '@utils/apiError';
+import { apiRequest } from '@utils/apiRequest';
 
 class RunClient {
   private baseUrl: string;
