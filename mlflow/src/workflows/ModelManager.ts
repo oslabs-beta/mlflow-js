@@ -355,4 +355,4 @@ class ModelManager {
   // }
 }
 
-export { ModelManager };
+export default ModelManager;
