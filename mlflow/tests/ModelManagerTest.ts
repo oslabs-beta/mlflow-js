@@ -118,7 +118,7 @@ async function testModelManager() {
   // const bestModel = await modelManager.createModelFromRunWithBestMetric(
   
   // )
-  // console.log(`Created ${modelName} from run with best metric`)
+  // console.log(`Created ${modelName} from run with best metric`);
 }
 
 testModelManager();
