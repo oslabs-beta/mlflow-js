@@ -1,5 +1,6 @@
 import { ModelManager } from '../src/workflows/ModelManager';
 import { apiRequest } from '../src/utils/apiRequest';
+import RunClient from '../src/tracking/RunClient';
 import ModelRegistryClient from '../src/model-registry/ModelRegistryClient';
 
 async function createRun(
@@ -27,8 +28,10 @@ async function createRun(
 async function testModelManager() {
   const modelRegistryClient = new ModelRegistryClient('http://localhost:5001');
   const modelManager = new ModelManager('http://localhost:5001');
+  const runClient = new RunClient('http://localhost:5001');
   const timestamp = Date.now();
   const modelName = `test-model-${timestamp}`;
+  const modelName2 = `test-model2-${timestamp}`;
   const modelDescription = `test-model-description-${timestamp}`;
   const modelTagKey = `test-model-tagKey-${timestamp}`;
   const modelTagValue = `test-model-tagValue-${timestamp}`;
@@ -37,6 +40,8 @@ async function testModelManager() {
   const modelVersionTagValue = `version_1_value_${timestamp}`;
   const modelVersionAlias = `version_1_alias_${timestamp}`;
   const modelVersion = '1';
+  const runMetricKey = `test_run_metric_key_${timestamp}`;
+  const runMetricValue = timestamp;
 
   console.log('\n5. Creating a run...');
   const run = await createRun(modelRegistryClient, '0'); // Using '0' as the default experiment ID
@@ -115,13 +120,23 @@ async function testModelManager() {
   console.log(`Deleted Latest version of ${modelName}`);
 
   console.log('9. Creating model from run with best metric...');
+  await runClient.logMetric(
+    run.info.run_id,
+    runMetricKey,
+    runMetricValue
+  );
+
+  const runData = await runClient.getRun(
+    run.info.run_id
+  );
+
   const bestModel = await modelManager.createModelFromRunWithBestMetric(
     [run.info.experiment_id],
-    
+    runData.data.metrics[0].key,
     'max',
-    modelName,
+    modelName2,
   );
-  console.log(`Created ${modelName} from run with best metric`);
+  console.log(`Created ${modelName2} from run with best metric`);
 }
 
 testModelManager();
