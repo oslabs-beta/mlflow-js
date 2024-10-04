@@ -305,7 +305,8 @@ class ModelManager {
    * @param {string[]} experiment_ids - An array containing an experiment id. (Required)
    * @param {string} filterMetric - The name of the metric that we're filtering by. (Required)
    * @param {string} metricMinOrMax - A string specifying if we want the minimum or maximum
-   *                                  value of the specified metric. (Required)
+   *                                  value of the specified metric. Can be either 'min' or 
+   *                                  'max'(Required)
    * @param {string} modelName - The name of the new model that will be created. (Required)
    * @returns {Promise<void>}
    * @throws {ApiError | Error} If request fails

@@ -116,7 +116,10 @@ async function testModelManager() {
 
   console.log('9. Creating model from run with best metric...');
   const bestModel = await modelManager.createModelFromRunWithBestMetric(
-  
+    [run.info.experiment_id],
+    
+    'max',
+    modelName,
   );
   console.log(`Created ${modelName} from run with best metric`);
 }
