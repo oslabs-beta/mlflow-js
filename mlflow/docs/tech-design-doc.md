@@ -61,6 +61,7 @@ mlflow-js/
 The `MLflow` class serves as the main entry point for the library. It provides:
 - Access to High-level abstractions for common workflows
 - Access to tracking and model registry components
+- Dynamic Method Delegation Approach/Dynamic Method Binding and getter access
 
 
 ### 3.2 Tracking Module
