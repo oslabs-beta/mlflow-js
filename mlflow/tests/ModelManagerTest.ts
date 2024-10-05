@@ -1,7 +1,7 @@
-import { ModelManager } from '../src/workflows/ModelManager';
 import { apiRequest } from '../src/utils/apiRequest';
-import RunClient from '../src/tracking/RunClient';
+import ModelManager from '../src/workflows/ModelManager';
 import ModelRegistryClient from '../src/model-registry/ModelRegistryClient';
+import RunClient from '../src/tracking/RunClient';
 
 async function createRun(
   client: ModelRegistryClient,

@@ -316,7 +316,7 @@ class ModelManager {
     filterMetric: string,
     metricMinOrMax: string,
     modelName: string
-  ): Promise<any> {
+  ): Promise<void> {
     try {
       const { runs } = await this.runClient.searchRuns(
         experiment_ids,
@@ -365,4 +365,4 @@ class ModelManager {
   }
 }
 
-export { ModelManager };
+export default ModelManager;
