@@ -1,9 +1,6 @@
 import ExperimentClient from '@tracking/ExperimentClient';
-// import ExperimentClient from '../tracking/ExperimentClient';
 import RunClient from '@tracking/RunClient';
-// import RunClient from '../tracking/RunClient';
 import { ApiError } from '@utils/apiError';
-// import { ApiError } from '../utils/apiError';
 
 class ExperimentManager {
   private trackingUri: string;

@@ -1,7 +1,5 @@
 import { ApiError } from '@utils/apiError';
-// import { ApiError } from '../utils/apiError';
 import { apiRequest } from '@utils/apiRequest';
-// import { apiRequest } from '../utils/apiRequest';
 
 class ExperimentClient {
   trackingUri: string;
