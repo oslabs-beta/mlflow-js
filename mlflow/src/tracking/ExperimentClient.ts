@@ -24,9 +24,6 @@ class ExperimentClient {
     artifact_location?: string, 
     tags?: Array<{key: string, value: string}>
   ): Promise<any> {
-    if (!name) {
-      throw new Error('Experiment name is required');
-    }
 
     const { response, data } = await apiRequest(
       this.trackingUri,
@@ -68,12 +65,6 @@ class ExperimentClient {
     order_by?: string[],
     view_type?: string
   ): Promise<any> {
-    if (!filter) {
-      throw new Error('Filter is required');
-    }
-    if (!max_results) {
-      throw new Error('Max results is required');
-    }
 
     const { response, data } = await apiRequest(
       this.trackingUri,
@@ -106,9 +97,6 @@ class ExperimentClient {
   async getExperiment(
     experiment_id: string
   ): Promise<any> {
-    if (!experiment_id) {
-      throw new Error('Experiment ID is required');
-    }
 
     const { response, data } = await apiRequest(
       this.trackingUri,
@@ -144,9 +132,6 @@ class ExperimentClient {
   async getExperimentByName(
     experiment_name: string
   ): Promise<any> {
-    if (!experiment_name) {
-      throw new Error('Experiment name is required');
-    }
 
     const { response, data } = await apiRequest(
       this.trackingUri,
@@ -179,9 +164,6 @@ class ExperimentClient {
   async deleteExperiment(
     experiment_id: string
   ): Promise<void> {
-    if (!experiment_id) {
-      throw new Error('Experiment ID is required');
-    }
 
     const { response, data } = await apiRequest(
       this.trackingUri,
@@ -214,9 +196,6 @@ class ExperimentClient {
   async restoreExperiment(
     experiment_id: string
   ): Promise<any> {
-    if (!experiment_id) {
-      throw new Error('Experiment ID is required');
-    }
 
     const { response, data } = await apiRequest(
       this.trackingUri,
@@ -251,12 +230,6 @@ class ExperimentClient {
     experiment_id: string, 
     new_name: string
   ): Promise<void> {
-    if (!experiment_id) {
-      throw new Error('Experiment ID is required');
-    }
-    if (!new_name) {
-      throw new Error('New name is required');
-    }
 
     const { response, data } = await apiRequest(
       this.trackingUri,
@@ -295,15 +268,6 @@ class ExperimentClient {
     key: string, 
     value: string
   ): Promise<void> {
-    if (!experiment_id) {
-      throw new Error('Experiment ID is required');
-    }
-    if (!key) {
-      throw new Error('Key is required');
-    }
-    if (!value) {
-      throw new Error('Value is required');
-    }
 
     const { response, data } = await apiRequest(
       this.trackingUri,
