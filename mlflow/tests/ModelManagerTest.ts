@@ -41,7 +41,8 @@ async function testModelManager() {
   const modelVersionAlias = `version_1_alias_${timestamp}`;
   const modelVersion = '1';
   const runMetricKey = `test_run_metric_key_${timestamp}`;
-  const runMetricValue = timestamp;
+  const runMetricValueHigh = 2;
+  const runMetricValueLow = 1;
 
   console.log('\n5. Creating a run...');
   const run = await createRun(modelRegistryClient, '0'); // Using '0' as the default experiment ID
@@ -120,10 +121,19 @@ async function testModelManager() {
   console.log(`Deleted Latest version of ${modelName}`);
 
   console.log('9. Creating model from run with best metric...');
+  const run2 = await createRun(modelRegistryClient, '0'); // Using '0' as the default experiment ID
+  console.log('Created run:', run2);
+
   await runClient.logMetric(
     run.info.run_id,
     runMetricKey,
-    runMetricValue
+    runMetricValueHigh
+  );
+
+  await runClient.logMetric(
+    run2.info.run_id,
+    runMetricKey,
+    runMetricValueHigh
   );
 
   const runData = await runClient.getRun(
