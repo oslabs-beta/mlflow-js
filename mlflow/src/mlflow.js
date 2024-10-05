@@ -10,11 +10,11 @@ class Mlflow {
   constructor(trackingUri) {
     this.components = {
       experimentClient: new ExperimentClient(trackingUri),
+      experimentManager: new ExperimentManager(trackingUri),
       runClient: new RunClient(trackingUri),
+      runManager: new RunManager(trackingUri),
       modelRegistryClient: new ModelRegistryClient(trackingUri),
       modelVersionClient: new ModelVersionClient(trackingUri),
-      experimentManager: new ExperimentManager(trackingUri),
-      runManager: new RunManager(trackingUri),
       modelManager: new ModelManager(trackingUri),
     };
 
