@@ -1,5 +1,5 @@
-import ExperimentManager from '../src/workflows/ExperimentManager.js';
-import ExperimentClient from '../src/tracking/ExperimentClient.js';
+import ExperimentManager from '../src/workflows/ExperimentManager';
+import ExperimentClient from '../src/tracking/ExperimentClient';
 const MLFLOW_TRACKING_URI = 'http://localhost:5001';
 const experimentManager = new ExperimentManager(MLFLOW_TRACKING_URI);
 const experimentClient = new ExperimentClient(MLFLOW_TRACKING_URI);
