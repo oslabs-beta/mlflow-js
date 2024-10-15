@@ -135,7 +135,7 @@ class ModelVersionClient {
     page_token?: string
   ): Promise<Array<object>> {
     // let filter2: string = filter?.toString();
-    const body: { [key: string]: any } = {};
+    const body: { [key: string]: string } = {};
     if (filter) {
       body.filter = filter;
     }
