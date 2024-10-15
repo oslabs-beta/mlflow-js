@@ -9,7 +9,7 @@
     "clean": "rimraf lib",
     "build": "npm run clean && tsc",
     "test": "",
-    "lint": "",
+    "lint": "eslint .",
     "docs": ""
   },
   "keywords": [
