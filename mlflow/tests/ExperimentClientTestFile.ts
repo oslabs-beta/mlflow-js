@@ -1,4 +1,4 @@
-import { ExperimentClient } from '../src/tracking/ExperimentClient.js';
+import ExperimentClient from '../src/tracking/ExperimentClient.ts';
 const MLFLOW_TRACKING_URI = 'http://localhost:5001';
 let experimentClient = new ExperimentClient(MLFLOW_TRACKING_URI);
 
