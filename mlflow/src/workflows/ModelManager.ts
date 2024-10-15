@@ -1,4 +1,4 @@
-// import RunClient from '@tracking/RunClient';
+import RunClient from '@tracking/RunClient';
 import ModelRegistryClient from '@model-registry/ModelRegistryClient';
 import ModelVersionClient from '@model-registry/ModelVersionClient';
 import { ApiError } from '@utils/apiError';
@@ -6,11 +6,12 @@ import { ApiError } from '@utils/apiError';
 class ModelManager {
   private modelRegistry: ModelRegistryClient;
   private modelVersion: ModelVersionClient;
+  private runClient: RunClient;
 
   constructor(trackingUri: string) {
     this.modelRegistry = new ModelRegistryClient(trackingUri);
     this.modelVersion = new ModelVersionClient(trackingUri);
-    // this.runClient = new RunClient(trackingUri);
+    this.runClient = new RunClient(trackingUri);
   }
 
   /**
@@ -21,6 +22,7 @@ class ModelManager {
    * @param {string} versionRun_id - MLflow run ID for correlation, if versionSource was generated
    * by an experiment run in MLflow tracking server.
    * @returns {Promise<Object>} - the updated model version object
+   * @throws {ApiError | Error} If request fails
    */
   async createRegisteredModelWithVersion(
     name: string,
@@ -55,6 +57,7 @@ class ModelManager {
    * @param {string} tagValue - String value of the tag being logged. (Required)
    * @param {string} description - Description of the registered model.
    * @returns {Promise<Registered Model>} - the updated registered model object
+   * @throws {ApiError | Error} If request fails
    */
   async updateRegisteredModelDescriptionAndTag(
     name: string,
@@ -90,6 +93,7 @@ class ModelManager {
    * @param {string} key - Name of the tag. (Required)
    * @param {string} value - Name of the value of the tag being logged. (Required)
    * @returns {Promise<Model Version>} - the updated model version object
+   * @throws {ApiError | Error} If request fails
    */
   async updateAllLatestModelVersion(
     name: string,
@@ -131,6 +135,7 @@ class ModelManager {
    * @param {string} key - Name of the tag. (Required)
    * @param {string} value - Name of the value of the tag being logged. (Required)
    * @returns {Promise<void>} - a promise that resolves when the model version is deleted
+   * @throws {ApiError | Error} If request fails
    */
   async setLatestModelVersionTag(
     name: string,
@@ -163,6 +168,7 @@ class ModelManager {
    * @param {string} name - Name of the registered model. (Required)
    * @param {string} alias - Name of the alias. (Required)
    * @returns {Promise<void>} - a promise that resolves when the model version is deleted
+   * @throws {ApiError | Error} If request fails
    */
   async setLatestModelVersionAlias(name: string, alias: string): Promise<void> {
     try {
@@ -191,6 +197,7 @@ class ModelManager {
    * @param {string} name - Name of the registered model. (Required)
    * @param {string} description - The description for the model version. (Required)
    * @returns {Promise<Model Version>} - the updated model version object
+   * @throws {ApiError | Error} If request fails
    */
   async updateLatestModelVersion(
     name: string,
@@ -231,6 +238,7 @@ class ModelManager {
    * @param {string} value - Name of the value of the tag being logged. (Required)
    * @param {string} description - The description for the model version. (Required)
    * @returns {Promise<Model Version>} - the updated model version object
+   * @throws {ApiError | Error} If request fails
    */
   async updateAllModelVersion(
     name: string,
@@ -238,7 +246,7 @@ class ModelManager {
     alias: string,
     key: string,
     value: string,
-    description: string,
+    description: string
   ): Promise<object> {
     try {
       await this.modelRegistry.setRegisteredModelAlias(name, alias, version);
@@ -265,6 +273,7 @@ class ModelManager {
    *
    * @param {string} name - the model name
    * @returns - a promise that resolves when the model version is deleted
+   * @throws {ApiError | Error} If request fails
    */
   async deleteLatestModelVersion(name: string): Promise<void> {
     try {
@@ -287,9 +296,6 @@ class ModelManager {
     }
   }
 
-  // Set it up so they can specify if they want the specified metric that is the greatest value, or the lowest value
-
-  // Probably make it so it can also make a new model version if there's already a version of that modelName
   /**
    * Looks through the runs with the given experiment id and through their metrics
    * looking for the specified metric that has the highest or lowest value (can be specified).
@@ -299,60 +305,64 @@ class ModelManager {
    * @param {string[]} experiment_ids - An array containing an experiment id. (Required)
    * @param {string} filterMetric - The name of the metric that we're filtering by. (Required)
    * @param {string} metricMinOrMax - A string specifying if we want the minimum or maximum
-   *                                  value of the specified metric. (Required)
+   *                                  value of the specified metric. Can be either 'min' or 
+   *                                  'max'(Required)
    * @param {string} modelName - The name of the new model that will be created. (Required)
+   * @returns {Promise<void>}
+   * @throws {ApiError | Error} If request fails
    */
-  // async createModelFromRunWithBestMetric(
-  //   experiment_ids: string[],
-  //   filterMetric: string,
-  //   metricMinOrMax: string,
-  //   modelName: string
-  // ): Promise<any> {
-  //   try {
-  //     const { runs } = await this.runClient.searchRuns(
-  //       experiment_ids,
-  //       `metrics.${filterMetric} != -99999`
-  //     );
-  //     let num;
-  //     if (metricMinOrMax === 'min') {
-  //       num = Infinity;
-  //     } else if (metricMinOrMax === 'max') {
-  //       num = -Infinity;
-  //     }
-  //     let bestRun;
-  //     for (let i = 0; i < runs.length; i++) {
-  //       for (let x = 0; x < runs[i].data.metrics.length; x++) {
-  //         if (runs[i].data.metrics[x].key === `${filterMetric}`) {
-  //           if (
-  //             metricMinOrMax === 'min' &&
-  //             num > runs[i].data.metrics[x].value
-  //           ) {
-  //             num = runs[i].data.metrics[x].value;
-  //             bestRun = runs[i];
-  //           } else if (
-  //             metricMinOrMax === 'max' &&
-  //             num < runs[i].data.metrics[x].value
-  //           ) {
-  //             num = runs[i].data.metrics[x].value;
-  //             bestRun = runs[i];
-  //           }
-  //         }
-  //       }
-  //     }
-  //     await this.modelRegistry.createRegisteredModel(modelName);
-  //     await this.modelVersion.createModelVersion(
-  //       modelName,
-  //       bestRun.info.artifact_uri,
-  //       bestRun.info.run_id
-  //     );
-  //   } catch (error) {
-  //     if (error instanceof ApiError) {
-  //       console.error(`API Error (${error.statusCode}): ${error.message}`);
-  //     } else {
-  //       console.error('An unexpected error occurred:', error);
-  //     }
-  //   }
-  // }
+  async createModelFromRunWithBestMetric(
+    experiment_ids: string[],
+    filterMetric: string,
+    metricMinOrMax: string,
+    modelName: string
+  ): Promise<void> {
+    try {
+      const { runs } = await this.runClient.searchRuns(
+        experiment_ids,
+        `metrics.${filterMetric} != -99999`
+      );
+      let num;
+      if (metricMinOrMax === 'min') {
+        num = Infinity;
+      } else if (metricMinOrMax === 'max') {
+        num = -Infinity;
+      }
+      let bestRun;
+      for (let i = 0; i < runs.length; i++) {
+        for (let x = 0; x < runs[i].data.metrics.length; x++) {
+          if (runs[i].data.metrics[x].key === `${filterMetric}`) {
+            if (
+              metricMinOrMax === 'min' &&
+              num > runs[i].data.metrics[x].value
+            ) {
+              num = runs[i].data.metrics[x].value;
+              bestRun = runs[i];
+            } else if (
+              metricMinOrMax === 'max' &&
+              num < runs[i].data.metrics[x].value
+            ) {
+              num = runs[i].data.metrics[x].value;
+              bestRun = runs[i];
+            }
+          }
+        }
+      }
+      await this.modelRegistry.createRegisteredModel(modelName);
+      await this.modelVersion.createModelVersion(
+        modelName,
+        bestRun.info.artifact_uri,
+        bestRun.info.run_id
+      );
+  return
+    } catch (error) {
+      if (error instanceof ApiError) {
+        console.error(`API Error (${error.statusCode}): ${error.message}`);
+      } else {
+        console.error('An unexpected error occurred:', error);
+      }
+    }
+  }
 }
 
-export { ModelManager };
+export default ModelManager;

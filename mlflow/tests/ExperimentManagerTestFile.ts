@@ -1,5 +1,5 @@
-import { ExperimentManager } from '../src/workflows/ExperimentManager.js';
-import { ExperimentClient } from '../src/tracking/ExperimentClient.js';
+import ExperimentManager from '../src/workflows/ExperimentManager';
+import ExperimentClient from '../src/tracking/ExperimentClient';
 const MLFLOW_TRACKING_URI = 'http://localhost:5001';
 const experimentManager = new ExperimentManager(MLFLOW_TRACKING_URI);
 const experimentClient = new ExperimentClient(MLFLOW_TRACKING_URI);
@@ -89,7 +89,7 @@ const testRunNewExperiment = async () => {
   // call .runNewExperiment using our randomly generated name, passing in the fake data, and store the results under the variable 'log'
   const log = await experimentManager.runNewExperiment(
     name,
-    undefined,
+    '',
     metrics,
     params,
     tags,
@@ -107,4 +107,4 @@ const testExperimentSummary = async () => {
   );
   return console.log(log);
 };
-// testExperimentSummary();
+testExperimentSummary();
