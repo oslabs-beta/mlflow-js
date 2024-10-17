@@ -18,7 +18,7 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
+  font-size: 1rem;
 }
 
 @layer utilities {
@@ -52,8 +52,8 @@ body {
   grid-column: 2;
   grid-row: 1;
   display: grid;
-  grid-template-columns: 10px 20px 1fr 20px 10px;
-  grid-template-rows: 20px 50px 1fr min-content 20px;
+  grid-template-columns: 0.7rem 1.3rem 1fr 1.3rem 0.7rem;
+  grid-template-rows: 1.3rem 2.8rem 1fr min-content 1.3rem;
 }
 
 .navBar {
