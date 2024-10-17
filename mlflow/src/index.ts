@@ -1,3 +1,3 @@
-import Mlflow from "./mlflow";
+import Mlflow from './mlflow';
 
 export default Mlflow;

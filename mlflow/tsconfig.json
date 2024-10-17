@@ -55,7 +55,7 @@
   },
   "typedocOptions": {
     "entryPoints": ["src/index.ts"],
-    "out": "docs"
+    "out": "docs/documentation"
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "**/*.spec.ts"]

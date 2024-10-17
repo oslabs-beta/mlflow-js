@@ -6,8 +6,10 @@ import ModelRegistryClient from './model-registry/ModelRegistryClient';
 import ModelVersionClient from './model-registry/ModelVersionClient';
 import ModelManager from './workflows/ModelManager';
 
-// Define a type for the components
-type Components = {
+type ComponentName = keyof Mlflow['components'];
+
+class Mlflow {
+  private components: {
     experimentClient: ExperimentClient;
     experimentManager: ExperimentManager;
     runClient: RunClient;
@@ -16,9 +18,6 @@ type Components = {
     modelVersionClient: ModelVersionClient;
     modelManager: ModelManager;
   };
-
-class Mlflow {
-    private components: Components;
 
   constructor(trackingUri: string) {
     this.components = {
@@ -34,46 +33,50 @@ class Mlflow {
     this.initializeMethods();
   }
 
-  initializeMethods() {
-    Object.keys(this.components).forEach((componentName) => {
-      const component = this.components[componentName as keyof Components];
-      Object.getOwnPropertyNames(Object.getPrototypeOf(component))
-        .filter(
-          (name) =>
-            typeof (component as keyof typeof component)[name] === 'function' && name !== 'constructor'
-        )
-        .forEach((methodName) => {
-          (this as any)[methodName] = (...args: unknown[]) => (component as any)[methodName as any](...args);
-        });
-    });
+  private initializeMethods(): void {
+    (Object.keys(this.components) as ComponentName[]).forEach(
+      (componentName) => {
+        const component = this.components[componentName];
+        Object.getOwnPropertyNames(Object.getPrototypeOf(component))
+          .filter(
+            (name) =>
+              typeof (component as any)[name] === 'function' &&
+              name !== 'constructor'
+          )
+          .forEach((methodName) => {
+            (this as any)[methodName] = (...args: any[]) =>
+              (component as any)[methodName](...args);
+          });
+      }
+    );
   }
 
   // Getter methods for direct access to clients and managers
-  getExperimentClient() {
+  getExperimentClient(): ExperimentClient {
     return this.components.experimentClient;
   }
 
-  getRunClient() {
+  getRunClient(): RunClient {
     return this.components.runClient;
   }
 
-  getModelRegistryClient() {
+  getModelRegistryClient(): ModelRegistryClient {
     return this.components.modelRegistryClient;
   }
 
-  getModelVersionClient() {
+  getModelVersionClient(): ModelVersionClient {
     return this.components.modelVersionClient;
   }
 
-  getExperimentManager() {
+  getExperimentManager(): ExperimentManager {
     return this.components.experimentManager;
   }
 
-  getRunManager() {
+  getRunManager(): RunManager {
     return this.components.runManager;
   }
 
-  getModelManager() {
+  getModelManager(): ModelManager {
     return this.components.modelManager;
   }
 }
