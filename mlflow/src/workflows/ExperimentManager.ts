@@ -3,11 +3,9 @@ import RunClient from '@tracking/RunClient';
 import { ApiError } from '@utils/apiError';
 
 class ExperimentManager {
-  private trackingUri: string;
   private experimentClient: ExperimentClient;
   private runClient: RunClient;
   constructor(trackingUri: string) {
-    this.trackingUri = trackingUri;
     this.experimentClient = new ExperimentClient(trackingUri);
     this.runClient = new RunClient(trackingUri);
   }
