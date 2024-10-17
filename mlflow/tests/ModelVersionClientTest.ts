@@ -1,32 +1,11 @@
-import { apiRequest } from '../src/utils/apiRequest';
 import ModelVersionClient from '../src/model-registry/ModelVersionClient';
 import ModelRegistryClient from '../src/model-registry/ModelRegistryClient';
-
-async function createRun(
-  client: ModelRegistryClient,
-  experimentId: string
-): Promise<any> {
-  const { response, data } = await apiRequest(
-    (client as any).baseUrl,
-    'runs/create',
-    {
-      method: 'POST',
-      body: { experiment_id: experimentId },
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error(
-      `Error creating run: ${data.message || response.statusText}`
-    );
-  }
-
-  return data.run;
-}
+import RunClient from '../src/tracking/RunClient';
 
 async function testModelVersionClient() {
   const client = new ModelVersionClient('http://localhost:5001');
   const modelRegistryClient = new ModelRegistryClient('http://localhost:5001');
+  const runClient = new RunClient('http://localhost:5001');
   const timestamp = Date.now();
   const modelName = `test-model-${timestamp}`;
   const modelVersionDescription1 = 'This is test version 1 description';
@@ -42,7 +21,7 @@ async function testModelVersionClient() {
     );
 
     console.log('\n5. Creating a run...');
-    const run = await createRun(modelRegistryClient, '0'); // Using '0' as the default experiment ID
+    const run = await runClient.createRun('0'); // Using '0' as the default experiment ID
     console.log('Created run:', run);
 
     // 1. Creating a registered model version
@@ -99,7 +78,7 @@ async function testModelVersionClient() {
 
     // 7. Setting model version tag
     console.log('7. Setting model version tag...');
-    const modelVersionTag = await client.setModelVersionTag(
+    await client.setModelVersionTag(
       modelName,
       '1',
       modelVersionKey,
@@ -109,7 +88,7 @@ async function testModelVersionClient() {
 
     // 8. Deleting model version tag
     console.log('8. Deleting model version tag...');
-    const deletedModelVersionTag = await client.deleteModelVersionTag(
+    await client.deleteModelVersionTag(
       modelName,
       '1',
       modelVersionKey
@@ -118,7 +97,7 @@ async function testModelVersionClient() {
 
     // 9. Deleting model version
     console.log('9. Deleting model version...');
-    const deletedModelVersion = await client.deleteModelVersion(
+    await client.deleteModelVersion(
       modelName,
       '1',
     )

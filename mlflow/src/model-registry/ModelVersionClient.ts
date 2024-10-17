@@ -134,16 +134,15 @@ class ModelVersionClient {
     order_by?: Array<string>,
     page_token?: string
   ): Promise<Array<object>> {
-    // let filter2: string = filter?.toString();
-    const body: { [key: string]: any } = {};
+    const body: { [key: string]: string } = {};
     if (filter) {
       body.filter = filter;
     }
     if (maxResults) {
-      body.maxResults = maxResults;
+      body.maxResults = maxResults.toString();
     }
     if (order_by) {
-      body.order_by = order_by;
+      body.order_by = order_by.toString();
     }
     if (page_token) {
       body.page_token = page_token;

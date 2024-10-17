@@ -1,32 +1,7 @@
-import { apiRequest } from '../src/utils/apiRequest';
 import ModelManager from '../src/workflows/ModelManager';
-import ModelRegistryClient from '../src/model-registry/ModelRegistryClient';
 import RunClient from '../src/tracking/RunClient';
 
-async function createRun(
-  client: ModelRegistryClient,
-  experimentId: string
-): Promise<any> {
-  const { response, data } = await apiRequest(
-    (client as any).baseUrl,
-    'runs/create',
-    {
-      method: 'POST',
-      body: { experiment_id: experimentId },
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error(
-      `Error creating run: ${data.message || response.statusText}`
-    );
-  }
-
-  return data.run;
-}
-
 async function testModelManager() {
-  const modelRegistryClient = new ModelRegistryClient('http://localhost:5001');
   const modelManager = new ModelManager('http://localhost:5001');
   const runClient = new RunClient('http://localhost:5001');
   const timestamp = Date.now();
@@ -45,7 +20,7 @@ async function testModelManager() {
   const runMetricValueLow = 1;
 
   console.log('\n5. Creating a run...');
-  const run = await createRun(modelRegistryClient, '0'); // Using '0' as the default experiment ID
+  const run = await runClient.createRun('0'); // Using '0' as the default experiment ID
   console.log('Created run:', run);
 
   console.log('1. Creating a new registered model with a version...');
@@ -82,7 +57,7 @@ async function testModelManager() {
   console.log(`Updated latest version of ${modelName}'s alias, tag, and description: `, updatedLatestModelVersionAll);
 
   console.log("4. Updating the latest model version's tag...");
-  const updatedModelVersionTag = await modelManager.setLatestModelVersionTag(
+  await modelManager.setLatestModelVersionTag(
     modelName,
     modelVersionTagKey,
     modelVersionTagValue
@@ -90,7 +65,7 @@ async function testModelManager() {
   console.log(`Updated ${modelName} version tag`);
 
   console.log('5. Updating the latest model version\'s alias...');
-  const updatedModelVersionAlias = await modelManager.setLatestModelVersionAlias(
+  await modelManager.setLatestModelVersionAlias(
     modelName,
     modelVersionAlias
   )
@@ -115,13 +90,13 @@ async function testModelManager() {
   console.log('Updated model version: ', updatedModelVersionAll);
 
   console.log(`8. Deleting the latest version of the model...`);
-  const deletedModelVersion = await modelManager.deleteLatestModelVersion(
+  await modelManager.deleteLatestModelVersion(
     modelName
   );
   console.log(`Deleted Latest version of ${modelName}`);
 
   console.log('9. Creating model from run with best metric...');
-  const run2 = await createRun(modelRegistryClient, '0'); // Using '0' as the default experiment ID
+  const run2 = await runClient.createRun('0'); // Using '0' as the default experiment ID
   console.log('Created run:', run2);
 
   await runClient.logMetric(
@@ -133,14 +108,14 @@ async function testModelManager() {
   await runClient.logMetric(
     run2.info.run_id,
     runMetricKey,
-    runMetricValueHigh
+    runMetricValueLow
   );
 
   const runData = await runClient.getRun(
     run.info.run_id
   );
 
-  const bestModel = await modelManager.createModelFromRunWithBestMetric(
+  await modelManager.createModelFromRunWithBestMetric(
     [run.info.experiment_id],
     runData.data.metrics[0].key,
     'max',

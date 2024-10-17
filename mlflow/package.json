@@ -9,8 +9,8 @@
     "clean": "rimraf lib",
     "build": "npm run clean && tsc",
     "test": "",
-    "lint": "",
-    "docs": ""
+    "lint": "eslint .",
+    "docs": "typedoc src/index.ts"
   },
   "keywords": [
     "mlflow",
@@ -22,11 +22,16 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@eslint/js": "^9.12.0",
+    "@types/eslint__js": "^8.42.3",
     "@types/node": "^22.5.4",
+    "eslint": "^9.12.0",
     "rimraf": "^6.0.1",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.1",
-    "typescript": "^5.6.2"
+    "typedoc": "^0.26.9",
+    "typescript": "^5.6.2",
+    "typescript-eslint": "^8.8.0"
   },
   "engines": {
     "node": ">=22.7.0"

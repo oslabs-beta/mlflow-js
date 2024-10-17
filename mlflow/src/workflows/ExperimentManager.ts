@@ -3,11 +3,9 @@ import RunClient from '@tracking/RunClient';
 import { ApiError } from '@utils/apiError';
 
 class ExperimentManager {
-  private trackingUri: string;
   private experimentClient: ExperimentClient;
   private runClient: RunClient;
   constructor(trackingUri: string) {
-    this.trackingUri = trackingUri;
     this.experimentClient = new ExperimentClient(trackingUri);
     this.runClient = new RunClient(trackingUri);
   }
@@ -82,11 +80,11 @@ class ExperimentManager {
     metrics: Array<{key: string, value: number, timestamp: number, step?: number}>,
     params?: Array<{key: string, value: string}>,
     tags?: Array<{key: string, value: string}>,
-    model?: {artifact_path: string, flavors: Object, model_url: string, model_uuid: string, utc_time_created: number, mlflow_version: string, run_id?: string}
+    model?: {artifact_path: string, flavors: object, model_url: string, model_uuid: string, utc_time_created: number, mlflow_version: string, run_id?: string}
   ): Promise<any> {
 
     try {
-      let experiment_id = await this.experimentClient.createExperiment(experiment_name);
+      const experiment_id = await this.experimentClient.createExperiment(experiment_name);
   
       // create run
       const run = await this.runClient.createRun(experiment_id, run_name);
@@ -99,7 +97,7 @@ class ExperimentManager {
       // (model gets passed in as a JS object, not JSON - it gets JSON stringified here after adding a run_id property)
       if (model) {
         model.run_id = run_id;
-        let model_json = JSON.stringify(model);
+        const model_json = JSON.stringify(model);
         await this.runClient.logModel(run_id, model_json);
       }
   
