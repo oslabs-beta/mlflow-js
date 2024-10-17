@@ -7,6 +7,8 @@
     "rootDir": "./src",
     "outDir": "./lib",
 
+    "types": ["jest"],
+
     // Module Resolution Options
     "moduleResolution": "node",
     "baseUrl": ".",
