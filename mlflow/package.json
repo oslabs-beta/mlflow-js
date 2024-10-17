@@ -10,7 +10,7 @@
     "build": "npm run clean && tsc",
     "test": "",
     "lint": "eslint .",
-    "docs": "npx typedoc src/index.ts"
+    "docs": "typedoc src/index.ts"
   },
   "keywords": [
     "mlflow",
