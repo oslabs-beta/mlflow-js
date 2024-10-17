@@ -5,6 +5,7 @@ import { ApiError } from '@utils/apiError';
 class ExperimentManager {
   private experimentClient: ExperimentClient;
   private runClient: RunClient;
+
   constructor(trackingUri: string) {
     this.experimentClient = new ExperimentClient(trackingUri);
     this.runClient = new RunClient(trackingUri);
@@ -25,20 +26,32 @@ class ExperimentManager {
   async runExistingExperiment(
     experiment_id: string,
     run_name?: string,
-    metrics?: Array<{key: string, value: number, timestamp: number, step?: number}>,
-    params?: Array<{key: string, value: string}>,
-    tags?: Array<{key: string, value: string}>,
-    model?: {artifact_path: string, flavors: Object, model_url: string, model_uuid: string, utc_time_created: number, mlflow_version: string, run_id?: string}
+    metrics?: Array<{
+      key: string;
+      value: number;
+      timestamp: number;
+      step?: number;
+    }>,
+    params?: Array<{ key: string; value: string }>,
+    tags?: Array<{ key: string; value: string }>,
+    model?: {
+      artifact_path: string;
+      flavors: Object;
+      model_url: string;
+      model_uuid: string;
+      utc_time_created: number;
+      mlflow_version: string;
+      run_id?: string;
+    }
   ): Promise<any> {
-
     try {
       // create run
       const run = await this.runClient.createRun(experiment_id, run_name);
       const run_id = run.info.run_id;
-  
+
       // log metric, params, and tags via logBatch
       await this.runClient.logBatch(run_id, metrics, params, tags);
-  
+
       // log model
       // (model gets passed in as a JS object, not JSON - it gets JSON stringified here after adding a run_id property)
       if (model) {
@@ -46,10 +59,10 @@ class ExperimentManager {
         let model_json = JSON.stringify(model);
         await this.runClient.logModel(run_id, model_json);
       }
-  
+
       // updateRun to finish it
       const latestRun = await this.runClient.updateRun(run_id, 'FINISHED');
-  
+
       return latestRun;
     } catch (error) {
       if (error instanceof ApiError) {
@@ -57,7 +70,7 @@ class ExperimentManager {
         throw error;
       } else {
         console.error('An unexpected error occurred:', error);
-        throw new Error;
+        throw new Error();
       }
     }
   }
@@ -77,22 +90,36 @@ class ExperimentManager {
   async runNewExperiment(
     experiment_name: string,
     run_name: string,
-    metrics: Array<{key: string, value: number, timestamp: number, step?: number}>,
-    params?: Array<{key: string, value: string}>,
-    tags?: Array<{key: string, value: string}>,
-    model?: {artifact_path: string, flavors: object, model_url: string, model_uuid: string, utc_time_created: number, mlflow_version: string, run_id?: string}
+    metrics: Array<{
+      key: string;
+      value: number;
+      timestamp: number;
+      step?: number;
+    }>,
+    params?: Array<{ key: string; value: string }>,
+    tags?: Array<{ key: string; value: string }>,
+    model?: {
+      artifact_path: string;
+      flavors: Object;
+      model_url: string;
+      model_uuid: string;
+      utc_time_created: number;
+      mlflow_version: string;
+      run_id?: string;
+    }
   ): Promise<any> {
-
     try {
-      const experiment_id = await this.experimentClient.createExperiment(experiment_name);
-  
+      const experiment_id = await this.experimentClient.createExperiment(
+        experiment_name
+      );
+
       // create run
       const run = await this.runClient.createRun(experiment_id, run_name);
       const run_id = run.info.run_id;
-  
+
       // log metric, params, and tags via logBatch
       await this.runClient.logBatch(run_id, metrics, params, tags);
-  
+
       // log model
       // (model gets passed in as a JS object, not JSON - it gets JSON stringified here after adding a run_id property)
       if (model) {
@@ -100,19 +127,18 @@ class ExperimentManager {
         const model_json = JSON.stringify(model);
         await this.runClient.logModel(run_id, model_json);
       }
-  
+
       // updateRun to finish it
       const latest_run = await this.runClient.updateRun(run_id, 'FINISHED');
-  
+
       return latest_run;
-    }
-    catch (error) {
+    } catch (error) {
       if (error instanceof ApiError) {
         console.error(`API Error (${error.statusCode}): ${error.message}`);
         throw error;
       } else {
         console.error('An unexpected error occurred:', error);
-        throw new Error;
+        throw new Error();
       }
     }
   }
@@ -127,11 +153,10 @@ class ExperimentManager {
    */
 
   async experimentSummary(
-    experiment_id: string, 
-    primaryMetric: string, 
+    experiment_id: string,
+    primaryMetric: string,
     order?: 'ASC' | 'DESC' | 1 | -1
   ): Promise<any> {
-
     try {
       interface RunInfo {
         run_id: string;
@@ -143,13 +168,18 @@ class ExperimentManager {
         artifact_uri: string;
         lifecycle_stage: string;
       }
-      
+
       interface RunData {
-        metrics: Array<{ key: string; value: number; timestamp: number; step?: number }>;
+        metrics: Array<{
+          key: string;
+          value: number;
+          timestamp: number;
+          step?: number;
+        }>;
         params: Array<{ key: string; value: string }>;
         tags: Array<{ key: string; value: string }>;
       }
-      
+
       interface Run {
         info: RunInfo;
         data: RunData;
@@ -184,21 +214,27 @@ class ExperimentManager {
       data.runs.forEach((el: Run) => {
         const arr = el.data.metrics;
         let val: number | undefined;
-        arr.forEach((obj: {key: string, value: number, timestamp: number, step?: number}) => {
-          if (obj.key === primaryMetric) val = obj.value;
-        })
+        arr.forEach(
+          (obj: {
+            key: string;
+            value: number;
+            timestamp: number;
+            step?: number;
+          }) => {
+            if (obj.key === primaryMetric) val = obj.value;
+          }
+        );
         el[primaryMetric] = val;
       });
 
       return data.runs;
-    }
-    catch (error) {
+    } catch (error) {
       if (error instanceof ApiError) {
         console.error(`API Error (${error.statusCode}): ${error.message}`);
         throw error;
       } else {
         console.error('An unexpected error occurred:', error);
-        throw new Error;
+        throw new Error();
       }
     }
   }
