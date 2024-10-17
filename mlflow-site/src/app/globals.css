@@ -53,7 +53,7 @@ body {
   grid-row: 1;
   display: grid;
   grid-template-columns: 10px 20px 1fr 20px 10px;
-  grid-template-rows: 20px 50px 1fr 250px 20px;
+  grid-template-rows: 20px 50px 1fr min-content 20px;
 }
 
 .navBar {
