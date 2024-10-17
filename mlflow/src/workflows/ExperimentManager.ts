@@ -109,7 +109,7 @@ class ExperimentManager {
     }
   ): Promise<any> {
     try {
-      let experiment_id = await this.experimentClient.createExperiment(
+      const experiment_id = await this.experimentClient.createExperiment(
         experiment_name
       );
 
@@ -124,7 +124,7 @@ class ExperimentManager {
       // (model gets passed in as a JS object, not JSON - it gets JSON stringified here after adding a run_id property)
       if (model) {
         model.run_id = run_id;
-        let model_json = JSON.stringify(model);
+        const model_json = JSON.stringify(model);
         await this.runClient.logModel(run_id, model_json);
       }
 

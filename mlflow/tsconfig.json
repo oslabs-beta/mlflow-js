@@ -52,6 +52,10 @@
     "removeComments": false,
     "allowJs": false
   },
+  "typedocOptions": {
+    "entryPoints": ["src/index.ts"],
+    "out": "docs/documentation"
+  },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "**/*.spec.ts"],
   "tsc-alias": {
