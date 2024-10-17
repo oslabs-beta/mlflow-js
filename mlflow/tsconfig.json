@@ -4,8 +4,8 @@
     "target": "ES2018",
     "module": "ESNext",
     "lib": ["ES2018"],
-    "outDir": "./lib",
     "rootDir": "./src",
+    "outDir": "./lib",
 
     // Module Resolution Options
     "moduleResolution": "node",
@@ -19,7 +19,7 @@
     },
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "moduleDetection": "force",
+    // "moduleDetection": "force",
 
     // Strict Type-Checking Options
     "strict": true,
@@ -45,11 +45,10 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
 
-    // Source Map Options
-    "sourceMap": false,
-
     // Other Options
     "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
     "removeComments": false,
     "allowJs": false
   },
@@ -58,5 +57,10 @@
     "out": "docs/documentation"
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "exclude": ["node_modules", "**/*.spec.ts"],
+  "tsc-alias": {
+    "resolveFullPaths": true,
+    "outDir": "./lib",
+    "extensionReplacement": [{ "from": ".ts", "to": ".js" }]
+  }
 }
