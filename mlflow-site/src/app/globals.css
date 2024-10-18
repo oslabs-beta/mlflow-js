@@ -43,6 +43,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 360px 1fr;
   grid-template-rows: 1fr;
+  overflow-y: auto;
 }
 
 .mobileWrapper {
@@ -134,14 +135,17 @@ body {
   grid-row: 3;
   width: 100%;
   background-color: rgb(176, 47, 107);
+  display: grid;
+  place-items: center;
 }
 
 .featureCard {
   width: 100%;
   background-color: rgb(122, 144, 167);
   display: grid;
-  grid-template-columns: 50% 50%;
-  grid-template-rows: 50% 50%;
+  grid-template-columns: 100%;
+  grid-template-rows: min-content;
+  text-align: center;
 }
 
 .demo {
@@ -157,8 +161,8 @@ body {
 .demoSplit {
   width: 100%;
   display: grid;
-  grid-template-columns: 50% 50%;
-  grid-template-rows: 100%;
+  grid-template-columns: 100%;
+  grid-template-rows: min-content;
 }
 
 .teamCards {
@@ -175,4 +179,9 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.teamCardImg {
+  width: 50px;
+  height: 50px;
 }

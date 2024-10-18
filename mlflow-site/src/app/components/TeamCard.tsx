@@ -16,7 +16,8 @@ const TeamCard: React.FC<TeamCardProps> = ({
 }) => {
   return (
     <div className='teamcard'>
-      <img src={imageNotFound} alt='Img not found'></img>
+      {/* <div style={{ backgroundImage: 'url(../../assets/imageNotFound.jpg)' }} className='teamCardImg'></div> */}
+      <img src={imageNotFound} alt='Miss'></img>
       <div>{name}</div>
       <div>
         <a href={github}>G </a>
