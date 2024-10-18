@@ -46,6 +46,26 @@ body {
   overflow-y: auto;
 }
 
+::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #262626;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #3c3c3c;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #1b1b1b;
+}
+
 .mobileWrapper {
   background: rgb(255, 255, 255);
   width: 100%;
