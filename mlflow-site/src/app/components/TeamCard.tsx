@@ -7,6 +7,8 @@ interface TeamCardProps {
   email: string;
   linkedIn: string;
 }
+// declare function require(path: string);
+// const kittenHeader = require('../images/kitten-header.jpg');
 
 const TeamCard: React.FC<TeamCardProps> = ({
   name,
@@ -18,6 +20,7 @@ const TeamCard: React.FC<TeamCardProps> = ({
     <div className='teamcard'>
       {/* <div style={{ backgroundImage: 'url(../../assets/imageNotFound.jpg)' }} className='teamCardImg'></div> */}
       <img src={imageNotFound} alt='Miss'></img>
+      {/* <img src={require('../../assets/imageNotFound.jpg')} alt="Test"></img> */}
       <div>{name}</div>
       <div>
         <a href={github}>G </a>
