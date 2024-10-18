@@ -18,10 +18,190 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.fullScreen {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+.wrapper {
+  position:absolute;
+  background: rgb(51, 51, 58);
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 360px 1fr;
+  grid-template-rows: 1fr;
+  overflow-y: auto;
+}
+
+::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #262626;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #3c3c3c;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #1b1b1b;
+}
+
+.mobileWrapper {
+  background: rgb(255, 255, 255);
+  width: 100%;
+  height: 100%;
+  grid-column: 2;
+  grid-row: 1;
+  display: grid;
+  grid-template-columns: 0.7rem 1.3rem 1fr 1.3rem 0.7rem;
+  grid-template-rows: 1.3rem 2.8rem 1fr min-content 1.3rem;
+}
+
+.navBar {
+  grid-column: 2/5;
+  grid-row: 2;
+  width: 100%;
+  height: 100%;
+  background-color: #0a0a0a;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: 100%;
+}
+
+.navBarLinks {
+  grid-column: 2;
+  grid-row: 1;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(calc(100%/6), 6);
+  grid-template-rows: 100%;
+}
+
+.navBarLinksFeatures {
+  grid-column: 2;
+}
+
+.navBarLinksDemo {
+  grid-column: 3;
+}
+
+.navBarLinksTeam {
+  grid-column: 4;
+}
+
+.navBarLinksGithub {
+  grid-column: 5;
+}
+
+.navBarLinksLinkedIn {
+  grid-column: 6;
+}
+
+.mobileInnerWrapper {
+  grid-column: 3;
+  grid-row: 3;
+  width: 100%;
+  height: 100%;
+  background-color: aqua;
+}
+
+.team {
+  grid-column: 2/5;
+  grid-row: 4;
+  width: 100%;
+  height: fit-content;
+  background-color: yellow;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.home {
+  grid-column: 2/5;
+  grid-row: 3;
+  width: 100%;
+  background-color: rgb(102, 102, 54);
+}
+
+.button {
+  width: 100%;
+  background-color: rgb(14, 69, 129);
+}
+
+.features {
+  grid-column: 2/5;
+  grid-row: 3;
+  width: 100%;
+  background-color: rgb(176, 47, 107);
+  display: grid;
+  place-items: center;
+}
+
+.featureCard {
+  width: 100%;
+  background-color: rgb(122, 144, 167);
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: min-content;
+  text-align: center;
+}
+
+.demo {
+  grid-column: 2/5;
+  grid-row: 3;
+  width: 100%;
+  background-color: rgb(47, 176, 101);
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: calc(100%/3) calc(100%/3) calc(100%/3);
+}
+
+.demoSplit {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: min-content;
+}
+
+.teamCards {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: repeat(calc(100%/3), 3);
+  /* border: #0a0a0a; */
+  background-color: red;
+}
+
+.teamcard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.teamCardImg {
+  width: 50px;
+  height: 50px;
 }
