@@ -1,4 +1,3 @@
-// import React from 'react';
 import imageNotFound from '../../assets/imageNotFound.jpg'
 
 interface TeamCardProps {
@@ -6,8 +5,6 @@ interface TeamCardProps {
   github: string;
   linkedIn: string;
 }
-// declare function require(path: string);
-// const kittenHeader = require('../images/kitten-header.jpg');
 
 const TeamCard: React.FC<TeamCardProps> = ({
   name,
