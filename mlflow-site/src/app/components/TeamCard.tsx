@@ -4,7 +4,6 @@ import imageNotFound from '../../assets/imageNotFound.jpg'
 interface TeamCardProps {
   name: string;
   github: string;
-  email: string;
   linkedIn: string;
 }
 // declare function require(path: string);
@@ -13,7 +12,6 @@ interface TeamCardProps {
 const TeamCard: React.FC<TeamCardProps> = ({
   name,
   github,
-  email,
   linkedIn,
 }) => {
   return (
@@ -24,7 +22,6 @@ const TeamCard: React.FC<TeamCardProps> = ({
       <div>{name}</div>
       <div>
         <a href={github}>G </a>
-        <a href={`mailto:${email}`}>E </a>
         <a href={linkedIn}>L </a>
       </div>
     </div>
