@@ -1,4 +1,4 @@
-import imageNotFound from '../../assets/imageNotFound.jpg'
+// import imageNotFound from '/../..//assets/imageNotFound.jpg'
 
 interface TeamCardProps {
   name: string;
@@ -14,7 +14,7 @@ const TeamCard: React.FC<TeamCardProps> = ({
   return (
     <div className='teamcard'>
       {/* <div style={{ backgroundImage: 'url(../../assets/imageNotFound.jpg)' }} className='teamCardImg'></div> */}
-      <img src={imageNotFound} alt='Miss'></img>
+      {/* <img src={imageNotFound} alt='Miss'></img> */}
       {/* <img src={require('../../assets/imageNotFound.jpg')} alt="Test"></img> */}
       <div>{name}</div>
       <div>

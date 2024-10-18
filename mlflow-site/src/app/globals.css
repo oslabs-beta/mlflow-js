@@ -83,11 +83,10 @@ body {
   grid-row: 2;
   width: 100%;
   height: 100%;
-  background-color: #7e7e7e;
+  /* background-color: #7e7e7e; */
   display: grid;
   grid-template-columns: auto auto;
   grid-template-rows: 100%;
-  /* text-align: center; */
 }
 
 .navBarLinks {
@@ -125,6 +124,8 @@ body {
   color: rgb(66, 107, 31);
   font-size: 1.2rem;
   font-family: Newsreader;
+  display: flex;
+  align-items: center;
 }
 
 .bigHeadline {
@@ -153,10 +154,11 @@ body {
 }
 
 .home {
+  margin-top: 0.3rem;
   grid-column: 2/5;
   grid-row: 3;
   width: 100%;
-  background-color: rgb(102, 102, 54);
+  /* background-color: rgb(102, 102, 54); */
 }
 
 .button {
