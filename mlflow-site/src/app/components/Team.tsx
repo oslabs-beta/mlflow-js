@@ -30,7 +30,7 @@ const Team = () => {
   ];
   
   return (
-    <div className='team'>
+    <div className='team' id='team'>
       <div className='centered'>Meet the team</div>
       <div className='teamCards'>
         {teamArray.map((member, index) => (
