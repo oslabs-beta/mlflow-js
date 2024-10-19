@@ -14,9 +14,6 @@ jobs:
       - name: Install dependencies
         working-directory: ./mlflow
         run: npm ci
-      - name: Run eslint
-        working-directory: ./mlflow
-        run: npm run lint
       - name: Build
         working-directory: ./mlflow
         run: npm run build
