@@ -45,7 +45,7 @@ const NavBar = () => {
           href='https://github.com/oslabs-beta/mlflow-js'
           className='navBarLinksGithub'
         >
-          <Image src={'/assets/GithubLogo.png'} width={24} height={24} alt='G' />
+          <Image src={'/assets/GithubLogo.png'} width={24} height={24} alt='G' className='navbarGithub'/>
         </a>
       </div>
     </div>
