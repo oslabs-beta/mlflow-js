@@ -3,6 +3,7 @@ node_modules/
 
 # Misc
 .DS_Store
+../.DS_Store
 
 # Python / MLflow specific
 .venv/

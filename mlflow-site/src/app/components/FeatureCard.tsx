@@ -1,10 +1,12 @@
-const FeatureCard = () => {
+const FeatureCard = ({ header, blurb }: {
+  key: string,
+  blurb: string,
+  header: string
+}) => {
   return (
     <div className='featureCard'>
-      <div>FeatureCard1 hello how are you doing?</div>
-      <div>FeatureCard2</div>
-      <div>FeatureCard3</div>
-      <div>FeatureCard4</div>
+      <div className='featureCardHeader'>{header}</div>
+      {blurb}
     </div>
   );
 };
