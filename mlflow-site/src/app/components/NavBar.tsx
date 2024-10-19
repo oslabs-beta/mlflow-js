@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import githubLogo from '../assets/GithubLogo.png';
 
 const NavBar = () => {
   return (
@@ -46,7 +45,7 @@ const NavBar = () => {
           href='https://github.com/oslabs-beta/mlflow-js'
           className='navBarLinksGithub'
         >
-          <Image src={githubLogo} width={24} height={24} alt='G' />
+          <Image src={'/assets/GithubLogo.png'} width={24} height={24} alt='G' />
         </a>
       </div>
     </div>
