@@ -154,7 +154,6 @@ body {
   grid-column: 2/5;
   grid-row: 3;
   width: 100%;
-  background-color: rgb(176, 47, 107);
   display: grid;
   place-items: center;
 }
@@ -166,14 +165,12 @@ body {
   display: grid;
   grid-template-columns: 100%;
   grid-template-rows: min-content;
-  text-align: left;
 }
 
 .demo {
   grid-column: 2/5;
   grid-row: 3;
   width: 100%;
-  background-color: rgb(47, 176, 101);
   display: grid;
   grid-template-columns: 100%;
   grid-template-rows: calc(100%/3) calc(100%/3) calc(100%/3);
