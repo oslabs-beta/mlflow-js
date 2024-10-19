@@ -13,7 +13,7 @@ const Button = () => {
       </button>
       <button
         onClick={() => {
-          window.location.assign('https://github.com/oslabs-beta/mlflow-js');
+          window.location.assign('https://github.com/oslabs-beta/mlflow-js/tree/dev/mlflow/docs');
         }}
         className='homeButton homeButtonRead'
       >
