@@ -160,12 +160,13 @@ body {
 }
 
 .featureCard {
+  color: black;
   width: 100%;
-  background-color: rgb(122, 144, 167);
+  background-color: rgb(217, 225, 210);
   display: grid;
   grid-template-columns: 100%;
   grid-template-rows: min-content;
-  text-align: center;
+  text-align: left;
 }
 
 .demo {
