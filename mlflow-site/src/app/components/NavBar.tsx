@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import githubLogo from '../assets/GithubLogo.png';
-import linkedInLogo from '../assets/LinkedInLogo.png';
 
 const NavBar = () => {
   return (
@@ -48,9 +47,6 @@ const NavBar = () => {
           className='navBarLinksGithub'
         >
           <Image src={githubLogo} width={24} height={24} alt='G' />
-        </a>
-        <a href='' className='navBarLinksLinkedIn'>
-          <Image src={linkedInLogo} width={24} height={24} alt='L' />
         </a>
       </div>
     </div>
