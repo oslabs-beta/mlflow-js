@@ -1,25 +1,34 @@
-import imageNotFound from '../../assets/imageNotFound.jpg'
+import Image from 'next/image';
 
 interface TeamCardProps {
   name: string;
   github: string;
   linkedIn: string;
+  pfp: string;
 }
 
-const TeamCard: React.FC<TeamCardProps> = ({
-  name,
-  github,
-  linkedIn,
-}) => {
+const TeamCard: React.FC<TeamCardProps> = ({ name, github, linkedIn, pfp }) => {
   return (
     <div className='teamcard'>
-      {/* <div style={{ backgroundImage: 'url(../../assets/imageNotFound.jpg)' }} className='teamCardImg'></div> */}
-      <img src={imageNotFound} alt='Miss'></img>
-      {/* <img src={require('../../assets/imageNotFound.jpg')} alt="Test"></img> */}
+      <Image src={pfp} width={70} height={70} alt='No Image' />
       <div>{name}</div>
-      <div>
-        <a href={github}>G </a>
-        <a href={linkedIn}>L </a>
+      <div className='teamcardLinks'>
+        <a href={github} className='teamCardLink1'>
+          <Image
+            src={'/assets/GithubLogo.png'}
+            width={20}
+            height={20}
+            alt='G'
+          />
+        </a>
+        <a href={linkedIn} className='teamCardLink2'>
+          <Image
+            src={'/assets/LinkedInLogo.png'}
+            width={20}
+            height={20}
+            alt='L'
+          />
+        </a>
       </div>
     </div>
   );
