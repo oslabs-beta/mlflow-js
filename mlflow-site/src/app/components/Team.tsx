@@ -26,6 +26,12 @@ const Team = () => {
       linkedIn: 'https://www.linkedin.com/in/stephanyho/',
       pfp: '',
     },
+    {
+      name: 'Winston Ludlam',
+      github: 'https://github.com/winjolu/',
+      linkedIn: 'https://www.linkedin.com/in/wjludlam/',
+      pfp: '',
+    },
   ];
   
   return (
@@ -42,13 +48,6 @@ const Team = () => {
           />
         ))}
       </div>
-      <TeamCard 
-      key={'soloCard'}
-      name={'Winston Ludlam'}
-      github={'https://github.com/winjolu/'}
-      linkedIn={'https://www.linkedin.com/in/wjludlam/'}
-      pfp={''}
-      />
     </div>
   );
 };
