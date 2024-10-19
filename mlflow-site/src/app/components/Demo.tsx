@@ -1,6 +1,6 @@
 const Demo = () => {
   return (
-    <div className='demo'>
+    <div className='demo' id='demo'>
       <div className='demoSplit'>
         <div>Img 1</div>
         <div>Demo 1</div>

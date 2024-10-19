@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* :root {
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -12,13 +12,14 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Inter;
   font-size: 1rem;
+  color: rgb(0, 0, 0);
 }
 
 @layer utilities {
@@ -74,7 +75,7 @@ body {
   grid-row: 1;
   display: grid;
   grid-template-columns: 0.7rem 1.3rem 1fr 1.3rem 0.7rem;
-  grid-template-rows: 1.3rem 2.8rem 1fr min-content 1.3rem;
+  grid-template-rows: 1.3rem min-content 1fr min-content 1.3rem;
 }
 
 .navBar {
@@ -82,7 +83,7 @@ body {
   grid-row: 2;
   width: 100%;
   height: 100%;
-  background-color: #0a0a0a;
+  /* background-color: #7e7e7e; */
   display: grid;
   grid-template-columns: auto auto;
   grid-template-rows: 100%;
@@ -94,8 +95,9 @@ body {
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: repeat(calc(100%/6), 6);
+  grid-template-columns: repeat(calc(100%/5), 5);
   grid-template-rows: 100%;
+  align-items: center;
 }
 
 .navBarLinksFeatures {
@@ -114,8 +116,17 @@ body {
   grid-column: 5;
 }
 
-.navBarLinksLinkedIn {
-  grid-column: 6;
+.navBarMlflow {
+  color: rgb(66, 107, 31);
+  font-size: 1.2rem;
+  font-family: Newsreader;
+  display: flex;
+  align-items: center;
+}
+
+.bigHeadline {
+  font-size: 1.7rem;
+  font-family: Newsreader;
 }
 
 .mobileInnerWrapper {
@@ -123,7 +134,7 @@ body {
   grid-row: 3;
   width: 100%;
   height: 100%;
-  background-color: aqua;
+  /* background-color: aqua; */
 }
 
 .team {
@@ -139,15 +150,33 @@ body {
 }
 
 .home {
+  margin-top: 0.3rem;
   grid-column: 2/5;
   grid-row: 3;
   width: 100%;
-  background-color: rgb(102, 102, 54);
+  /* background-color: rgb(102, 102, 54); */
+}
+
+.homeButton {
+  padding: 3px;
+  padding-left: 6px;
+  padding-right: 6px;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  margin-right: 8px;
+}
+
+.homeButtonDownload {
+  background-color: rgb(66, 107, 31);
+}
+
+.homeButtonRead {
+  background-color: rgb(204, 204, 204);
 }
 
 .button {
   width: 100%;
-  background-color: rgb(14, 69, 129);
+  /* background-color: rgb(14, 69, 129); */
 }
 
 .features {
