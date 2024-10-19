@@ -22,7 +22,7 @@ const Demo = () => {
     );
   }
   return (
-    <div className='demo text-black bg-white'>{demos}</div>
+    <div className='demo'>{demos}</div>
   );
 };
 

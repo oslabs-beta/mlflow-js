@@ -29,9 +29,9 @@ const Features = () => {
     );
   }
   return (
-    <div className='features p-2 mb-20 text-center text-black bg-white'>
-      <div className='text-3xl mb-2'>{featureHeader}</div>
-      <div className='mb-2'>{featureLongBlurb}</div>
+    <div className='features'>
+      <div className='featureHeader'>{featureHeader}</div>
+      <div className='featureLongBlurb'>{featureLongBlurb}</div>
       <div className=''>{cards}</div>
     </div>
   );

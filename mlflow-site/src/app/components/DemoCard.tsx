@@ -6,7 +6,7 @@ const DemoCard = ({ header, blurb }: {
     header: string
   }) => {
     return (
-      <div className='demoCard gap-5 p-1 mb-2 text-center'>
+      <div className='demoCard'>
         <Image
             src='https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExaW9tcWttZ3R0YTVpNWxwcGJ4M2YyZ2ExcmxlazN5N3JyenF0ajl4dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/FqdGGgugkC4Xm/giphy.gif'
             alt=''
@@ -18,7 +18,7 @@ const DemoCard = ({ header, blurb }: {
                 height: "auto",
             }}
         />
-        <div className='text-2xl'>{header}</div>
+        <div className='demoCardHeader'>{header}</div>
         {blurb}
       </div>
     );
