@@ -1,46 +1,22 @@
-import { apiRequest } from '../src/utils/apiRequest';
 import RunClient from '../src/tracking/RunClient';
 import RunManager from '../src/workflows/RunManager';
-
-// helper functions
-async function createExperiment(
-  myRunClient: RunClient,
-  name: string
-): Promise<string> {
-  const { response, data } = await apiRequest(
-    (myRunClient as any).baseUrl,
-    'experiments/create',
-    {
-      method: 'POST',
-      body: { name },
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error(
-      `Error creating experiment: ${data.message || response.statusText}`
-    );
-  }
-
-  return data.experiment_id;
-}
+import ExperimentClient from '../src/tracking/ExperimentClient';
 
 // test code for cleanupRuns
 async function testCleanupRuns(): Promise<any> {
   const myRunClient = new RunClient('http://127.0.0.1:5000');
   const myRunManager = new RunManager('http://127.0.0.1:5000');
+  const myExperimentClient = new ExperimentClient('http://127.0.0.1:5000');
 
   try {
     // create 2 experiments
     console.log('Creating experiment Test Cleanup Run 1...');
-    const experiment_id1 = await createExperiment(
-      myRunClient,
+    const experiment_id1 = await myExperimentClient.createExperiment(
       'Test Cleanup Run 1'
     );
 
     console.log('Creating experiment Test Cleanup Run 2...');
-    const experiment_id2 = await createExperiment(
-      myRunClient,
+    const experiment_id2 = await myExperimentClient.createExperiment(
       'Test Cleanup Run 2'
     );
 
@@ -86,14 +62,14 @@ async function testCleanupRuns(): Promise<any> {
 async function testCopyRun(): Promise<any> {
   const myRunClient = new RunClient('http://127.0.0.1:5000');
   const myRunManager = new RunManager('http://127.0.0.1:5000');
+  const myExperimentClient = new ExperimentClient('http://127.0.0.1:5000');
 
   try {
     console.log('Testing copy run...');
 
     // create a new experiment
     console.log('Creating a new experiment and log batch for the new run...');
-    const experiment_id1 = await createExperiment(
-      myRunClient,
+    const experiment_id1 = await myExperimentClient.createExperiment(
       'Test Copy Run 1'
     );
 
@@ -173,8 +149,7 @@ async function testCopyRun(): Promise<any> {
 
     // create another experiment
     console.log('Create a target experiment...');
-    const experiment_id2 = await createExperiment(
-      myRunClient,
+    const experiment_id2 = await myExperimentClient.createExperiment(
       'Test Copy Run 2'
     );
 

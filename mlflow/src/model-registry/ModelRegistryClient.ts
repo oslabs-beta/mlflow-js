@@ -21,7 +21,7 @@ class ModelRegistryClient {
     name: string,
     tags?: Array<{ key: string; value: string }>,
     description?: string
-  ): Promise<any> {
+  ): Promise<object> {
     const { response, data } = await apiRequest(
       this.baseUrl,
       'registered-models/create',
@@ -50,7 +50,7 @@ class ModelRegistryClient {
    * @returns {Promise<RegisteredModel>} The registered model object
    * @throws {ApiError} If the API request fails
    */
-  async getRegisteredModel(name: string): Promise<any> {
+  async getRegisteredModel(name: string): Promise<object> {
     const { response, data } = await apiRequest(
       this.baseUrl,
       'registered-models/get',
@@ -80,7 +80,7 @@ class ModelRegistryClient {
    * @returns {Promise<RegisteredModel>} The updated registered model object
    * @throws {ApiError} If the API request fails
    */
-  async renameRegisteredModel(name: string, newName: string): Promise<any> {
+  async renameRegisteredModel(name: string, newName: string): Promise<object> {
     const { response, data } = await apiRequest(
       this.baseUrl,
       'registered-models/rename',
@@ -113,7 +113,7 @@ class ModelRegistryClient {
   async updateRegisteredModel(
     name: string,
     description?: string
-  ): Promise<any> {
+  ): Promise<object> {
     const { response, data } = await apiRequest(
       this.baseUrl,
       'registered-models/update',
@@ -172,7 +172,7 @@ class ModelRegistryClient {
    * @returns {Promise<ModelVersion[]>} An array of the latest model versions
    * @throws {ApiError} If the API request fails
    */
-  async getLatestModelVersions(name: string, stages?: string[]): Promise<any> {
+  async getLatestModelVersions(name: string, stages?: string[]): Promise<Array<object>> {
     const { response, data } = await apiRequest(
       this.baseUrl,
       'registered-models/get-latest-versions',
@@ -207,7 +207,7 @@ class ModelRegistryClient {
     maxResults?: number,
     orderBy?: string[],
     pageToken?: string
-  ): Promise<any> {
+  ): Promise<object> {
     const params: Record<string, string> = {};
     if (filter) params.filter = filter;
     if (maxResults) params.max_results = maxResults.toString();
@@ -373,7 +373,7 @@ class ModelRegistryClient {
    * @returns {Promise<ModelVersion>} The model version object
    * @throws {ApiError} If the API request fails
    */
-  async getModelVersionByAlias(name: string, alias: string): Promise<any> {
+  async getModelVersionByAlias(name: string, alias: string): Promise<object> {
     const { response, data } = await apiRequest(
       this.baseUrl,
       'registered-models/alias',
