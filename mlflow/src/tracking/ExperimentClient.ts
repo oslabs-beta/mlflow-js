@@ -14,14 +14,14 @@ class ExperimentClient {
    * @param {string} name Experiment name.  (required)
    * @param {string} artifact_location Optional location where all artifacts for the experiment are stored.  If not provided, the remote server will select an appropriate default.
    * @param {Array<{key: string, value: string}>} tags Optional collection of tags to set on the experiment.
-   * @returns {Promise<Object>} Returns the ID of the newly created experiment in an object.
+   * @returns {Promise<string>} Returns the ID of the newly created experiment in an object.
    * @throws {ApiError} If the API request fails
    */
   async createExperiment(
     name: string, 
     artifact_location?: string, 
     tags?: Array<{key: string, value: string}>
-  ): Promise<any> {
+  ): Promise<string> {
 
     const { response, data } = await apiRequest(
       this.trackingUri,
@@ -62,7 +62,7 @@ class ExperimentClient {
     page_token?: string,
     order_by?: string[],
     view_type?: string
-  ): Promise<any> {
+  ): Promise<object> {
 
     const { response, data } = await apiRequest(
       this.trackingUri,
@@ -94,7 +94,7 @@ class ExperimentClient {
    */
   async getExperiment(
     experiment_id: string
-  ): Promise<any> {
+  ): Promise<object> {
 
     const { response, data } = await apiRequest(
       this.trackingUri,
@@ -129,7 +129,7 @@ class ExperimentClient {
    */
   async getExperimentByName(
     experiment_name: string
-  ): Promise<any> {
+  ): Promise<object> {
 
     const { response, data } = await apiRequest(
       this.trackingUri,
@@ -193,7 +193,7 @@ class ExperimentClient {
    */
   async restoreExperiment(
     experiment_id: string
-  ): Promise<any> {
+  ): Promise<void> {
 
     const { response, data } = await apiRequest(
       this.trackingUri,
