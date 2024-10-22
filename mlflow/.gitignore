@@ -13,3 +13,5 @@ lib/
 
 # Temporary files
 temp/
+
+package-lock.json
