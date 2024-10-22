@@ -22,7 +22,7 @@ const Demo = () => {
     );
   }
   return (
-    <div className='demo' id="demo">{demos}</div>
+    <div className='demo' id='demo'>{demos}</div>
   );
 };
 
