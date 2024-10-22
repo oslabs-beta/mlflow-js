@@ -29,7 +29,7 @@ const Features = () => {
     );
   }
   return (
-    <div className='features'>
+    <div className='features' id="features">
       <div className='featureHeader'>{featureHeader}</div>
       <div className='featureLongBlurb'>{featureLongBlurb}</div>
       <div className=''>{cards}</div>
