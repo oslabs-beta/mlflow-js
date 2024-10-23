@@ -13,7 +13,7 @@ const Features = () => {
     'Feature 4',
   ];
   const featureCardBlurbs = [
-    'Feature Card Blurb 1.  Feature Card Blurb 1.  Feature Card Blurb 1.  Feature Card Blurb 1.  ',
+    'Feature Card Blurb 1.  Feature Card Blurb 1.  Feature Card Blurb 1.  Feature Card Blurb 1. Feature Card Blurb 1. Feature Card Blurb 1. Feature Card Blurb 1. Feature Card Blurb 1. ',
     'Feature Card Blurb 2.  Feature Card Blurb 2.  Feature Card Blurb 2.  Feature Card Blurb 2.  ',
     'Feature Card Blurb 3.  Feature Card Blurb 3.  Feature Card Blurb 3.  Feature Card Blurb 3.  ',
     'Feature Card Blurb 4.  Feature Card Blurb 4.  Feature Card Blurb 4.  Feature Card Blurb 4.  '
@@ -32,7 +32,7 @@ const Features = () => {
     <div className='features' id='features'>
       <div className='featureHeader'>{featureHeader}</div>
       <div className='featureLongBlurb'>{featureLongBlurb}</div>
-      <div className=''>{cards}</div>
+      <div className='featureCardsSection'>{cards}</div>
     </div>
   );
 };
