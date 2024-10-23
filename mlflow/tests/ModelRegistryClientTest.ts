@@ -1,76 +1,11 @@
-import { apiRequest } from '../src/utils/apiRequest';
 import ModelRegistryClient from '../src/model-registry/ModelRegistryClient';
-
-async function createRun(
-  client: ModelRegistryClient,
-  experimentId: string
-): Promise<any> {
-  const { response, data } = await apiRequest(
-    (client as any).baseUrl,
-    'runs/create',
-    {
-      method: 'POST',
-      body: { experiment_id: experimentId },
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error(
-      `Error creating run: ${data.message || response.statusText}`
-    );
-  }
-
-  return data.run;
-}
-
-async function getRun(
-  client: ModelRegistryClient,
-  runId: string
-): Promise<any> {
-  const { response, data } = await apiRequest(
-    (client as any).baseUrl,
-    'runs/get',
-    {
-      method: 'GET',
-      params: { run_id: runId },
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error(
-      `Error getting run: ${data.message || response.statusText}`
-    );
-  }
-
-  return data.run;
-}
-
-async function createModelVersion(
-  client: ModelRegistryClient,
-  name: string,
-  source: string,
-  runId: string
-): Promise<any> {
-  const { response, data } = await apiRequest(
-    (client as any).baseUrl,
-    'model-versions/create',
-    {
-      method: 'POST',
-      body: { name, source, run_id: runId },
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error(
-      `Error creating model version: ${data.message || response.statusText}`
-    );
-  }
-
-  return data.model_version;
-}
+import RunClient from '../src/tracking/RunClient';
+import ModelVersionClient from '../src/model-registry/ModelVersionClient';
 
 async function testModelRegistryClient() {
   const client = new ModelRegistryClient('http://localhost:5001');
+  const runClient = new RunClient('http://localhost:5001');
+  const modelVersionClient = new ModelVersionClient('http://localhost:5001');
   const timestamp = Date.now();
   const baseName = `test-model-${timestamp}`;
   const renamedBaseName = `renamed-test-model-${timestamp}`;
@@ -109,18 +44,17 @@ async function testModelRegistryClient() {
 
     // 5. Create a run
     console.log('\n5. Creating a run...');
-    const run = await createRun(client, '0'); // Using '0' as the default experiment ID
+    const run = await runClient.createRun('0'); // Using '0' as the default experiment ID
     console.log('Created run:', run);
 
     // 6. Get the run to retrieve the artifact URI
     console.log('\n6. Getting run details...');
-    const runDetails = await getRun(client, run.info.run_id);
+    const runDetails = await runClient.getRun(run.info.run_id);
     console.log('Run artifact URI:', runDetails.info.artifact_uri);
 
     // 7. Test creating a model version
     console.log('\n7. Creating a model version...');
-    const modelVersion = await createModelVersion(
-      client,
+    const modelVersion = await modelVersionClient.createModelVersion(
       renamedBaseName,
       runDetails.info.artifact_uri + '/model', // Assuming 'model' as the artifact path
       run.info.run_id

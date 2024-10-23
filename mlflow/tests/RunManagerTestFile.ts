@@ -3,7 +3,7 @@ import RunManager from '../src/workflows/RunManager';
 import ExperimentClient from '../src/tracking/ExperimentClient';
 
 // test code for cleanupRuns
-async function testCleanupRuns(): Promise<any> {
+async function testCleanupRuns(): Promise<void> {
   const myRunClient = new RunClient('http://127.0.0.1:5000');
   const myRunManager = new RunManager('http://127.0.0.1:5000');
   const myExperimentClient = new ExperimentClient('http://127.0.0.1:5000');
@@ -59,7 +59,7 @@ async function testCleanupRuns(): Promise<any> {
 
 // test code for copyRun
 
-async function testCopyRun(): Promise<any> {
+async function testCopyRun(): Promise<void> {
   const myRunClient = new RunClient('http://127.0.0.1:5000');
   const myRunManager = new RunManager('http://127.0.0.1:5000');
   const myExperimentClient = new ExperimentClient('http://127.0.0.1:5000');
