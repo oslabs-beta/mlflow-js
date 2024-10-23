@@ -1,0 +1,19 @@
+name: mlflow
+on:
+  push:
+    branches: [stephany/github-actions-3]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.7'
+      - name: Install and build
+        working-directory: ./mlflow
+        run: npm ci
+      - name: Build
+        working-directory: ./mlflow
+        run: npm run build
