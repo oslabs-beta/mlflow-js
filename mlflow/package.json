@@ -16,7 +16,7 @@
     "build": "npm run clean && tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
     "test": "",
     "lint": "eslint .",
-    "docs": "typedoc src/index.ts"
+    "docs": ""
   },
   "keywords": [
     "mlflow",
@@ -36,7 +36,6 @@
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.10",
     "tsx": "^4.19.1",
-    "typedoc": "^0.26.9",
     "typescript": "^5.6.2",
     "typescript-eslint": "^8.8.0"
   },
