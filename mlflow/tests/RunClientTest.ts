@@ -1,35 +1,14 @@
-import { apiRequest } from '../src/utils/apiRequest';
 import RunClient from '../src/tracking/RunClient';
-
-async function createExperiment(
-  client: RunClient,
-  name: string
-): Promise<string> {
-  const { response, data } = await apiRequest(
-    (client as any).baseUrl,
-    'experiments/create',
-    {
-      method: 'POST',
-      body: { name },
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error(
-      `Error creating experiment: ${data.message || response.statusText}`
-    );
-  }
-
-  return data.experiment_id;
-}
+import ExperimentClient from '../src/tracking/ExperimentClient';
 
 async function testRunClient(): Promise<void> {
   const client = new RunClient('http://127.0.0.1:5000');
+  const experimentClient = new ExperimentClient('http://127.0.0.1:5000');
 
   try {
     // createRun
     console.log('Creating experiment...');
-    const experiment_id = await createExperiment(client, 'Experiment 9');
+    const experiment_id = await experimentClient.createExperiment('Experiment 9');
     console.log('Created experiment ID: ', experiment_id);
 
     console.log('1. Creating run...');

@@ -1,6 +1,6 @@
 import ExperimentClient from '../src/tracking/ExperimentClient.ts';
 const MLFLOW_TRACKING_URI = 'http://localhost:5001';
-let experimentClient = new ExperimentClient(MLFLOW_TRACKING_URI);
+const experimentClient = new ExperimentClient(MLFLOW_TRACKING_URI);
 
 const testCreateExperiment = async () => {
   const num = Math.random().toString().slice(2, 11);

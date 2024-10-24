@@ -24,7 +24,7 @@ class RunClient {
     run_name?: string,
     start_time: number = Date.now(),
     tags?: Array<{ key: string; value: string }>
-  ): Promise<any> {
+  ): Promise<object> {
     const { response, data } = await apiRequest(this.baseUrl, 'runs/create', {
       method: 'POST',
       body: { experiment_id, run_name, start_time, tags },
@@ -95,7 +95,7 @@ class RunClient {
    * @returns {Promise<FetchedRun>} A promise that resolves with the fetched run object.
    * @throws {ApiError} If the API request fails
    */
-  async getRun(run_id: string): Promise<any> {
+  async getRun(run_id: string): Promise<object> {
     const { response, data } = await apiRequest(this.baseUrl, 'runs/get', {
       method: 'GET',
       params: { run_id },
@@ -126,7 +126,7 @@ class RunClient {
     status?: 'RUNNING' | 'SCHEDULED' | 'FINISHED' | 'FAILED' | 'KILLED',
     end_time?: number,
     run_name?: string
-  ): Promise<any> {
+  ): Promise<object> {
     const { response, data } = await apiRequest(this.baseUrl, 'runs/update', {
       method: 'POST',
       body: { run_id, status, end_time, run_name },
@@ -402,7 +402,7 @@ class RunClient {
     metric_key: string,
     page_token?: string,
     max_results?: number
-  ): Promise<any> {
+  ): Promise<object> {
     const params: Record<string, string> = { run_id, metric_key };
 
     if (page_token !== undefined) params.page_token = page_token;
@@ -458,7 +458,7 @@ class RunClient {
     max_results?: number,
     order_by?: Array<string>,
     page_token?: string
-  ): Promise<any> {
+  ): Promise<object> {
     const { response, data } = await apiRequest(this.baseUrl, 'runs/search', {
       method: 'POST',
       body: {
@@ -498,7 +498,7 @@ class RunClient {
     run_id: string,
     path?: string,
     page_token?: string
-  ): Promise<any> {
+  ): Promise<object> {
     const params: Record<string, string> = { run_id };
     if (path !== undefined) params.path = path;
     if (page_token !== undefined) params.page_token = page_token;
