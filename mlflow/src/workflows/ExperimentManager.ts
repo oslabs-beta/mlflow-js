@@ -36,14 +36,14 @@ class ExperimentManager {
     tags?: Array<{ key: string; value: string }>,
     model?: {
       artifact_path: string;
-      flavors: Object;
+      flavors: object;
       model_url: string;
       model_uuid: string;
       utc_time_created: number;
       mlflow_version: string;
       run_id?: string;
     }
-  ): Promise<any> {
+  ): Promise<object> {
     try {
       // create run
       const run = await this.runClient.createRun(experiment_id, run_name);
@@ -56,7 +56,7 @@ class ExperimentManager {
       // (model gets passed in as a JS object, not JSON - it gets JSON stringified here after adding a run_id property)
       if (model) {
         model.run_id = run_id;
-        let model_json = JSON.stringify(model);
+        const model_json = JSON.stringify(model);
         await this.runClient.logModel(run_id, model_json);
       }
 
@@ -100,14 +100,14 @@ class ExperimentManager {
     tags?: Array<{ key: string; value: string }>,
     model?: {
       artifact_path: string;
-      flavors: Object;
+      flavors: object;
       model_url: string;
       model_uuid: string;
       utc_time_created: number;
       mlflow_version: string;
       run_id?: string;
     }
-  ): Promise<any> {
+  ): Promise<object> {
     try {
       const experiment_id = await this.experimentClient.createExperiment(
         experiment_name
@@ -156,7 +156,7 @@ class ExperimentManager {
     experiment_id: string,
     primaryMetric: string,
     order?: 'ASC' | 'DESC' | 1 | -1
-  ): Promise<any> {
+  ): Promise<Array<object>> {
     try {
       interface RunInfo {
         run_id: string;

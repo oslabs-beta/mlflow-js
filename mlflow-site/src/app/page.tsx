@@ -11,8 +11,8 @@ export default function Home() {
         <NavBar />
         <div className='mobileInnerWrapper'>
           <Headline />
-          <Features/>
-          <Demo/>
+          <Features />
+          <Demo />
         </div>
         <Team />
       </div>
