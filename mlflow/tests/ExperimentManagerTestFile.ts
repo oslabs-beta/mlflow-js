@@ -51,7 +51,7 @@ const testRunExistingExperiment = async () => {
   );
   return console.log(log);
 };
-// testRunExistingExperiment();
+testRunExistingExperiment();
 
 const testRunNewExperiment = async () => {
   // define fake data for metrics, params, tags, and model
@@ -97,7 +97,7 @@ const testRunNewExperiment = async () => {
   );
   return console.log(log);
 };
-// testRunNewExperiment();
+testRunNewExperiment();
 
 const testExperimentSummary = async () => {
   const log = await experimentManager.experimentSummary(
