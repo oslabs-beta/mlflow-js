@@ -15,7 +15,7 @@
     "clean": "rimraf lib",
     "build": "npm run clean && tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
     "test": "",
-    "lint": "eslint .",
+    "lint": "eslint src",
     "docs": ""
   },
   "keywords": [

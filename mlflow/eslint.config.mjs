@@ -7,9 +7,6 @@ export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    ignores: ['docs', 'lib/**'],
-  },
-  {
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
       'no-console': 'off',
