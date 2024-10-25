@@ -2,11 +2,15 @@ import RunClient from '../src/tracking/RunClient';
 import RunManager from '../src/workflows/RunManager';
 import ExperimentClient from '../src/tracking/ExperimentClient';
 
+interface keyable {
+  [key: string]: any
+}
+
 // test code for cleanupRuns
 async function testCleanupRuns(): Promise<void> {
-  const myRunClient = new RunClient('http://127.0.0.1:5000');
-  const myRunManager = new RunManager('http://127.0.0.1:5000');
-  const myExperimentClient = new ExperimentClient('http://127.0.0.1:5000');
+  const myRunClient = new RunClient('http://127.0.0.1:5001');
+  const myRunManager = new RunManager('http://127.0.0.1:5001');
+  const myExperimentClient = new ExperimentClient('http://127.0.0.1:5001');
 
   try {
     // create 2 experiments
@@ -22,11 +26,11 @@ async function testCleanupRuns(): Promise<void> {
 
     // create two runs for each experiment
     console.log('Creating runs...');
-    const run1 = await myRunClient.createRun(experiment_id1);
-    const run2 = await myRunClient.createRun(experiment_id1);
+    const run1:keyable = await myRunClient.createRun(experiment_id1);
+    const run2:keyable = await myRunClient.createRun(experiment_id1);
     console.log('Created runs for Test Cleanup Run 1');
-    const run3 = await myRunClient.createRun(experiment_id2);
-    const run4 = await myRunClient.createRun(experiment_id2);
+    const run3:keyable = await myRunClient.createRun(experiment_id2);
+    const run4:keyable = await myRunClient.createRun(experiment_id2);
     console.log('Created runs for Test Cleanup Run 2');
 
     // log metrics
@@ -60,9 +64,9 @@ async function testCleanupRuns(): Promise<void> {
 // test code for copyRun
 
 async function testCopyRun(): Promise<void> {
-  const myRunClient = new RunClient('http://127.0.0.1:5000');
-  const myRunManager = new RunManager('http://127.0.0.1:5000');
-  const myExperimentClient = new ExperimentClient('http://127.0.0.1:5000');
+  const myRunClient = new RunClient('http://127.0.0.1:5001');
+  const myRunManager = new RunManager('http://127.0.0.1:5001');
+  const myExperimentClient = new ExperimentClient('http://127.0.0.1:5001');
 
   try {
     console.log('Testing copy run...');
@@ -75,7 +79,7 @@ async function testCopyRun(): Promise<void> {
 
     // create a new run in the newly created experiment
     console.log('Creating run...');
-    const run = await myRunClient.createRun(experiment_id1);
+    const run:keyable = await myRunClient.createRun(experiment_id1);
     console.log('Created run: ', run);
 
     // log batch for that run ID

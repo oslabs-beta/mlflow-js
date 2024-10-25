@@ -175,10 +175,14 @@ body {
 
 .homeButtonDownload {
   background-color: rgb(66, 107, 31);
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
 }
 
 .homeButtonRead {
   background-color: rgb(204, 204, 204);
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
 }
 
 .button {

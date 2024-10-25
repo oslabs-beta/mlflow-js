@@ -2,6 +2,10 @@ import ModelRegistryClient from '../src/model-registry/ModelRegistryClient';
 import RunClient from '../src/tracking/RunClient';
 import ModelVersionClient from '../src/model-registry/ModelVersionClient';
 
+interface keyable {
+  [key: string]: any
+}
+
 async function testModelRegistryClient() {
   const client = new ModelRegistryClient('http://localhost:5001');
   const runClient = new RunClient('http://localhost:5001');
@@ -44,12 +48,12 @@ async function testModelRegistryClient() {
 
     // 5. Create a run
     console.log('\n5. Creating a run...');
-    const run = await runClient.createRun('0'); // Using '0' as the default experiment ID
+    const run:keyable = await runClient.createRun('0'); // Using '0' as the default experiment ID
     console.log('Created run:', run);
 
     // 6. Get the run to retrieve the artifact URI
     console.log('\n6. Getting run details...');
-    const runDetails = await runClient.getRun(run.info.run_id);
+    const runDetails:keyable = await runClient.getRun(run.info.run_id);
     console.log('Run artifact URI:', runDetails.info.artifact_uri);
 
     // 7. Test creating a model version
@@ -75,7 +79,7 @@ async function testModelRegistryClient() {
     }
 
     // Perform initial search with a small max_results to force pagination
-    const initialSearchResults = await client.searchRegisteredModels(
+    const initialSearchResults:keyable = await client.searchRegisteredModels(
       `name LIKE '${renamedBaseName}%'`,
       3, // Small max_results to force pagination
       ['name ASC']
@@ -88,7 +92,7 @@ async function testModelRegistryClient() {
 
     if (initialSearchResults.next_page_token) {
       // Perform second search using the page token
-      const secondSearchResults = await client.searchRegisteredModels(
+      const secondSearchResults:keyable = await client.searchRegisteredModels(
         `name LIKE '${renamedBaseName}%'`,
         3,
         ['name ASC'],
