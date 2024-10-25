@@ -2,6 +2,10 @@ import ExperimentClient from '@tracking/ExperimentClient';
 import RunClient from '@tracking/RunClient';
 import { ApiError } from '@utils/apiError';
 
+interface keyable {
+  [key: string]: any
+}
+
 class ExperimentManager {
   private experimentClient: ExperimentClient;
   private runClient: RunClient;
@@ -46,7 +50,7 @@ class ExperimentManager {
   ): Promise<object> {
     try {
       // create run
-      const run = await this.runClient.createRun(experiment_id, run_name);
+      const run:keyable = await this.runClient.createRun(experiment_id, run_name);
       const run_id = run.info.run_id;
 
       // log metric, params, and tags via logBatch
@@ -114,7 +118,7 @@ class ExperimentManager {
       );
 
       // create run
-      const run = await this.runClient.createRun(experiment_id, run_name);
+      const run:keyable = await this.runClient.createRun(experiment_id, run_name);
       const run_id = run.info.run_id;
 
       // log metric, params, and tags via logBatch
@@ -203,7 +207,7 @@ class ExperimentManager {
       if (order === 1 || order === 'DESC') orderString = 'DESC';
       else if (order === -1 || order === 'ASC') orderString = 'ASC';
       const arg = `metrics.${primaryMetric} ${orderString}`;
-      const data = await this.runClient.searchRuns(
+      const data:keyable = await this.runClient.searchRuns(
         [experiment_id],
         '',
         undefined,
