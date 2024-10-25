@@ -2,6 +2,10 @@ import ModelVersionClient from '../src/model-registry/ModelVersionClient';
 import ModelRegistryClient from '../src/model-registry/ModelRegistryClient';
 import RunClient from '../src/tracking/RunClient';
 
+interface keyable {
+  [key: string]: any
+}
+
 async function testModelVersionClient() {
   const client = new ModelVersionClient('http://localhost:5001');
   const modelRegistryClient = new ModelRegistryClient('http://localhost:5001');
@@ -21,7 +25,7 @@ async function testModelVersionClient() {
     );
 
     console.log('\n5. Creating a run...');
-    const run = await runClient.createRun('0'); // Using '0' as the default experiment ID
+    const run:keyable = await runClient.createRun('0'); // Using '0' as the default experiment ID
     console.log('Created run:', run);
 
     // 1. Creating a registered model version

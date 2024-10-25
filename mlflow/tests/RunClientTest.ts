@@ -1,6 +1,10 @@
 import RunClient from '../src/tracking/RunClient';
 import ExperimentClient from '../src/tracking/ExperimentClient';
 
+interface keyable {
+  [key: string]: any
+}
+
 async function testRunClient(): Promise<void> {
   const client = new RunClient('http://127.0.0.1:5000');
   const experimentClient = new ExperimentClient('http://127.0.0.1:5000');
@@ -12,7 +16,7 @@ async function testRunClient(): Promise<void> {
     console.log('Created experiment ID: ', experiment_id);
 
     console.log('1. Creating run...');
-    const run = await client.createRun(experiment_id);
+    const run:keyable = await client.createRun(experiment_id);
     console.log('Created run: ', run);
 
     // deleteRun
@@ -48,7 +52,7 @@ async function testRunClient(): Promise<void> {
 
     // logBatch
     console.log('Creating another run...');
-    const run2 = await client.createRun(experiment_id);
+    const run2:keyable = await client.createRun(experiment_id);
     console.log('Created run2: ', run2);
     const run2Id = run2.info.run_id;
 
@@ -120,7 +124,7 @@ async function testRunClient(): Promise<void> {
 
     // setTag
     console.log('Creating another run...');
-    const run3 = await client.createRun(experiment_id);
+    const run3:keyable = await client.createRun(experiment_id);
     console.log('Created run3: ', run3);
     const run3Id = run3.info.run_id;
 
