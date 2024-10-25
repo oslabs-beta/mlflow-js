@@ -4,7 +4,7 @@ import ModelVersionClient from '@model-registry/ModelVersionClient';
 import { ApiError } from '@utils/apiError';
 
 interface keyable {
-  [key: string]: any
+  [key: string]: any;
 }
 
 class ModelManager {
@@ -107,7 +107,9 @@ class ModelManager {
     value: string
   ): Promise<object> {
     try {
-      const data: keyable = await this.modelRegistry.getLatestModelVersions(name);
+      const data: keyable = await this.modelRegistry.getLatestModelVersions(
+        name
+      );
       if (!data) {
         throw new Error('Model has no version to update.');
       } else {
@@ -147,7 +149,9 @@ class ModelManager {
     value: string
   ): Promise<void> {
     try {
-      const data:keyable = await this.modelRegistry.getLatestModelVersions(name);
+      const data: keyable = await this.modelRegistry.getLatestModelVersions(
+        name
+      );
       if (!data) {
         throw new Error('Model has no version to set tag for.');
       } else {
@@ -176,11 +180,13 @@ class ModelManager {
    */
   async setLatestModelVersionAlias(name: string, alias: string): Promise<void> {
     try {
-      const data:keyable = await this.modelRegistry.getLatestModelVersions(name);
+      const data: keyable = await this.modelRegistry.getLatestModelVersions(
+        name
+      );
       if (!data) {
         throw new Error('Model has no version to set alias for.');
       } else {
-        const version= data[0].version;
+        const version = data[0].version;
         this.modelRegistry.setRegisteredModelAlias(name, alias, version);
         return;
       }
@@ -208,11 +214,13 @@ class ModelManager {
     description: string
   ): Promise<object> {
     try {
-      const data:keyable = await this.modelRegistry.getLatestModelVersions(name);
+      const data: keyable = await this.modelRegistry.getLatestModelVersions(
+        name
+      );
       if (!data) {
         throw new Error('Model has no version to set description for.');
       } else {
-        const version= data[0].version;
+        const version = data[0].version;
         const response = await this.modelVersion.updateModelVersion(
           name,
           version,
@@ -281,7 +289,9 @@ class ModelManager {
    */
   async deleteLatestModelVersion(name: string): Promise<void> {
     try {
-      const data:keyable = await this.modelRegistry.getLatestModelVersions(name);
+      const data: keyable = await this.modelRegistry.getLatestModelVersions(
+        name
+      );
       if (!data) {
         throw new Error('Model has no version to delete.');
       } else {
@@ -309,7 +319,7 @@ class ModelManager {
    * @param {string[]} experiment_ids - An array containing an experiment id. (Required)
    * @param {string} filterMetric - The name of the metric that we're filtering by. (Required)
    * @param {string} metricMinOrMax - A string specifying if we want the minimum or maximum
-   *                                  value of the specified metric. Can be either 'min' or 
+   *                                  value of the specified metric. Can be either 'min' or
    *                                  'max'(Required)
    * @param {string} modelName - The name of the new model that will be created. (Required)
    * @returns {Promise<void>}
@@ -322,7 +332,7 @@ class ModelManager {
     modelName: string
   ): Promise<void> {
     try {
-      const data:keyable = await this.runClient.searchRuns(
+      const data: keyable = await this.runClient.searchRuns(
         experiment_ids,
         `metrics.${filterMetric} != -99999`
       );
@@ -359,7 +369,7 @@ class ModelManager {
         bestRun.info.artifact_uri,
         bestRun.info.run_id
       );
-  return
+      return;
     } catch (error) {
       if (error instanceof ApiError) {
         console.error(`API Error (${error.statusCode}): ${error.message}`);
