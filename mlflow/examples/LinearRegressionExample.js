@@ -1,18 +1,17 @@
 /**
- * @fileoverview Example of using MLflow.js for machine learning experiment tracking
- * This example demonstrates a simple linear regression model using TensorFlow.js
- * with MLflow tracking. It showcases:
+ * @fileoverview Example of using MLflow.js for machine learning projects
+ * The example creates a synthetic dataset and trains a linear regression model using TensorFlow.js,
+ * tracking various metrics and parameters throughout the training process with MLflow tracking server.
+ * It showcases:
  * - Experiment and run management
  * - Hyperparameter logging
  * - Metric tracking
+ * - Tagging 
+ * - Model registry
  * - Model versioning
  * - Artifact storage
  *
- * The example creates a synthetic dataset and trains a linear regression model,
- * tracking various metrics and parameters throughout the training process.
- *
  * @requires @tensorflow/tfjs-node
- * @requires mlflow-js
  *
  * @note Ensure MLflow server is running at http://localhost:5001 before executing
  */
@@ -71,7 +70,7 @@ function createModel() {
   model.compile({
     optimizer: tf.train.sgd(HYPERPARAMETERS.learningRate),
     loss: 'meanSquaredError',
-    metrics: ['mse', 'mae'],
+    metrics: ['mae'],
   });
 
   return model;
@@ -94,12 +93,6 @@ async function trainModel(model, xTrain, yTrain, runId) {
             step: epoch,
           },
           {
-            key: 'train_mse',
-            value: logs.mse,
-            timestamp: Date.now(),
-            step: epoch,
-          },
-          {
             key: 'train_mae',
             value: logs.mae,
             timestamp: Date.now(),
@@ -108,12 +101,6 @@ async function trainModel(model, xTrain, yTrain, runId) {
           {
             key: 'val_loss',
             value: logs.val_loss,
-            timestamp: Date.now(),
-            step: epoch,
-          },
-          {
-            key: 'val_mse',
-            value: logs.val_mse,
             timestamp: Date.now(),
             step: epoch,
           },
