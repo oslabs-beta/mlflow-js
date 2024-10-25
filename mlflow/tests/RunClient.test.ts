@@ -1,40 +1,14 @@
-import { describe, test, expect, beforeEach } from '@jest/globals';
+import { describe, test, expect, beforeAll } from '@jest/globals';
 import RunClient from '../src/tracking/RunClient';
+import { Run } from '../src/utils/interface';
 import { ApiError } from '../src/utils/apiError';
-
-interface Run {
-  info: {
-    run_id: string;
-    run_name: string;
-    experiment_id: string;
-    status: string;
-    start_time: number;
-    end_time: number;
-    artifact_uri: string;
-    lifecycle_stage: string;
-  };
-  data: {
-    metrics: Array<{ key: string; value: number }>;
-    params: Array<{ key: string; value: number }>;
-    tags: Array<{ key: string; value: number }>;
-  };
-  inputs: Array<{
-    tags?: Array<{ key: string; value: string }>;
-    dataset: {
-      name: string;
-      digest: string;
-      source_type: string;
-      source: string;
-      schema?: string;
-      profile?: string;
-    };
-  }>;
-}
 
 describe('RunClient', () => {
   let client: RunClient;
 
-  beforeEach(() => {
+  beforeAll(async () => {
+    // Add a small delay to ensure MLflow is fully ready
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     client = new RunClient('http://127.0.0.1:5001');
   });
 
