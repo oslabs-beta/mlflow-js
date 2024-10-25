@@ -3,10 +3,9 @@
     // Basic Options
     "target": "ES2018",
     "module": "ESNext",
-    "lib": ["ES2018"],
+    "lib": ["dom", "ES2018"],
     "rootDir": "./src",
     "outDir": "./lib",
-
     "types": ["jest"],
 
     // Module Resolution Options
@@ -20,6 +19,7 @@
       "@workflows/*": ["src/workflows/*"]
     },
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     // "moduleDetection": "force",
 

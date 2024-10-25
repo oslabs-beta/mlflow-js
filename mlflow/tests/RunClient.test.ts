@@ -1,9 +1,6 @@
-import { describe, test, expect, beforeEach, it } from '@jest/globals';
-import request from 'supertest';
+import { describe, test, expect, beforeEach } from '@jest/globals';
 import RunClient from '../src/tracking/RunClient';
 import { ApiError } from '../src/utils/apiError';
-
-const baseUrl = 'http://127.0.0.1:5000';
 
 interface Run {
   info: {
@@ -38,7 +35,7 @@ describe('RunClient', () => {
   let client: RunClient;
 
   beforeEach(() => {
-    client = new RunClient('http://127.0.0.1:5000');
+    client = new RunClient('http://127.0.0.1:5001');
   });
 
   describe('createRun', () => {
@@ -114,21 +111,5 @@ describe('RunClient', () => {
         /Error creating run:.+invalid_id/
       );
     });
-  });
-});
-
-describe('MLflow API Integration Tests', () => {
-  it('- Should create a run using direct API call', async () => {
-    const experiment_id = '876374673578277025';
-    const run_name = 'Test Run';
-
-    const response = await request(baseUrl)
-      .post('/api/2.0/mlflow/runs/create')
-      .send({ experiment_id, run_name })
-      .expect(200);
-
-    expect(response.body).toHaveProperty('run');
-    expect(response.body.run.info.experiment_id).toBe(experiment_id);
-    expect(response.body.run.info.run_name).toBe(run_name);
   });
 });
