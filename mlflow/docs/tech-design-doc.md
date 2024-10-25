@@ -4,7 +4,7 @@
 ## 1. Overview
 
 
-The MLflow-JS library aims to provide a comprehensive and intuitive interface for interacting with MLflow services in a JavaScript/Typescript environment. It simplifies the integration with MLflow REST APIs by offering high-level methods for tracking, model management, and advanced workflows.  
+The MLflow-JS library aims to provide a comprehensive and intuitive interface for interacting with MLflow services in a JavaScript/TypeScript environment. It simplifies the integration with MLflow REST APIs by offering high-level methods for tracking, model management, and advanced workflows.  
 
 
 ## 2. Architecture

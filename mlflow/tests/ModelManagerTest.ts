@@ -1,6 +1,10 @@
 import ModelManager from '../src/workflows/ModelManager';
 import RunClient from '../src/tracking/RunClient';
 
+interface keyable {
+  [key: string]: any
+}
+
 async function testModelManager() {
   const modelManager = new ModelManager('http://localhost:5001');
   const runClient = new RunClient('http://localhost:5001');
@@ -20,7 +24,7 @@ async function testModelManager() {
   const runMetricValueLow = 1;
 
   console.log('\n5. Creating a run...');
-  const run = await runClient.createRun('0'); // Using '0' as the default experiment ID
+  const run:keyable = await runClient.createRun('0'); // Using '0' as the default experiment ID
   console.log('Created run:', run);
 
   console.log('1. Creating a new registered model with a version...');
@@ -96,7 +100,7 @@ async function testModelManager() {
   console.log(`Deleted Latest version of ${modelName}`);
 
   console.log('9. Creating model from run with best metric...');
-  const run2 = await runClient.createRun('0'); // Using '0' as the default experiment ID
+  const run2:keyable = await runClient.createRun('0'); // Using '0' as the default experiment ID
   console.log('Created run:', run2);
 
   await runClient.logMetric(
@@ -111,7 +115,7 @@ async function testModelManager() {
     runMetricValueLow
   );
 
-  const runData = await runClient.getRun(
+  const runData:keyable = await runClient.getRun(
     run.info.run_id
   );
 

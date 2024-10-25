@@ -2,6 +2,10 @@ import RunClient from '@tracking/RunClient';
 import ModelVersionClient from '@model-registry/ModelVersionClient';
 import { ApiError } from '@utils/apiError';
 
+interface keyable {
+  [key: string]: any
+}
+
 interface Run {
   info: {
     run_id: string;
@@ -64,7 +68,7 @@ class RunManager {
     try {
       do {
         // get all runs
-        const searchResult = await this.runClient.searchRuns(
+        const searchResult:keyable = await this.runClient.searchRuns(
           experimentIds,
           '',
           undefined, // run_view_type
@@ -74,7 +78,7 @@ class RunManager {
         );
 
         // get runs that match the keep crteria
-        const keepRunsResult = await this.runClient.searchRuns(
+        const keepRunsResult:keyable = await this.runClient.searchRuns(
           experimentIds,
           query_string,
           undefined, // run_view_type
@@ -143,10 +147,10 @@ class RunManager {
   ): Promise<object> {
     try {
       // get original run
-      const originalRun = await this.runClient.getRun(runId);
+      const originalRun:keyable = await this.runClient.getRun(runId);
 
       // create a new run in the target experiment
-      const newRun = await this.runClient.createRun(
+      const newRun:keyable = await this.runClient.createRun(
         targetExperimentId,
         undefined,
         originalRun.info.start_time
