@@ -1,29 +1,33 @@
-import Image from 'next/image';
-
 const DemoCard = ({
   header,
   blurb,
+  video
 }: {
   key: string;
   blurb: string;
   header: string;
+  video: string;
 }) => {
   return (
-    <div className='demoCard'>
-      <Image
-        src='https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExaW9tcWttZ3R0YTVpNWxwcGJ4M2YyZ2ExcmxlazN5N3JyenF0ajl4dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/FqdGGgugkC4Xm/giphy.gif'
-        alt=''
-        width={700}
-        height={475}
-        sizes='100vw'
-        style={{
-          width: '100%',
-          height: 'auto',
-        }}
-      />
-      <div className='demoCardText'>
-        <div className='demoCardHeader'>{header}</div>
-        <div className='demoCardInfo'>{blurb}</div>
+    <div className="demoCard">
+      <div style={{ padding: '56.25% 0 0 0', position: 'relative' }}>
+        <iframe
+          src={video}
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+          }}
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowFullScreen
+          title="Vimeo Video Player"
+        />
+      </div>
+      <div className="demoCardText">
+        <div className="demoCardHeader">{header}</div>
+        <div className="demoCardInfo">{blurb}</div>
       </div>
     </div>
   );
