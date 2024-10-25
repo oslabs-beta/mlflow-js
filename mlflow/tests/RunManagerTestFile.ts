@@ -8,9 +8,9 @@ interface keyable {
 
 // test code for cleanupRuns
 async function testCleanupRuns(): Promise<void> {
-  const myRunClient = new RunClient('http://127.0.0.1:5000');
-  const myRunManager = new RunManager('http://127.0.0.1:5000');
-  const myExperimentClient = new ExperimentClient('http://127.0.0.1:5000');
+  const myRunClient = new RunClient('http://127.0.0.1:5001');
+  const myRunManager = new RunManager('http://127.0.0.1:5001');
+  const myExperimentClient = new ExperimentClient('http://127.0.0.1:5001');
 
   try {
     // create 2 experiments
@@ -64,9 +64,9 @@ async function testCleanupRuns(): Promise<void> {
 // test code for copyRun
 
 async function testCopyRun(): Promise<void> {
-  const myRunClient = new RunClient('http://127.0.0.1:5000');
-  const myRunManager = new RunManager('http://127.0.0.1:5000');
-  const myExperimentClient = new ExperimentClient('http://127.0.0.1:5000');
+  const myRunClient = new RunClient('http://127.0.0.1:5001');
+  const myRunManager = new RunManager('http://127.0.0.1:5001');
+  const myExperimentClient = new ExperimentClient('http://127.0.0.1:5001');
 
   try {
     console.log('Testing copy run...');
