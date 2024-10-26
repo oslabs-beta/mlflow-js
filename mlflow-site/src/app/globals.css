@@ -89,6 +89,11 @@ body {
   font-size: clamp(1rem, 4.43vw, 1.2rem);
 }
 
+.mlflow-logo {
+  width: clamp(4rem, 17.72vw, 8rem);
+  height: clamp(2rem, 8.86vw, 2.4rem);
+}
+
 .navBarLinks {
   grid-column: 2;
   grid-row: 1;

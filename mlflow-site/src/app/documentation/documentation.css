@@ -1,0 +1,29 @@
+.documentationWrapper {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: 50px 1fr;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.documentationHeader {
+    grid-column: 1/3;
+    /* height: 50px; */
+}
+
+.documentationLeftSideBar {
+    background-color: blue;
+}
+
+.documentationMain {
+    background-color: yellow;
+}
+
+.method {
+    background-color: indigo;
+}
