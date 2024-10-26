@@ -8,7 +8,7 @@ const testCreateExperiment = async () => {
   const log = await experimentClient.createExperiment(name);
   return console.log(log);
 };
-testCreateExperiment();
+// testCreateExperiment();
 
 const testSearchExperiment = async () => {
   const num1 = Math.random().toString().slice(2, 11);
@@ -51,7 +51,7 @@ const testGetExperiment = async () => {
   const log = await experimentClient.getExperiment(exp);
   console.log(log);
 };
-testGetExperiment();
+// testGetExperiment();
 
 const testGetExperimentByName = async () => {
   const num = Math.random().toString().slice(2, 11);
@@ -60,7 +60,7 @@ const testGetExperimentByName = async () => {
   const log = await experimentClient.getExperimentByName(name);
   console.log(log);
 };
-testGetExperimentByName();
+// testGetExperimentByName();
 
 const testDeleteExperiment = async () => {
   const num = Math.random().toString().slice(2, 11);
@@ -71,7 +71,7 @@ const testDeleteExperiment = async () => {
   console.log(log2);
   experimentClient.restoreExperiment(exp);
 };
-testDeleteExperiment();
+// testDeleteExperiment();
 
 const testRestoreExperiment = async () => {
   const num = Math.random().toString().slice(2, 11);
@@ -86,7 +86,7 @@ const testRestoreExperiment = async () => {
   const log4 = await experimentClient.getExperiment(exp);
   console.log(log4);
 };
-testRestoreExperiment();
+// testRestoreExperiment();
 
 const testUpdateExperiment = async () => {
   const num = Math.random().toString().slice(2, 11);
@@ -103,7 +103,7 @@ const testUpdateExperiment = async () => {
   // Reverting to old name
   await experimentClient.updateExperiment(exp, name);
 };
-testUpdateExperiment();
+// testUpdateExperiment();
 
 const testSetExperimentTag = async () => {
   const num = Math.random().toString().slice(2, 11);
@@ -120,4 +120,4 @@ const testSetExperimentTag = async () => {
   const log3 = await experimentClient.getExperiment(exp);
   console.log(log3);
 };
-testSetExperimentTag();
+// testSetExperimentTag();
