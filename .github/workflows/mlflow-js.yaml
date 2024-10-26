@@ -11,9 +11,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22.7'
-      - name: Install and build
+      - name: Install
         working-directory: ./mlflow
         run: npm ci
+      - name: Test
+        working-directory: ./mlflow
+        run: |
+          npm run lint
+          npm run test
       - name: Build
         working-directory: ./mlflow
         run: npm run build
