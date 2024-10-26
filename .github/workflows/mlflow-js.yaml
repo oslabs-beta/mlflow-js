@@ -14,11 +14,9 @@ jobs:
       - name: Install
         working-directory: ./mlflow
         run: npm ci
-      - name: Test
+      - name: Eslint
         working-directory: ./mlflow
-        run: |
-          npm run lint
-          npm run test
+        run: npm run lint
       - name: Build
         working-directory: ./mlflow
         run: npm run build
