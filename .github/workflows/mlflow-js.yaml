@@ -2,6 +2,7 @@ name: mlflow
 on:
   push:
     paths:
+      - '.github/workflows/**'
       - 'mlflow/**'
 jobs:
   build:
