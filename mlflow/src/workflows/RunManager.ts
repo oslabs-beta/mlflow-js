@@ -1,6 +1,6 @@
 import RunClient from '@tracking/RunClient';
 import ModelVersionClient from '@model-registry/ModelVersionClient';
-import { Run } from '../utils/interface';
+import { Run } from '@utils/interface';
 import { ApiError } from '@utils/apiError';
 
 interface keyable {
