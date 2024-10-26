@@ -7,7 +7,7 @@ export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    ignores: ['docs', 'lib/**'],
+    ignores: ['docs', 'lib/**', 'examples'],
   },
   {
     rules: {
