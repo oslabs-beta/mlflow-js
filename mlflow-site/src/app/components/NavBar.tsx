@@ -12,6 +12,7 @@ const NavBar = () => {
             const element = document.getElementById('headline');
             element?.scrollIntoView({ behavior: 'smooth' });
           }}
+          className='navBarLinksHome'
         >
           Home
         </button>
@@ -20,6 +21,7 @@ const NavBar = () => {
             const element = document.getElementById('features');
             element?.scrollIntoView({ behavior: 'smooth' });
           }}
+          className='navBarLinksFeatures'
         >
           Features
         </button>

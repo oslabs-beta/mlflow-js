@@ -1,38 +1,10 @@
 import RunClient from '@tracking/RunClient';
 import ModelVersionClient from '@model-registry/ModelVersionClient';
+import { Run } from '@utils/interface';
 import { ApiError } from '@utils/apiError';
 
 interface keyable {
-  [key: string]: any
-}
-
-interface Run {
-  info: {
-    run_id: string;
-    run_name: string;
-    experiment_id: string;
-    status: string;
-    start_time: number;
-    end_time: number;
-    artifact_uri: string;
-    lifecycle_stage: string;
-  };
-  data: {
-    metrics: Array<{ key: string; value: number }>;
-    params: Array<{ key: string; value: number }>;
-    tags: Array<{ key: string; value: number }>;
-  };
-  inputs: Array<{
-    tags?: Array<{ key: string; value: string }>;
-    dataset: {
-      name: string;
-      digest: string;
-      source_type: string;
-      source: string;
-      schema?: string;
-      profile?: string;
-    };
-  }>;
+  [key: string]: any;
 }
 
 class RunManager {
@@ -68,7 +40,7 @@ class RunManager {
     try {
       do {
         // get all runs
-        const searchResult:keyable = await this.runClient.searchRuns(
+        const searchResult: keyable = await this.runClient.searchRuns(
           experimentIds,
           '',
           undefined, // run_view_type
@@ -78,7 +50,7 @@ class RunManager {
         );
 
         // get runs that match the keep crteria
-        const keepRunsResult:keyable = await this.runClient.searchRuns(
+        const keepRunsResult: keyable = await this.runClient.searchRuns(
           experimentIds,
           query_string,
           undefined, // run_view_type
@@ -147,10 +119,10 @@ class RunManager {
   ): Promise<object> {
     try {
       // get original run
-      const originalRun:keyable = await this.runClient.getRun(runId);
+      const originalRun: keyable = await this.runClient.getRun(runId);
 
       // create a new run in the target experiment
-      const newRun:keyable = await this.runClient.createRun(
+      const newRun: keyable = await this.runClient.createRun(
         targetExperimentId,
         undefined,
         originalRun.info.start_time
