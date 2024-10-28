@@ -26,3 +26,10 @@ export interface Run {
     };
   }>;
 }
+
+export interface Metric {
+  key: string;
+  value: number;
+  timestamp: number;
+  step?: number;
+}
