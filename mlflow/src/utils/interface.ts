@@ -11,8 +11,8 @@ export interface Run {
   };
   data: {
     metrics: Array<{ key: string; value: number }>;
-    params: Array<{ key: string; value: number }>;
-    tags: Array<{ key: string; value: number }>;
+    params: Array<{ key: string; value: string }>;
+    tags: Array<{ key: string; value: string }>;
   };
   inputs: Array<{
     tags?: Array<{ key: string; value: string }>;
@@ -31,5 +31,14 @@ export interface Metric {
   key: string;
   value: number;
   timestamp: number;
-  step?: number;
+}
+
+export interface Params {
+  key: string;
+  value: string;
+}
+
+export interface Tags {
+  key: string;
+  value: string;
 }
