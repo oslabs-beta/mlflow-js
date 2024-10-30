@@ -19,7 +19,8 @@
       "@workflows/*": ["src/workflows/*"]
     },
     "esModuleInterop": true,
-    "strict": true
+    "strict": true,
+    "declaration": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"],
