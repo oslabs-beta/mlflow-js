@@ -3,10 +3,8 @@
     // Basic Options
     "target": "ES2018",
     "module": "ESNext",
-    // "lib": ["dom", "ES2018"],
     "rootDir": "./src",
     "outDir": "./lib",
-    // "types": ["jest"],
 
     // Module Resolution Options
     "moduleResolution": "node",
@@ -20,7 +18,8 @@
     },
     "esModuleInterop": true,
     "strict": true,
-    "declaration": true
+    "declaration": true,
+    "sourceMap": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"],
