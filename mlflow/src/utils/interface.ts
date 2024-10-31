@@ -42,3 +42,8 @@ export interface Tags {
   key: string;
   value: string;
 }
+
+export interface MetricHistoryResponse {
+  metrics: Metric[];
+  next_page_token?: string;
+}
