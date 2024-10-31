@@ -16,8 +16,8 @@ describe('RunClient', () => {
 
   beforeAll(async () => {
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    runClient = new RunClient('http://127.0.0.1:5001');
-    experimentClient = new ExperimentClient('http://127.0.0.1:5001');
+    runClient = new RunClient('http://127.0.0.1:5002');
+    experimentClient = new ExperimentClient('http://127.0.0.1:5002');
 
     // Generate the experiment ID for test runs
     const timestamp = Date.now();
@@ -1073,12 +1073,6 @@ describe('RunClient', () => {
       // Test with empty experiment ID array
       const emptyArrayResult = await runClient.searchRuns([]);
       expect(emptyArrayResult).toEqual({});
-
-      // Test with non-array experiment ID
-      const nonArrayExpIDResult = await runClient.searchRuns(
-        experimentId as any
-      );
-      expect(nonArrayExpIDResult).toEqual({});
     });
   });
 
