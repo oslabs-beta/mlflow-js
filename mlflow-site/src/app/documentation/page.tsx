@@ -1,3 +1,5 @@
+'use client';
+
 // import type { Metadata } from "next";
 // import localFont from "next/font/local";
 import './documentation.css';
@@ -799,22 +801,26 @@ export default function Documentation() {
         {
           name: 'source',
           type: 'STRING',
-          description: 'The source path where the model artifacts are stored. (required)',
+          description:
+            'The source path where the model artifacts are stored. (required)',
         },
         {
           name: 'run_id',
           type: 'STRING',
-          description: 'The id of the run that generated this version. (optional)',
+          description:
+            'The id of the run that generated this version. (optional)',
         },
         {
           name: 'tags',
           type: 'ARRAY',
-          description: 'Tags of key/value pairs for the model version. (optional)',
+          description:
+            'Tags of key/value pairs for the model version. (optional)',
         },
         {
           name: 'run_link',
           type: 'STRING',
-          description: 'MLflow run link for the run that generated this model version. (optional)',
+          description:
+            'MLflow run link for the run that generated this model version. (optional)',
         },
         {
           name: 'description',
@@ -873,7 +879,8 @@ export default function Documentation() {
         {
           name: 'filter',
           type: 'STRING',
-          description: 'The filter criteria for searching model versions. (optional)',
+          description:
+            'The filter criteria for searching model versions. (optional)',
         },
         {
           name: 'maxResults',
@@ -888,11 +895,13 @@ export default function Documentation() {
         {
           name: 'page_token',
           type: 'STRING',
-          description: 'Pagination token to go to the next page based on previous search query. (optional)',
+          description:
+            'Pagination token to go to the next page based on previous search query. (optional)',
         },
       ],
       responseType: 'Promise<Array<object>>',
-      responseDescription: 'An array of model versions that match the search criteria.',
+      responseDescription:
+        'An array of model versions that match the search criteria.',
     },
     {
       name: 'Get Download URI for Model Version Artifacts',
@@ -906,11 +915,13 @@ export default function Documentation() {
         {
           name: 'version',
           type: 'STRING',
-          description: 'The version number of the model to fetch the uri for. (required)',
+          description:
+            'The version number of the model to fetch the uri for. (required)',
         },
       ],
       responseType: 'Promise<string>',
-      responseDescription: 'The uri for downloading the model version artifacts.',
+      responseDescription:
+        'The uri for downloading the model version artifacts.',
     },
     {
       name: 'Transition Model Version Stage',
@@ -924,21 +935,25 @@ export default function Documentation() {
         {
           name: 'version',
           type: 'STRING',
-          description: 'The version number of the model to transition. (required)',
+          description:
+            'The version number of the model to transition. (required)',
         },
         {
           name: 'stage',
           type: 'STRING',
-          description: 'The stage to transition the model version to (e.g., "staging", "production"). (required)',
+          description:
+            'The stage to transition the model version to (e.g., "staging", "production"). (required)',
         },
         {
           name: 'archive_existing_versions',
           type: 'BOOLEAN',
-          description: 'Flag to archive existing versions in that stage. (required)',
+          description:
+            'Flag to archive existing versions in that stage. (required)',
         },
       ],
       responseType: 'Promise<object>',
-      responseDescription: 'The updated model version object after the stage transition.',
+      responseDescription:
+        'The updated model version object after the stage transition.',
     },
     {
       name: 'Set Model Version Tag',
@@ -1008,23 +1023,32 @@ export default function Documentation() {
       ],
       responseType: 'Promise<void>',
       responseDescription: 'No response.',
-    }
+    },
   ];
 
   return (
     <div className='documentationWrapper'>
       <div className='documentationHeader'>
-        <Image
-          src={'/assets/MLflow-js-logo.png'}
-          width={144}
-          height={38.4}
-          alt='G'
-          className='documentationImage'
-        />
+        <a href='/' className='documentationImageLink'>
+          <Image
+            src={'/assets/MLflow-js-logo.png'}
+            width={144}
+            height={38.4}
+            alt='G'
+            className='documentationImage'
+          />
+        </a>
       </div>
       <div className='documentationLeftSideBar'>
         <div className='documentationLeftHeader'>
-          <span>Mlflow.js Methods</span>
+          <span
+            onClick={() => {
+              const element = document.getElementById(`methodsHeader`);
+              element?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          >
+            Mlflow.js Methods
+          </span>
         </div>
         {methodArr.map((method, index) => (
           <MethodBarIndividual
@@ -1032,12 +1056,12 @@ export default function Documentation() {
             name={method.name}
           />
         ))}
-        {/* <div>Left SideBar 770px seems to be when the mlflow site hides/shows the left sidebar</div>
-        <div>Left SideBar Open/close on click, the left side bar is like 300px wide on teh mlflow site</div> */}
       </div>
       <div className='documentationMainWrapper'>
         <div className='documentationMain'>
-          <div className='methodsHeader'>Methods</div>
+          <div className='methodsHeader' id='methodsHeader'>
+            Methods
+          </div>
           {methodArr.map((method, index) => (
             <Method
               key={`methodIndividual:${index}`}
