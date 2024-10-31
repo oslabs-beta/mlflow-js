@@ -10,12 +10,12 @@ export interface Run {
     lifecycle_stage: string;
   };
   data: {
-    metrics: Array<{ key: string; value: number }>;
-    params: Array<{ key: string; value: string }>;
-    tags: Array<{ key: string; value: string }>;
+    metrics: Metrics[];
+    params: Params[];
+    tags: Tags[];
   };
   inputs: Array<{
-    tags?: Array<{ key: string; value: string }>;
+    tags?: Tags[];
     dataset: {
       name: string;
       digest: string;
@@ -27,7 +27,7 @@ export interface Run {
   }>;
 }
 
-export interface Metric {
+export interface Metrics {
   key: string;
   value: number;
   timestamp: number;
@@ -44,6 +44,6 @@ export interface Tags {
 }
 
 export interface MetricHistoryResponse {
-  metrics: Metric[];
+  metrics: Metrics[];
   next_page_token?: string;
 }

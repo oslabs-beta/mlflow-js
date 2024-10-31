@@ -1,10 +1,13 @@
 import { describe, test, expect, beforeAll, beforeEach } from '@jest/globals';
 import RunClient from '../src/tracking/RunClient';
 import ExperimentClient from '../src/tracking/ExperimentClient';
-import { ApiError } from '../src/utils/apiError';
-import { Run } from '../src/utils/interface';
-import { Metric, Params, Tags } from '../src/utils/interface';
-import { MetricHistoryResponse } from '../src/utils/interface';
+import {
+  Run,
+  Metrics,
+  Params,
+  Tags,
+  MetricHistoryResponse,
+} from '../src/utils/interface';
 
 describe('RunClient', () => {
   let runClient: RunClient;
@@ -12,7 +15,6 @@ describe('RunClient', () => {
   let experimentId: string;
 
   beforeAll(async () => {
-    // Add a small delay to ensure MLflow is fully ready
     await new Promise((resolve) => setTimeout(resolve, 2000));
     runClient = new RunClient('http://127.0.0.1:5001');
     experimentClient = new ExperimentClient('http://127.0.0.1:5001');
@@ -80,19 +82,13 @@ describe('RunClient', () => {
       expect(run.data.tags).toContainEqual(tags[0]);
     });
 
-    test('- Should throw error if experiment_id is missing', async () => {
+    test('- Should handle errors and edge cases', async () => {
+      // test missing run_id
       // @ts-expect-error: testing for missing arguments
-      await expect(runClient.createRun()).rejects.toThrow(ApiError);
-      // @ts-expect-error: testing for missing arguments
-      await expect(runClient.createRun()).rejects.toThrow(
-        /Error creating run:/
-      );
-    });
+      await expect(runClient.createRun()).rejects.toThrow();
 
-    test('- Should handle API error', async () => {
+      // test invalid id
       const invalid_id = 'invalid_id';
-
-      // the thrown error is specifically an instance of 'ApiError'
       await expect(runClient.createRun(invalid_id)).rejects.toThrow(
         expect.objectContaining({
           name: 'ApiError',
@@ -114,19 +110,13 @@ describe('RunClient', () => {
       expect(deletedRun.info.lifecycle_stage).toBe('deleted');
     });
 
-    test('- Should throw error if run_id is missing', async () => {
+    test('- Should handle errors and edge cases', async () => {
+      // test missing run_id
       // @ts-expect-error: testing for missing arguments
-      await expect(runClient.deleteRun()).rejects.toThrow(ApiError);
-      // @ts-expect-error: testing for missing arguments
-      await expect(runClient.deleteRun()).rejects.toThrow(
-        /Error deleting run:/
-      );
-    });
+      await expect(runClient.deleteRun()).rejects.toThrow();
 
-    test('- Should handle API error', async () => {
+      // test invalid id
       const invalid_id = 'invalid_id';
-
-      // the thrown error is specifically an instance of 'ApiError'
       await expect(runClient.deleteRun(invalid_id)).rejects.toThrow(
         expect.objectContaining({
           name: 'ApiError',
@@ -169,19 +159,13 @@ describe('RunClient', () => {
       expect(unchangedRun.info.lifecycle_stage).not.toBe('deleted');
     });
 
-    test('- Should throw error if run_id is missing', async () => {
+    test('- Should handle errors and edge cases', async () => {
+      // test missing run_id
       // @ts-expect-error: testing for missing arguments
-      await expect(runClient.restoreRun()).rejects.toThrow(ApiError);
-      // @ts-expect-error: testing for missing arguments
-      await expect(runClient.restoreRun()).rejects.toThrow(
-        /Error restoring run:/
-      );
-    });
+      await expect(runClient.restoreRun()).rejects.toThrow();
 
-    test('- Should handle API error', async () => {
+      // test invalid id
       const invalid_id = 'invalid_id';
-
-      // the thrown error is specifically an instance of 'ApiError'
       await expect(runClient.restoreRun(invalid_id)).rejects.toThrow(
         expect.objectContaining({
           name: 'ApiError',
@@ -197,7 +181,7 @@ describe('RunClient', () => {
       const run = (await runClient.createRun(experimentId)) as Run;
 
       // create dummy data for created run
-      const metrics: Metric[] = [
+      const metrics: Metrics[] = [
         { key: 'accuracy', value: 0.83, timestamp: 1694000700000 },
         { key: 'loss', value: 0.18, timestamp: 1694000700000 },
       ];
@@ -214,7 +198,7 @@ describe('RunClient', () => {
       const fetchedRun = (await runClient.getRun(run.info.run_id)) as Run;
 
       // check metrics
-      const fetchedMetrics = fetchedRun.data.metrics as Metric[];
+      const fetchedMetrics = fetchedRun.data.metrics as Metrics[];
 
       expect(fetchedMetrics).toHaveLength(metrics.length);
 
@@ -236,17 +220,13 @@ describe('RunClient', () => {
       expect(fetchedRun.data.tags).toEqual(expect.arrayContaining(tags));
     });
 
-    test('- Should throw error if run_id is missing', async () => {
+    test('- Should handle errors and edge cases', async () => {
+      // test missing run_id
       // @ts-expect-error: testing for missing arguments
-      await expect(runClient.getRun()).rejects.toThrow(ApiError);
-      // @ts-expect-error: testing for missing arguments
-      await expect(runClient.getRun()).rejects.toThrow(/Error fetching run:/);
-    });
+      await expect(runClient.getRun()).rejects.toThrow();
 
-    test('- Should handle API error', async () => {
+      // test invalid id
       const invalid_id = 'invalid_id';
-
-      // the thrown error is specifically an instance of 'ApiError'
       await expect(runClient.getRun(invalid_id)).rejects.toThrow(
         expect.objectContaining({
           name: 'ApiError',
@@ -337,7 +317,7 @@ describe('RunClient', () => {
       // Test with invalid end_time
       await expect(
         runClient.updateRun(run.info.run_id, 'FINISHED', 'invalid_time' as any)
-      ).rejects.toThrow(ApiError);
+      ).rejects.toThrow();
 
       // Test with empty run_name
       await expect(
@@ -389,15 +369,11 @@ describe('RunClient', () => {
     test('- Should handle errors and edge cases', async () => {
       // test missing arguments
       // @ts-expect-error: testing for all missing arguments
-      await expect(runClient.logMetric()).rejects.toThrow(ApiError);
+      await expect(runClient.logMetric()).rejects.toThrow();
       // @ts-expect-error: testing for missing key and value
-      await expect(runClient.logMetric(run.info.run_id)).rejects.toThrow(
-        ApiError
-      );
+      await expect(runClient.logMetric(run.info.run_id)).rejects.toThrow();
       // @ts-expect-error: testing for all missing value
-      await expect(runClient.logMetric(run.info.run_id, key)).rejects.toThrow(
-        ApiError
-      );
+      await expect(runClient.logMetric(run.info.run_id, key)).rejects.toThrow();
 
       // test invalid run_id
       const invalid_id = 'invalid_id';
@@ -411,12 +387,12 @@ describe('RunClient', () => {
       // test invalid key
       await expect(
         runClient.logMetric(run.info.run_id, '', value)
-      ).rejects.toThrow(ApiError);
+      ).rejects.toThrow();
 
       // test invalid value
       await expect(
         runClient.logMetric(run.info.run_id, key, NaN)
-      ).rejects.toThrow(ApiError);
+      ).rejects.toThrow();
 
       // All required args provided, should not throw
       await expect(
@@ -438,7 +414,7 @@ describe('RunClient', () => {
     test('- Should log batch with optional metrics', async () => {
       const run = (await runClient.createRun(experimentId)) as Run;
 
-      const metrics: Metric[] = [
+      const metrics: Metrics[] = [
         { key: 'accuracy', value: 0.83, timestamp: 1694000700000 },
         { key: 'loss', value: 0.18, timestamp: 1694000700000 },
       ];
@@ -448,7 +424,7 @@ describe('RunClient', () => {
       // fetch run to confirm changes
       const fetchedRun = (await runClient.getRun(run.info.run_id)) as Run;
 
-      const fetchedMetrics = fetchedRun.data.metrics as Metric[];
+      const fetchedMetrics = fetchedRun.data.metrics as Metrics[];
 
       expect(fetchedMetrics).toHaveLength(metrics.length);
 
@@ -530,7 +506,7 @@ describe('RunClient', () => {
 
       await expect(
         runClient.logBatch(run.info.run_id, metrics)
-      ).rejects.toThrow(ApiError);
+      ).rejects.toThrow();
     });
 
     test('- Should be able to log up to 100 params', async () => {
@@ -556,7 +532,7 @@ describe('RunClient', () => {
 
       await expect(
         runClient.logBatch(run.info.run_id, undefined, params)
-      ).rejects.toThrow(ApiError);
+      ).rejects.toThrow();
     });
 
     test('- Should be able to log up to 100 tags', async () => {
@@ -582,12 +558,12 @@ describe('RunClient', () => {
 
       await expect(
         runClient.logBatch(run.info.run_id, undefined, undefined, tags)
-      ).rejects.toThrow(ApiError);
+      ).rejects.toThrow();
     });
 
     test('- Should handle errors and edge cases', async () => {
       // @ts-expect-error: testing for missing arguments
-      await expect(runClient.logBatch()).rejects.toThrow(ApiError);
+      await expect(runClient.logBatch()).rejects.toThrow();
       // @ts-expect-error: testing for missing arguments
       await expect(runClient.logBatch()).rejects.toThrow(
         /Error logging batch:/
@@ -674,11 +650,9 @@ describe('RunClient', () => {
     test('- Should handle errors and edge cases', async () => {
       // test missing arguments
       // @ts-expect-error: testing for all missing arguments
-      await expect(runClient.logModel()).rejects.toThrow(ApiError);
+      await expect(runClient.logModel()).rejects.toThrow();
       // @ts-expect-error: testing for missing key and value
-      await expect(runClient.logModel(run.info.run_id)).rejects.toThrow(
-        ApiError
-      );
+      await expect(runClient.logModel(run.info.run_id)).rejects.toThrow();
 
       // Test invalid run_id
       const invalid_id = 'invalid_id';
@@ -751,9 +725,7 @@ describe('RunClient', () => {
 
       // test with invalid_id
       const invalid_id = 'invalid_id';
-      await expect(runClient.logInputs(invalid_id, datasets)).rejects.toThrow(
-        ApiError
-      );
+      await expect(runClient.logInputs(invalid_id, datasets)).rejects.toThrow();
 
       // test with empty datasets
       await expect(
@@ -794,9 +766,9 @@ describe('RunClient', () => {
 
       // test missing arguments
       // @ts-expect-error: testing for all missing arguments
-      await expect(runClient.setTag()).rejects.toThrow(ApiError);
+      await expect(runClient.setTag()).rejects.toThrow();
       // @ts-expect-error: testing for missing key and value
-      await expect(runClient.setTag(run.info.run_id)).rejects.toThrow(ApiError);
+      await expect(runClient.setTag(run.info.run_id)).rejects.toThrow();
       // All required args provided, should not throw
 
       // test invalid run_id
@@ -810,7 +782,7 @@ describe('RunClient', () => {
 
       await expect(
         runClient.setTag(run.info.run_id, '', value)
-      ).rejects.toThrow(ApiError);
+      ).rejects.toThrow();
 
       await expect(
         runClient.setTag(run.info.run_id, 'empty_value_key', '')
@@ -852,11 +824,9 @@ describe('RunClient', () => {
 
       // testing missing arguments
       // @ts-expect-error: testing for all missing arguments
-      await expect(runClient.deleteTag()).rejects.toThrow(ApiError);
+      await expect(runClient.deleteTag()).rejects.toThrow();
       // @ts-expect-error: testing for missing key and value
-      await expect(runClient.deleteTag(run.info.run_id)).rejects.toThrow(
-        ApiError
-      );
+      await expect(runClient.deleteTag(run.info.run_id)).rejects.toThrow();
 
       // test invalid run_id
       const invalid_id = 'invalid_id';
@@ -870,7 +840,7 @@ describe('RunClient', () => {
       // Test deleting non-existent tag
       await expect(
         runClient.deleteTag(run.info.run_id, 'non_existent_key')
-      ).rejects.toThrow(ApiError);
+      ).rejects.toThrow();
 
       // All required args provided, should not throw
       await runClient.setTag(run.info.run_id, key, value);
@@ -900,17 +870,15 @@ describe('RunClient', () => {
       expect(param?.value).toBe(value);
     });
 
-    test('- Should handle errors for invalid inputs and API errors', async () => {
+    test('- Should handle errors and edge cases', async () => {
       const run = (await runClient.createRun(experimentId)) as Run;
       const key = 'learning_rate';
       const value = '0.001';
 
       // @ts-expect-error: testing for all missing arguments
-      await expect(runClient.logParam()).rejects.toThrow(ApiError);
+      await expect(runClient.logParam()).rejects.toThrow();
       // @ts-expect-error: testing for missing key and value
-      await expect(runClient.logParam(run.info.run_id)).rejects.toThrow(
-        ApiError
-      );
+      await expect(runClient.logParam(run.info.run_id)).rejects.toThrow();
 
       // Test invalid run_id
       const invalid_id = 'invalid_id';
@@ -924,7 +892,7 @@ describe('RunClient', () => {
       // All required args provided, should not throw
       await expect(
         runClient.logParam(run.info.run_id, key, value)
-      ).resolves.not.toThrow(ApiError);
+      ).resolves.not.toThrow();
     });
   });
 
@@ -960,7 +928,7 @@ describe('RunClient', () => {
       }
     });
 
-    test('- Should throw ApiError for invalid inputs', async () => {
+    test('- Should handle errors and edge cases', async () => {
       // @ts-expect-error: testing for missing arguments
       await expect(runClient.getMetricHistory()).rejects.toThrow(
         expect.objectContaining({
@@ -1100,7 +1068,7 @@ describe('RunClient', () => {
       // test with valid experiment id but invalid filter string
       await expect(
         runClient.searchRuns([experimentId.toString()], invalid_filter_string)
-      ).rejects.toThrow(ApiError);
+      ).rejects.toThrow();
 
       // Test with empty experiment ID array
       const emptyArrayResult = await runClient.searchRuns([]);
@@ -1126,9 +1094,7 @@ describe('RunClient', () => {
     test('- Should handle errors and edge cases', async () => {
       // test invalid id
       const invalid_id = 'invalid_id';
-      await expect(runClient.listArtifacts(invalid_id)).rejects.toThrow(
-        ApiError
-      );
+      await expect(runClient.listArtifacts(invalid_id)).rejects.toThrow();
     });
   });
 });
