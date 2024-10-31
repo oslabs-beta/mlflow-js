@@ -27,3 +27,19 @@
 .method {
     background-color: indigo;
 }
+
+.methodBarIndividual {
+    cursor: pointer;
+}
+
+.methodBarIndividual:hover {
+    background-color: grey;
+}
+
+.methodName {
+    font-size: 2rem;
+}
+
+.methodDescription {
+    font-size: 1rem;
+}

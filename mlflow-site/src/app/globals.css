@@ -90,7 +90,7 @@ body {
 }
 
 .mlflow-logo {
-  width: clamp(4rem, 17.72vw, 8rem);
+  width: clamp(4rem, 17.72vw, 9rem);
   height: clamp(2rem, 8.86vw, 2.4rem);
 }
 
@@ -124,7 +124,7 @@ body {
 }
 
 .navBarLinksHome:hover, .navBarLinksFeatures:hover, .navBarLinksDemo:hover, .navBarLinksTeam:hover {
-  color: green;
+  color: rgb(99, 158, 40);
 }
 
 .navbarGithub {
@@ -151,6 +151,7 @@ body {
 
 .headLineText {
   font-size: clamp(1.1rem, 4.873vw, 2.25rem);
+  margin-bottom: 1rem;
 }
 
 .mobileInnerWrapper {
