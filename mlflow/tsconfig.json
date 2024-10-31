@@ -3,14 +3,12 @@
     // Basic Options
     "target": "ES2018",
     "module": "ESNext",
-    "lib": ["dom", "ES2018"],
     "rootDir": "./src",
     "outDir": "./lib",
-    "types": ["jest"],
 
     // Module Resolution Options
     "moduleResolution": "node",
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "@src/*": ["src/*"],
       "@model-registry/*": ["src/model-registry/*"],
@@ -19,43 +17,12 @@
       "@workflows/*": ["src/workflows/*"]
     },
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    // "moduleDetection": "force",
-
-    // Strict Type-Checking Options
     "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictBindCallApply": true,
-    "strictPropertyInitialization": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-
-    // Additional Checks
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-
-    // Experimental Options
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-
-    // Advanced Options
-    "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
-
-    // Other Options
     "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "removeComments": false,
-    "allowJs": false
+    "sourceMap": true
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts"],
+  "exclude": ["node_modules"],
   "tsc-alias": {
     "resolveFullPaths": true,
     "outDir": "./lib",
