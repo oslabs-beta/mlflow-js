@@ -1,7 +1,10 @@
 import { describe, test, expect, beforeAll, beforeEach } from '@jest/globals';
-import ModelRegistryClient from '../src/model-registry/ModelRegistryClient';
-import ModelVersionClient from '../src/model-registry/ModelVersionClient';
-import RunClient from '../src/tracking/RunClient';
+// @ts-ignore
+import ModelRegistryClient from '@model-registry/ModelRegistryClient';
+// @ts-ignore
+import ModelVersionClient from '@model-registry/ModelVersionClient';
+// @ts-ignore
+import RunClient from '@tracking/RunClient';
 
 interface keyable {
   [key: string]: any;
