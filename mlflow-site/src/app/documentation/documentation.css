@@ -48,6 +48,10 @@
   cursor: pointer;
 }
 
+.documentationLeftHeader:hover {
+  background-color: rgb(132, 185, 46);
+}
+
 .method {
   margin-bottom: 2rem;
 }
