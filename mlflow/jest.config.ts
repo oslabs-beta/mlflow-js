@@ -4,12 +4,15 @@ const config: Config.InitialOptions = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   transform: {
-    '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.json' }],
+    '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.test.json' }],
   },
-  roots: ['<rootDir>/src', '<rootDir>/tests/'],
-  moduleNameMapper: { '^@utils/(.*)$': '<rootDir>/src/utils/$1' },
-  moduleFileExtensions: ['ts', 'js', 'json'],
-  moduleDirectories: ['node_modules', 'src'],
+  moduleNameMapper: {
+    '^@utils/(.*)$': '<rootDir>/src/utils/$1',
+    '^@model-registry/(.*)$': '<rootDir>/src/model-registry/$1',
+    '^@tracking/(.*)$': '<rootDir>/src/tracking/$1',
+    '^@workflows/(.*)$': '<rootDir>/src/workflows/$1',
+  },
+  testTimeout: 30000,
 };
 
 export default config;
