@@ -1614,7 +1614,7 @@ export default function Documentation() {
             />
           ))}
           <div id='modelManagerHeader' className='methodsHeader2'>Model Manager Methods</div>
-          {experimentManagerMethods.map((method, index) => (
+          {modelManagerMethods.map((method, index) => (
             <Method
               key={`modelManagerIndividual:${index}`}
               name={method.name}
