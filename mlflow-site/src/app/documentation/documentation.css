@@ -52,12 +52,27 @@
   background-color: rgb(132, 185, 46);
 }
 
+.documentationLeftHeader2 {
+  padding-left: 10px;
+  padding-right: 1rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.documentationLeftHeader2:hover {
+  background-color: rgb(132, 185, 46);
+}
+
 .method {
   margin-bottom: 2rem;
 }
 
 .methodsHeader {
   font-size: 3rem;
+}
+
+.methodsHeader2 {
+  font-size: 2.5rem;
 }
 
 .methodBarIndividual {

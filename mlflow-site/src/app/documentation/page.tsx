@@ -1,42 +1,11 @@
 'use client';
-
-// import type { Metadata } from "next";
-// import localFont from "next/font/local";
 import './documentation.css';
-// import { Viewport } from "next";
 import Method from '../components/Method';
 import MethodBarIndividual from '../components/MethodBar';
 import Image from 'next/image';
 
 export default function Documentation() {
-  // const methodArr = [
-  //   { name: 'Create Experiment' },
-  //   { name: 'Search Experiments' },
-  //   { name: 'Get Experiment' },
-  //   { name: 'Get Experiment By Name' },
-  //   { name: 'Delete Experiment' },
-  //   { name: 'Restore Experiment' },
-  //   {
-  //     name: 'Update Experiment',
-  //     description: 'Update experiment name.',
-  //     requestProps: [
-  //       {
-  //         name: 'experiment_id',
-  //         type: 'STRING',
-  //         description: 'ID of the associated experiment. (required)',
-  //       },
-  //       {
-  //         name: 'new_name',
-  //         type: 'STRING',
-  //         description:
-  //           'The experiment’s name is changed to the new name. The new name must be unique. (required)',
-  //       },
-  //     ],
-  //     response: 'Promise<void>',
-  //   },
-  // ];
-
-  const methodArr = [
+  const experimentClientMethods = [
     {
       name: 'Create Experiment',
       description:
@@ -198,10 +167,12 @@ export default function Documentation() {
       responseType: 'Promise<void>',
       responseDescription: 'No response.',
     },
+  ];
+
+  const runClientMethods = [
     {
       name: 'Create Run',
-      description:
-        'Create a new run within an experiment. A run is usually a single execution of a machine learning or data ETL pipeline.',
+      description: 'Create a new run within an experiment.',
       requestProps: [
         {
           name: 'experiment_id',
@@ -221,7 +192,7 @@ export default function Documentation() {
         },
         {
           name: 'tags',
-          type: 'ARRAY',
+          type: 'ARRAY<{ key: string; value: string }>',
           description: 'Additional metadata for the run.',
         },
       ],
@@ -239,7 +210,7 @@ export default function Documentation() {
           description: 'ID of the run to delete. (required)',
         },
       ],
-      responseType: 'Promise<void>',
+      responseType: 'Promise<Void>',
       responseDescription: 'No response.',
     },
     {
@@ -252,7 +223,7 @@ export default function Documentation() {
           description: 'ID of the run to restore. (required)',
         },
       ],
-      responseType: 'Promise<void>',
+      responseType: 'Promise<Void>',
       responseDescription: 'No response.',
     },
     {
@@ -330,7 +301,7 @@ export default function Documentation() {
           description: 'Step at which to log the metric.',
         },
       ],
-      responseType: 'Promise<void>',
+      responseType: 'Promise<Void>',
       responseDescription: 'No response.',
     },
     {
@@ -344,24 +315,21 @@ export default function Documentation() {
         },
         {
           name: 'metrics',
-          type: 'ARRAY',
-          description:
-            'Metrics to log. A single request can contain up to 1000 metrics.',
+          type: 'ARRAY<{ key: string; value: number; timestamp: number; step: number }>',
+          description: 'Metrics to log.',
         },
         {
           name: 'params',
-          type: 'ARRAY',
-          description:
-            'Params to log. A single request can contain up to 100 params.',
+          type: 'ARRAY<{ key: string; value: string }>',
+          description: 'Params to log.',
         },
         {
           name: 'tags',
-          type: 'ARRAY',
-          description:
-            'Tags to log. A single request can contain up to 100 tags.',
+          type: 'ARRAY<{ key: string; value: string }>',
+          description: 'Tags to log.',
         },
       ],
-      responseType: 'Promise<void>',
+      responseType: 'Promise<Void>',
       responseDescription: 'No response.',
     },
     {
@@ -376,16 +344,15 @@ export default function Documentation() {
         {
           name: 'model_json',
           type: 'STRING',
-          description:
-            'MLmodel file in json format. Should conform to the MLflow model format. (required)',
+          description: 'MLmodel file in json format. (required)',
         },
       ],
-      responseType: 'Promise<void>',
+      responseType: 'Promise<Void>',
       responseDescription: 'No response.',
     },
     {
       name: 'Log Inputs',
-      description: 'Logs inputs for a run.',
+      description: 'Logs inputs.',
       requestProps: [
         {
           name: 'run_id',
@@ -394,12 +361,11 @@ export default function Documentation() {
         },
         {
           name: 'datasets',
-          type: 'ARRAY',
-          description:
-            "Dataset inputs. Each object should have a 'dataset' property.",
+          type: 'ARRAY<Object>',
+          description: 'Dataset inputs. (required)',
         },
       ],
-      responseType: 'Promise<void>',
+      responseType: 'Promise<Void>',
       responseDescription: 'No response.',
     },
     {
@@ -422,7 +388,7 @@ export default function Documentation() {
           description: 'String value of the tag being logged. (required)',
         },
       ],
-      responseType: 'Promise<void>',
+      responseType: 'Promise<Void>',
       responseDescription: 'No response.',
     },
     {
@@ -441,7 +407,7 @@ export default function Documentation() {
           description: 'Name of the tag. (required)',
         },
       ],
-      responseType: 'Promise<void>',
+      responseType: 'Promise<Void>',
       responseDescription: 'No response.',
     },
     {
@@ -464,7 +430,7 @@ export default function Documentation() {
           description: 'String value of the param being logged. (required)',
         },
       ],
-      responseType: 'Promise<void>',
+      responseType: 'Promise<Void>',
       responseDescription: 'No response.',
     },
     {
@@ -505,7 +471,7 @@ export default function Documentation() {
       requestProps: [
         {
           name: 'experiment_ids',
-          type: 'ARRAY',
+          type: 'ARRAY<string>',
           description: 'List of experiment IDs to search over.',
         },
         {
@@ -526,7 +492,7 @@ export default function Documentation() {
         },
         {
           name: 'order_by',
-          type: 'ARRAY',
+          type: 'ARRAY<string>',
           description: 'List of columns to be ordered by.',
         },
         {
@@ -541,19 +507,37 @@ export default function Documentation() {
         'A promise that resolves with the runs that match the search criteria.',
     },
     {
-      name: 'Get Runs',
-      description: 'Get metadata, metrics, params, and tags for multiple runs.',
+      name: 'List Artifacts',
+      description: 'List artifacts for a run.',
       requestProps: [
         {
-          name: 'run_ids',
-          type: 'ARRAY',
-          description: 'IDs of the runs to fetch. (required)',
+          name: 'run_id',
+          type: 'STRING',
+          description: 'ID of the run for which to list artifacts. (required)',
+        },
+        {
+          name: 'artifact_type',
+          type: 'STRING',
+          description: 'Optional filter for specific artifact types.',
+        },
+        {
+          name: 'max_results',
+          type: 'NUMBER',
+          description: 'Maximum number of artifacts to return.',
+        },
+        {
+          name: 'page_token',
+          type: 'STRING',
+          description: 'Token for pagination.',
         },
       ],
       responseType: 'Promise<Object>',
       responseDescription:
-        'A promise that resolves with the fetched run objects.',
+        'A promise that resolves with the list of artifacts.',
     },
+  ];
+
+  const modelRegistryClientMethods = [
     {
       name: 'Create Registered Model',
       description: 'Creates a new registered model.',
@@ -789,6 +773,9 @@ export default function Documentation() {
       responseType: 'Promise<object>',
       responseDescription: 'The model version object.',
     },
+  ];
+
+  const modelVersionClientMethods = [
     {
       name: 'Create Model Version',
       description: 'Creates a new version of a model.',
@@ -1024,14 +1011,18 @@ export default function Documentation() {
       responseType: 'Promise<void>',
       responseDescription: 'No response.',
     },
+  ];
+  const experimentManagerMethods = [
     {
       name: 'Run Existing Experiment',
-      description: 'Full workflow of creating, naming, and starting a run under an existing experiment, logging metrics, params, tags, logging the model, and finishing the run.',
+      description:
+        'Full workflow of creating, naming, and starting a run under an existing experiment, logging metrics, params, tags, logging the model, and finishing the run.',
       requestProps: [
         {
           name: 'experiment_id',
           type: 'STRING',
-          description: 'ID of the experiment under which to log the run. (required)',
+          description:
+            'ID of the experiment under which to log the run. (required)',
         },
         {
           name: 'run_name',
@@ -1056,7 +1047,8 @@ export default function Documentation() {
         {
           name: 'model',
           type: 'OBJECT',
-          description: 'The ML model data to log to the run, represented as a Javascript object. (optional)',
+          description:
+            'The ML model data to log to the run, represented as a Javascript object. (optional)',
         },
       ],
       responseType: 'Promise<Object>',
@@ -1064,12 +1056,14 @@ export default function Documentation() {
     },
     {
       name: 'Run New Experiment',
-      description: 'Full workflow of creating, naming, and starting a run under a new experiment, logging metrics, params, tags, logging the model, and finishing the run.',
+      description:
+        'Full workflow of creating, naming, and starting a run under a new experiment, logging metrics, params, tags, logging the model, and finishing the run.',
       requestProps: [
         {
           name: 'experiment_name',
           type: 'STRING',
-          description: 'Name of the experiment under which to log the run. (required)',
+          description:
+            'Name of the experiment under which to log the run. (required)',
         },
         {
           name: 'run_name',
@@ -1094,7 +1088,8 @@ export default function Documentation() {
         {
           name: 'model',
           type: 'OBJECT',
-          description: 'The ML model data to log to the run, represented as a Javascript object. (optional)',
+          description:
+            'The ML model data to log to the run, represented as a Javascript object. (optional)',
         },
       ],
       responseType: 'Promise<Object>',
@@ -1102,30 +1097,38 @@ export default function Documentation() {
     },
     {
       name: 'Experiment Summary',
-      description: 'Returns an array of all the passed-in experiment\'s runs, sorted according to the passed-in metric.',
+      description:
+        "Returns an array of all the passed-in experiment's runs, sorted according to the passed-in metric.",
       requestProps: [
         {
           name: 'experiment_id',
           type: 'STRING',
-          description: 'The experiment whose runs will be evaluated. (required)',
+          description:
+            'The experiment whose runs will be evaluated. (required)',
         },
         {
           name: 'primaryMetric',
           type: 'STRING',
-          description: 'The metric by which the results array will be sorted. (required)',
+          description:
+            'The metric by which the results array will be sorted. (required)',
         },
         {
           name: 'order',
           type: 'STRING or NUMBER',
-          description: 'Sort order for the array: pass in \'DESC\' or 1 for descending; \'ASC\' or -1 for ascending. (optional)',
+          description:
+            "Sort order for the array: pass in 'DESC' or 1 for descending; 'ASC' or -1 for ascending. (optional)",
         },
       ],
       responseType: 'Promise<Array<Object>>',
-      responseDescription: 'An array of run objects belonging to the passed-in experiment ID, sorted according to the primary metric.',
+      responseDescription:
+        'An array of run objects belonging to the passed-in experiment ID, sorted according to the primary metric.',
     },
+  ];
+  const modelManagerMethods = [
     {
       name: 'Create Registered Model With Version',
-      description: 'Creates a new registered model and creates the first version of that model.',
+      description:
+        'Creates a new registered model and creates the first version of that model.',
       requestProps: [
         {
           name: 'name',
@@ -1135,12 +1138,14 @@ export default function Documentation() {
         {
           name: 'versionSource',
           type: 'STRING',
-          description: 'URI indicating the location of the model artifacts. (required)',
+          description:
+            'URI indicating the location of the model artifacts. (required)',
         },
         {
           name: 'versionRun_id',
           type: 'STRING',
-          description: 'MLflow run ID for correlation, if versionSource was generated by an experiment run in MLflow tracking server. (required)',
+          description:
+            'MLflow run ID for correlation, if versionSource was generated by an experiment run in MLflow tracking server. (required)',
         },
       ],
       responseType: 'Promise<Object>',
@@ -1148,7 +1153,7 @@ export default function Documentation() {
     },
     {
       name: 'Update Registered Model Description And Tag',
-      description: 'Updates a registered model\'s description and tag.',
+      description: "Updates a registered model's description and tag.",
       requestProps: [
         {
           name: 'name',
@@ -1176,7 +1181,8 @@ export default function Documentation() {
     },
     {
       name: 'Update All Latest Model Version',
-      description: 'Updates the latest version of the specified registered model\'s description and adds a new alias and tag key/value.',
+      description:
+        "Updates the latest version of the specified registered model's description and adds a new alias and tag key/value.",
       requestProps: [
         {
           name: 'name',
@@ -1209,7 +1215,8 @@ export default function Documentation() {
     },
     {
       name: 'Set Latest Model Version Tag',
-      description: 'Adds a new tag key/value for the latest version of the specified registered model.',
+      description:
+        'Adds a new tag key/value for the latest version of the specified registered model.',
       requestProps: [
         {
           name: 'name',
@@ -1232,7 +1239,8 @@ export default function Documentation() {
     },
     {
       name: 'Set Latest Model Version Alias',
-      description: 'Adds an alias for the latest version of the specified registered model.',
+      description:
+        'Adds an alias for the latest version of the specified registered model.',
       requestProps: [
         {
           name: 'name',
@@ -1250,7 +1258,8 @@ export default function Documentation() {
     },
     {
       name: 'Update Latest Model Version',
-      description: 'Updates the description of the latest version of a registered model.',
+      description:
+        'Updates the description of the latest version of a registered model.',
       requestProps: [
         {
           name: 'name',
@@ -1268,7 +1277,8 @@ export default function Documentation() {
     },
     {
       name: 'Update All Model Version',
-      description: 'Updates the specified version of the specified registered model\'s description and adds a new alias and tag key/value for that specified version.',
+      description:
+        "Updates the specified version of the specified registered model's description and adds a new alias and tag key/value for that specified version.",
       requestProps: [
         {
           name: 'name',
@@ -1306,7 +1316,8 @@ export default function Documentation() {
     },
     {
       name: 'Delete Latest Model Version',
-      description: 'Deletes the latest version of the specified registered model.',
+      description:
+        'Deletes the latest version of the specified registered model.',
       requestProps: [
         {
           name: 'name',
@@ -1319,7 +1330,8 @@ export default function Documentation() {
     },
     {
       name: 'Create Model From Run With Best Metric',
-      description: 'Creates a new model with the specified model name from the run with the best specified metric.',
+      description:
+        'Creates a new model with the specified model name from the run with the best specified metric.',
       requestProps: [
         {
           name: 'experiment_ids',
@@ -1329,25 +1341,31 @@ export default function Documentation() {
         {
           name: 'filterMetric',
           type: 'STRING',
-          description: 'The name of the metric that we\'re filtering by. (required)',
+          description:
+            "The name of the metric that we're filtering by. (required)",
         },
         {
           name: 'metricMinOrMax',
           type: 'STRING',
-          description: 'A string specifying if we want the minimum or maximum value of the specified metric. Can be either "min" or "max". (required)',
+          description:
+            'A string specifying if we want the minimum or maximum value of the specified metric. Can be either "min" or "max". (required)',
         },
         {
           name: 'modelName',
           type: 'STRING',
-          description: 'The name of the new model that will be created. (required)',
+          description:
+            'The name of the new model that will be created. (required)',
         },
       ],
       responseType: 'Promise<void>',
       responseDescription: 'No response.',
     },
+  ];
+  const runManagerMethods = [
     {
       name: 'Cleanup Runs',
-      description: 'Delete runs that do not meet certain criteria and return deleted runs.',
+      description:
+        'Delete runs that do not meet certain criteria and return deleted runs.',
       requestProps: [
         {
           name: 'experimentIds',
@@ -1357,7 +1375,8 @@ export default function Documentation() {
         {
           name: 'query_string',
           type: 'STRING',
-          description: 'SQL-like query string to filter runs to keep. (required)',
+          description:
+            'SQL-like query string to filter runs to keep. (required)',
         },
         {
           name: 'metric_key',
@@ -1367,7 +1386,8 @@ export default function Documentation() {
         {
           name: 'dryRun',
           type: 'BOOLEAN',
-          description: 'If true, only simulate the deletion. Defaults to true. (optional)',
+          description:
+            'If true, only simulate the deletion. Defaults to true. (optional)',
         },
       ],
       responseType: 'Promise<object>',
@@ -1375,7 +1395,8 @@ export default function Documentation() {
     },
     {
       name: 'Copy Run',
-      description: 'Copy run from one experiment to another without artifacts and models. Artifacts and models detail tagged in new run as reference.',
+      description:
+        'Copy run from one experiment to another without artifacts and models. Artifacts and models detail tagged in new run as reference.',
       requestProps: [
         {
           name: 'runId',
@@ -1390,12 +1411,13 @@ export default function Documentation() {
         {
           name: 'runName',
           type: 'STRING',
-          description: 'The name of the new run in target experiment. (optional)',
+          description:
+            'The name of the new run in target experiment. (optional)',
         },
       ],
       responseType: 'Promise<object>',
       responseDescription: 'An object detail of the copied run.',
-    }        
+    },
   ];
 
   return (
@@ -1412,19 +1434,119 @@ export default function Documentation() {
         </a>
       </div>
       <div className='documentationLeftSideBar'>
-        <div className='documentationLeftHeader'>
-          <span
-            onClick={() => {
-              const element = document.getElementById(`methodsHeader`);
-              element?.scrollIntoView({ behavior: 'smooth' });
-            }}
-          >
-            Mlflow.js Methods
-          </span>
+        <div
+          className='documentationLeftHeader'
+          onClick={() => {
+            const element = document.getElementById(`methodsHeader`);
+            element?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
+          Mlflow.js Methods
         </div>
-        {methodArr.map((method, index) => (
+        <div
+          className='documentationLeftHeader2'
+          onClick={() => {
+            const element = document.getElementById(`experimentClientHeader`);
+            element?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
+          Experiment Client Methods
+        </div>
+        {experimentClientMethods.map((method, index) => (
           <MethodBarIndividual
-            key={`methodBarIndividual:${index}`}
+            key={`experimentClientBarIndividual:${index}`}
+            name={method.name}
+          />
+        ))}
+        <div
+          className='documentationLeftHeader2'
+          onClick={() => {
+            const element = document.getElementById(`runClientHeader`);
+            element?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
+          Run Client Methods
+        </div>
+        {runClientMethods.map((method, index) => (
+          <MethodBarIndividual
+            key={`runClientBarIndividual:${index}`}
+            name={method.name}
+          />
+        ))}
+        <div
+          className='documentationLeftHeader2'
+          onClick={() => {
+            const element = document.getElementById(
+              `modelRegistryClientHeader`
+            );
+            element?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
+          Model Registry Client Methods
+        </div>
+        {modelRegistryClientMethods.map((method, index) => (
+          <MethodBarIndividual
+            key={`modelRegistryClientBarIndividual:${index}`}
+            name={method.name}
+          />
+        ))}
+        <div
+          className='documentationLeftHeader2'
+          onClick={() => {
+            const element = document.getElementById(`modelVersionClientHeader`);
+            element?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
+          Model Version Client Methods
+        </div>
+        {modelVersionClientMethods.map((method, index) => (
+          <MethodBarIndividual
+            key={`modelVersionClientBarIndividual:${index}`}
+            name={method.name}
+          />
+        ))}
+        <div
+          className='documentationLeftHeader2'
+          onClick={() => {
+            const element = document.getElementById(`experimentManagerHeader`);
+            element?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
+          Experiment Manager Methods
+        </div>
+        {experimentManagerMethods.map((method, index) => (
+          <MethodBarIndividual
+            key={`experimentManagerBarIndividual:${index}`}
+            name={method.name}
+          />
+        ))}
+        <div
+          className='documentationLeftHeader2'
+          onClick={() => {
+            const element = document.getElementById(`modelManagerHeader`);
+            element?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
+          Model Manager Methods
+        </div>
+        {modelManagerMethods.map((method, index) => (
+          <MethodBarIndividual
+            key={`modelManagerBarIndividual:${index}`}
+            name={method.name}
+          />
+        ))}
+        <div
+          className='documentationLeftHeader2'
+          onClick={() => {
+            const element = document.getElementById(`runManagerHeader`);
+            element?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
+          Run Manager Methods
+        </div>
+        {runManagerMethods.map((method, index) => (
+          <MethodBarIndividual
+            key={`runManagerBarIndividual:${index}`}
             name={method.name}
           />
         ))}
@@ -1434,9 +1556,78 @@ export default function Documentation() {
           <div className='methodsHeader' id='methodsHeader'>
             Methods
           </div>
-          {methodArr.map((method, index) => (
+          <div id='experimentClientHeader' className='methodsHeader2'>Experiment Client Methods</div>
+          {experimentClientMethods.map((method, index) => (
             <Method
-              key={`methodIndividual:${index}`}
+              key={`experimentClientIndividual:${index}`}
+              name={method.name}
+              description={method.description}
+              requestProps={method.requestProps}
+              responseType={method.responseType}
+              responseDescription={method.responseDescription}
+            />
+          ))}
+          <div id='runClientHeader' className='methodsHeader2'>Run Client Methods</div>
+          {runClientMethods.map((method, index) => (
+            <Method
+              key={`runClientIndividual:${index}`}
+              name={method.name}
+              description={method.description}
+              requestProps={method.requestProps}
+              responseType={method.responseType}
+              responseDescription={method.responseDescription}
+            />
+          ))}
+          <div id='modelRegistryClientHeader' className='methodsHeader2'>
+            Model Registry Client Methods
+          </div>
+          {modelRegistryClientMethods.map((method, index) => (
+            <Method
+              key={`modelRegistryClientIndividual:${index}`}
+              name={method.name}
+              description={method.description}
+              requestProps={method.requestProps}
+              responseType={method.responseType}
+              responseDescription={method.responseDescription}
+            />
+          ))}
+          <div id='modelVersionClientHeader' className='methodsHeader2'>Model Version Client Methods</div>
+          {modelVersionClientMethods.map((method, index) => (
+            <Method
+              key={`modelVersionClientIndividual:${index}`}
+              name={method.name}
+              description={method.description}
+              requestProps={method.requestProps}
+              responseType={method.responseType}
+              responseDescription={method.responseDescription}
+            />
+          ))}
+          <div id='experimentManagerHeader' className='methodsHeader2'>Experiment Manager Methods</div>
+          {experimentManagerMethods.map((method, index) => (
+            <Method
+              key={`experimentManagerIndividual:${index}`}
+              name={method.name}
+              description={method.description}
+              requestProps={method.requestProps}
+              responseType={method.responseType}
+              responseDescription={method.responseDescription}
+            />
+          ))}
+          <div id='modelManagerHeader' className='methodsHeader2'>Model Manager Methods</div>
+          {experimentManagerMethods.map((method, index) => (
+            <Method
+              key={`modelManagerIndividual:${index}`}
+              name={method.name}
+              description={method.description}
+              requestProps={method.requestProps}
+              responseType={method.responseType}
+              responseDescription={method.responseDescription}
+            />
+          ))}
+          <div id='runManagerHeader' className='methodsHeader2'>Run Manager Methods</div>
+          {runManagerMethods.map((method, index) => (
+            <Method
+              key={`runManagerIndividual:${index}`}
               name={method.name}
               description={method.description}
               requestProps={method.requestProps}
