@@ -12,6 +12,7 @@
 .documentationHeader {
   grid-column: 1/3;
   border-bottom: 1px solid black;
+  display: grid;
   align-items: center;
 }
 
