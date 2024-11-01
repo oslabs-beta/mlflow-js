@@ -12,12 +12,19 @@
 .documentationHeader {
   grid-column: 1/3;
   border-bottom: 1px solid black;
-  display: grid;
   align-items: center;
 }
 
 .documentationImage {
   margin-left: 1rem;
+}
+
+.mlFlowOfficialLink {
+  color: rgb(1, 148, 226)
+}
+
+.mlFlowReference {
+  font-size: 1.5rem;
 }
 
 .documentationLeftSideBar {
@@ -151,6 +158,11 @@
 
   .documentationMainWrapper {
     grid-column: 1/3;
+    grid-template-columns: 1rem minmax(340px, 1fr) calc(1rem+20px);
+  }
+
+  .mlFlowOfficialLink {
+    word-break: break-all;
   }
 
   .textLeftPadding {

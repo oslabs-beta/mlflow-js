@@ -1556,7 +1556,22 @@ export default function Documentation() {
           <div className='methodsHeader' id='methodsHeader'>
             Methods
           </div>
-          <div id='experimentClientHeader' className='methodsHeader2'>Experiment Client Methods</div>
+          <span className='mlFlowReference'>
+            The Mlflow.js library implements a JavaScript interface to
+            Mlflow&apos;s functionality by utilizing the official MLflow REST
+            API. For detailed information about the underlying API endpoints,
+            please refer here (
+            <a
+              href='https://mlflow.org/docs/latest/rest-api.html'
+              className='mlFlowOfficialLink'
+            >
+              https://mlflow.org/docs/latest/rest-api.html
+            </a>
+            )
+          </span>
+          <div id='experimentClientHeader' className='methodsHeader2'>
+            Experiment Client Methods
+          </div>
           {experimentClientMethods.map((method, index) => (
             <Method
               key={`experimentClientIndividual:${index}`}
@@ -1567,7 +1582,9 @@ export default function Documentation() {
               responseDescription={method.responseDescription}
             />
           ))}
-          <div id='runClientHeader' className='methodsHeader2'>Run Client Methods</div>
+          <div id='runClientHeader' className='methodsHeader2'>
+            Run Client Methods
+          </div>
           {runClientMethods.map((method, index) => (
             <Method
               key={`runClientIndividual:${index}`}
@@ -1591,7 +1608,9 @@ export default function Documentation() {
               responseDescription={method.responseDescription}
             />
           ))}
-          <div id='modelVersionClientHeader' className='methodsHeader2'>Model Version Client Methods</div>
+          <div id='modelVersionClientHeader' className='methodsHeader2'>
+            Model Version Client Methods
+          </div>
           {modelVersionClientMethods.map((method, index) => (
             <Method
               key={`modelVersionClientIndividual:${index}`}
@@ -1602,7 +1621,9 @@ export default function Documentation() {
               responseDescription={method.responseDescription}
             />
           ))}
-          <div id='experimentManagerHeader' className='methodsHeader2'>Experiment Manager Methods</div>
+          <div id='experimentManagerHeader' className='methodsHeader2'>
+            Experiment Manager Methods
+          </div>
           {experimentManagerMethods.map((method, index) => (
             <Method
               key={`experimentManagerIndividual:${index}`}
@@ -1613,7 +1634,9 @@ export default function Documentation() {
               responseDescription={method.responseDescription}
             />
           ))}
-          <div id='modelManagerHeader' className='methodsHeader2'>Model Manager Methods</div>
+          <div id='modelManagerHeader' className='methodsHeader2'>
+            Model Manager Methods
+          </div>
           {modelManagerMethods.map((method, index) => (
             <Method
               key={`modelManagerIndividual:${index}`}
@@ -1624,7 +1647,9 @@ export default function Documentation() {
               responseDescription={method.responseDescription}
             />
           ))}
-          <div id='runManagerHeader' className='methodsHeader2'>Run Manager Methods</div>
+          <div id='runManagerHeader' className='methodsHeader2'>
+            Run Manager Methods
+          </div>
           {runManagerMethods.map((method, index) => (
             <Method
               key={`runManagerIndividual:${index}`}
