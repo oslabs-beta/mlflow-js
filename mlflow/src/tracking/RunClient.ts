@@ -1,3 +1,4 @@
+import { MetricHistoryResponse } from '@src/utils/interface';
 import { ApiError } from '@utils/apiError';
 import { apiRequest } from '@utils/apiRequest';
 
@@ -402,7 +403,7 @@ class RunClient {
     metric_key: string,
     page_token?: string,
     max_results?: number
-  ): Promise<object> {
+  ): Promise<MetricHistoryResponse> {
     const params: Record<string, string> = { run_id, metric_key };
 
     if (page_token !== undefined) params.page_token = page_token;
@@ -453,7 +454,7 @@ class RunClient {
    */
   async searchRuns(
     experiment_ids: Array<string>,
-    filter: string,
+    filter?: string,
     run_view_type?: 'ACTIVE_ONLY' | 'DELETED_ONLY' | 'ALL',
     max_results?: number,
     order_by?: Array<string>,
