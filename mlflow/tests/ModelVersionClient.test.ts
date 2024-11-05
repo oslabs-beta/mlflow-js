@@ -2,13 +2,6 @@ import { describe, test, expect, beforeAll } from '@jest/globals';
 import ModelVersionClient from '../src/model-registry/ModelVersionClient';
 import ModelRegistryClient from '../src/model-registry/ModelRegistryClient';
 import RunClient from '../src/tracking/RunClient';
-// import {
-//   Run,
-//   Metrics,
-//   Params,
-//   Tags,
-//   MetricHistoryResponse,
-// } from '../src/utils/interface';
 
 interface keyable {
   [key: string]: any;
