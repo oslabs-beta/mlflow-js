@@ -39,8 +39,8 @@ describe('ModelManager', () => {
       expect(newModelVersion.name).toBe(modelName2);
       expect(newModelVersion.version).toBe('1');
     });
-    // const consoleErrorMock = jest.spyOn(global.console, 'error').mockImplementation(()=> {});
     test('Should throw an error for duplicate model name', async () => {
+      // Making it so console.error doesn't show up in the console
       const consoleErrorMock = jest
         .spyOn(global.console, 'error')
         .mockImplementation(() => {});
@@ -50,6 +50,7 @@ describe('ModelManager', () => {
         run.info.artifact_uri,
         run.info.run_id
       );
+      // Testing if an error was thrown
       await expect(
         modelManager.createRegisteredModelWithVersion(
           modelName3,
@@ -57,7 +58,9 @@ describe('ModelManager', () => {
           run.info.run_id
         )
       ).rejects.toThrow();
+      // testing is a console.error was mocked
       expect(consoleErrorMock).toHaveBeenCalled();
+      // restoring the console to show console.error again to not affect other tests
       consoleErrorMock.mockRestore();
     });
   });
