@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeAll, beforeEach } from '@jest/globals';
+import { describe, test, expect, beforeAll } from '@jest/globals';
 import ModelVersionClient from '../src/model-registry/ModelVersionClient';
 import ModelRegistryClient from '../src/model-registry/ModelRegistryClient';
 import RunClient from '../src/tracking/RunClient';
@@ -10,15 +10,18 @@ import RunClient from '../src/tracking/RunClient';
 //   MetricHistoryResponse,
 // } from '../src/utils/interface';
 
-// interface keyable {
-//   [key: string]: any;
-// }
+interface keyable {
+  [key: string]: any;
+}
 
 describe('ModelVersionClient', () => {
   let modelVersionClient: ModelVersionClient;
   let modelRegistryClient: ModelRegistryClient;
   let runClient: RunClient;
-  let run: object;
+  let run: keyable;
+  let modelName: string;
+  let modelVersionRunLink: string;
+  let modelVersionDescription: string;
 
   beforeAll(async () => {
     await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -27,7 +30,9 @@ describe('ModelVersionClient', () => {
     runClient = new RunClient('http://localhost:5002');
 
     const timestamp = Date.now();
-    const modelName = `test-model-${timestamp}`;
+    modelName = `test-model-${timestamp}`;
+    modelVersionRunLink = 'test-run-link';
+    modelVersionDescription = 'test-model-version-description';
     // Creating a new registered model to test on
     await modelRegistryClient.createRegisteredModel(
       modelName,
@@ -35,19 +40,284 @@ describe('ModelVersionClient', () => {
       'This is a test model'
     );
 
-    console.log('\n5. Creating a run...');
-    const run = (await runClient.createRun('0')); // Using '0' as the default experiment ID
-    // console.log('Created run:', run);
+    run = await runClient.createRun('0'); // Using '0' as the default experiment ID
   });
 
   describe('createModelVersion', () => {
-    test('Should create a new model version', async () => {
-      const createdModelVersion = await modelVersionClient.createModelVersion(
+    test('Should create a new model version with name, source, run_id, tag, run_link, and description', async () => {
+      const createdModelVersion: keyable =
+        await modelVersionClient.createModelVersion(
+          modelName,
+          run.info.artifact_uri,
+          run.info.run_id,
+          [
+            { key: 'test-tag', value: 'test-value' },
+            { key: 'test-tag2', value: 'test-value2' },
+          ],
+          modelVersionRunLink,
+          modelVersionDescription
+        );
+      expect(createdModelVersion.name).toBe(modelName);
+      expect(createdModelVersion.source).toBe(run.info.artifact_uri);
+      expect(createdModelVersion.run_id).toBe(run.info.run_id);
+      expect(createdModelVersion.tags).toEqual([
+        { key: 'test-tag', value: 'test-value' },
+        { key: 'test-tag2', value: 'test-value2' },
+      ]);
+      expect(createdModelVersion.run_link).toBe(modelVersionRunLink);
+      expect(createdModelVersion.description).toBe(modelVersionDescription);
+    });
+
+    test('Should make version two of model version if passed same name', async () => {
+      const createdModelVersion2: keyable =
+        await modelVersionClient.createModelVersion(
+          modelName,
+          run.info.artifact_uri,
+          run.info.run_id,
+          [
+            { key: 'test-tag', value: 'test-value' },
+            { key: 'test-tag2', value: 'test-value2' },
+          ],
+          modelVersionRunLink,
+          modelVersionDescription
+        );
+      expect(createdModelVersion2.version).toBe('2');
+    });
+  });
+
+  describe('getModelVersion', () => {
+    test('Should get the specified version of a model with specified name and version', async () => {
+      const getModelVersionCreatedVersion: keyable =
+        await modelVersionClient.createModelVersion(
+          modelName,
+          run.info.artifact_uri
+        );
+
+      const retrievedModelVersion: keyable =
+        await modelVersionClient.getModelVersion(
+          modelName,
+          getModelVersionCreatedVersion.version
+        );
+      expect(retrievedModelVersion.name).toBe(modelName);
+      expect(retrievedModelVersion.version).toBe(
+        getModelVersionCreatedVersion.version
+      );
+    });
+  });
+
+  describe('updateModelVersion', () => {
+    test("Should update the specified model version's description", async () => {
+      await modelVersionClient.createModelVersion(
         modelName,
         run.info.artifact_uri,
         run.info.run_id,
-        [{ key: 'test-tag', value: 'test-value' }]
+        [
+          { key: 'test-tag', value: 'test-value' },
+          { key: 'test-tag2', value: 'test-value2' },
+        ],
+        modelVersionRunLink,
+        modelVersionDescription
       );
+      const updatedModelVersionDescription =
+        "This is test version 1's updated description";
+      const updatedModelVersionDescriptionObject: keyable =
+        await modelVersionClient.updateModelVersion(
+          modelName,
+          '1',
+          updatedModelVersionDescription
+        );
+      expect(updatedModelVersionDescriptionObject.description).toBe(
+        updatedModelVersionDescription
+      );
+    });
+  });
+
+  describe('searchModelVersions', () => {
+    test('Should retrieve an array of model_versions that match specified criteria', async () => {
+      for (let i = 0; i < 7; i++) {
+        await modelVersionClient.createModelVersion(
+          modelName,
+          run.info.artifact_uri,
+          run.info.run_id,
+          [
+            { key: 'test-tag', value: 'test-value' },
+            { key: 'test-tag2', value: 'test-value2' },
+          ],
+          modelVersionRunLink,
+          modelVersionDescription
+        );
+      }
+      const max_results = 5;
+      const filteredModelVersions: keyable =
+        await modelVersionClient.searchModelVersions(
+          `name='${modelName}'`,
+          max_results,
+          ['name']
+        );
+      if (filteredModelVersions.next_page_token) {
+        expect(typeof filteredModelVersions.next_page_token).toBe('string');
+      }
+      expect(filteredModelVersions.length).toBe(max_results);
+      for (let x = 0; x < max_results; x++) {
+        expect(filteredModelVersions[x].name).toBe(modelName);
+      }
+    });
+  });
+
+  describe('getDownloadUriForModelVersionArtifacts', () => {
+    test('Should retrieve the download uri for model version artifacts.', async () => {
+      const getDownloadUriForModelVersionArtifactsModelVersion: keyable =
+        await modelVersionClient.createModelVersion(
+          modelName,
+          run.info.artifact_uri,
+          run.info.run_id,
+          [
+            { key: 'test-tag', value: 'test-value' },
+            { key: 'test-tag2', value: 'test-value2' },
+          ],
+          modelVersionRunLink,
+          modelVersionDescription
+        );
+      const artifact_uri =
+        await modelVersionClient.getDownloadUriForModelVersionArtifacts(
+          modelName,
+          getDownloadUriForModelVersionArtifactsModelVersion.version
+        );
+      expect(artifact_uri).toBe(
+        getDownloadUriForModelVersionArtifactsModelVersion.source
+      );
+    });
+  });
+
+  describe('transitionModelVersionStage', () => {
+    test('Should transition the model version to a different stage', async () => {
+      const transitionModelVersionStageModelVersion: keyable =
+        await modelVersionClient.createModelVersion(
+          modelName,
+          run.info.artifact_uri,
+          run.info.run_id,
+          [
+            { key: 'test-tag', value: 'test-value' },
+            { key: 'test-tag2', value: 'test-value2' },
+          ],
+          modelVersionRunLink,
+          modelVersionDescription
+        );
+      expect(transitionModelVersionStageModelVersion.current_stage).toBe(
+        'None'
+      );
+
+      const transitionedModelVersion: keyable =
+        await modelVersionClient.transitionModelVersionStage(
+          modelName,
+          transitionModelVersionStageModelVersion.version,
+          'Production',
+          true
+        );
+      expect(transitionedModelVersion.current_stage).toBe('Production');
+    });
+  });
+
+  describe('setModelVersionTag', () => {
+    test('Should set a tag on a specific model version.', async () => {
+      const setModelVersionTagModelVersion: keyable =
+        await modelVersionClient.createModelVersion(
+          modelName,
+          run.info.artifact_uri,
+          run.info.run_id,
+          [
+            { key: 'test-tag', value: 'test-value' },
+            { key: 'test-tag2', value: 'test-value2' },
+          ],
+          modelVersionRunLink,
+          modelVersionDescription
+        );
+
+      await modelVersionClient.setModelVersionTag(
+        modelName,
+        setModelVersionTagModelVersion.version,
+        'setModelmodelVersionKey',
+        'setModelVersionValue'
+      );
+
+      const newModelVersionTagObject: keyable =
+        await modelVersionClient.getModelVersion(
+          modelName,
+          setModelVersionTagModelVersion.version
+        );
+
+      let tagExists = false;
+      for (let i = 0; i < newModelVersionTagObject.tags.length; i++) {
+        if (
+          newModelVersionTagObject.tags[i].key === 'setModelmodelVersionKey' &&
+          newModelVersionTagObject.tags[i].value === 'setModelVersionValue'
+        ) {
+          tagExists = true;
+        }
+      }
+      expect(tagExists).toBe(true);
+    });
+  });
+
+  describe('deleteModelVersionTag', () => {
+    test('Should delete a tag from a specific model version.', async () => {
+      const deleteModelVersionTagModelVersion: keyable =
+        await modelVersionClient.createModelVersion(
+          modelName,
+          run.info.artifact_uri,
+          run.info.run_id,
+          [
+            { key: 'test-tag', value: 'test-value' },
+            { key: 'test-tag2', value: 'test-value2' },
+          ],
+          modelVersionRunLink,
+          modelVersionDescription
+        );
+      await modelVersionClient.deleteModelVersionTag(
+        modelName,
+        deleteModelVersionTagModelVersion.version,
+        'test-tag'
+      );
+      const deleteModelVersionTagObject: keyable =
+        await modelVersionClient.getModelVersion(
+          modelName,
+          deleteModelVersionTagModelVersion.version
+        );
+      let tagExists = false;
+      for (let i = 0; i < deleteModelVersionTagObject.tags.length; i++) {
+        if (deleteModelVersionTagObject.tags[i].key === 'test-tag') {
+          tagExists = true;
+        }
+      }
+      expect(tagExists).toBe(false);
+    });
+  });
+
+  describe('deleteModelVersion', () => {
+    test('Should delete the specified model version', async () => {
+      const deleteModelVersionModelVersion: keyable =
+        await modelVersionClient.createModelVersion(
+          modelName,
+          run.info.artifact_uri,
+          run.info.run_id,
+          [
+            { key: 'test-tag', value: 'test-value' },
+            { key: 'test-tag2', value: 'test-value2' },
+          ],
+          modelVersionRunLink,
+          modelVersionDescription
+        );
+      await modelVersionClient.deleteModelVersion(
+        modelName,
+        deleteModelVersionModelVersion.version
+      );
+
+      await expect(
+        modelVersionClient.getModelVersion(
+          modelName,
+          deleteModelVersionModelVersion.version
+        )
+      ).rejects.toThrow();
     });
   });
 });
