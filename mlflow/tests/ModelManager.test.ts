@@ -69,7 +69,7 @@ describe('ModelManager', () => {
         .spyOn(global.console, 'error')
         .mockImplementation(() => {});
       await expect(
-        // @ts-expect-error: Trying to 0 parameters when parameters are required
+        // @ts-expect-error: Trying to use 0 parameters when parameters are required
         modelManager.createRegisteredModelWithVersion()
       ).rejects.toThrow();
       // testing is a console.error was mocked
@@ -106,7 +106,7 @@ describe('ModelManager', () => {
         .spyOn(global.console, 'error')
         .mockImplementation(() => {});
       await expect(
-        // @ts-expect-error: Trying to 0 parameters when parameters are required
+        // @ts-expect-error: Trying to use 0 parameters when parameters are required
         modelManager.updateRegisteredModelDescriptionAndTag()
       ).rejects.toThrow();
       // testing is a console.error was mocked
@@ -158,7 +158,7 @@ describe('ModelManager', () => {
         .spyOn(global.console, 'error')
         .mockImplementation(() => {});
       await expect(
-        // @ts-expect-error: Trying to 0 parameters when parameters are required
+        // @ts-expect-error: Trying to use 0 parameters when parameters are required
         modelManager.updateAllLatestModelVersion()
       ).rejects.toThrow();
       // testing is a console.error was mocked
@@ -199,7 +199,7 @@ describe('ModelManager', () => {
         .spyOn(global.console, 'error')
         .mockImplementation(() => {});
       await expect(
-        // @ts-expect-error: Trying to 0 parameters when parameters are required
+        // @ts-expect-error: Trying to use 0 parameters when parameters are required
         modelManager.setLatestModelVersionTag()
       ).rejects.toThrow();
       // testing is a console.error was mocked
@@ -238,7 +238,7 @@ describe('ModelManager', () => {
         .spyOn(global.console, 'error')
         .mockImplementation(() => {});
       await expect(
-        // @ts-expect-error: Trying to 0 parameters when parameters are required
+        // @ts-expect-error: Trying to use 0 parameters when parameters are required
         modelManager.setLatestModelVersionAlias()
       ).rejects.toThrow();
       // testing is a console.error was mocked
@@ -276,7 +276,7 @@ describe('ModelManager', () => {
         .spyOn(global.console, 'error')
         .mockImplementation(() => {});
       await expect(
-        // @ts-expect-error: Trying to 0 parameters when parameters are required
+        // @ts-expect-error: Trying to use 0 parameters when parameters are required
         modelManager.updateLatestModelVersion()
       ).rejects.toThrow();
       // testing is a console.error was mocked
@@ -322,7 +322,7 @@ describe('ModelManager', () => {
         .spyOn(global.console, 'error')
         .mockImplementation(() => {});
       await expect(
-        // @ts-expect-error: Trying to 0 parameters when parameters are required
+        // @ts-expect-error: Trying to use 0 parameters when parameters are required
         modelManager.updateAllModelVersion()
       ).rejects.toThrow();
       // testing is a console.error was mocked
@@ -356,7 +356,7 @@ describe('ModelManager', () => {
         .spyOn(global.console, 'error')
         .mockImplementation(() => {});
       await expect(
-        // @ts-expect-error: Trying to 0 parameters when parameters are required
+        // @ts-expect-error: Trying to use 0 parameters when parameters are required
         modelManager.deleteLatestModelVersion()
       ).rejects.toThrow();
       // testing is a console.error was mocked
@@ -417,7 +417,7 @@ describe('ModelManager', () => {
         .spyOn(global.console, 'error')
         .mockImplementation(() => {});
       await expect(
-        // @ts-expect-error: Trying to 0 parameters when parameters are required
+        // @ts-expect-error: Trying to use 0 parameters when parameters are required
         modelManager.createModelFromRunWithBestMetric()
       ).rejects.toThrow();
       // testing is a console.error was mocked
