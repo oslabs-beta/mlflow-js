@@ -61,11 +61,11 @@ class RunManager {
           keepRunIds.add(run.info.run_id)
         );
 
-        // Add runs without the specified metric key to keepRunIds
+        // Process each run
         for (const run of searchResult.runs) {
           const metrics = run.data.metrics;
           const hasMetricKey = Array.isArray(metrics)
-            ? metrics.some((metric) => metric.key === metric.key)
+            ? metrics.some((metric) => metric.key === metric_key)
             : metric_key in metrics;
 
           if (!hasMetricKey || keepRunIds.has(run.info.run_id)) {

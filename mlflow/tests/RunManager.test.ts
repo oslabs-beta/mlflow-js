@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeAll } from '@jest/globals';
+import { describe, test, expect, beforeEach } from '@jest/globals';
 import RunManager from '../src/workflows/RunManager';
 import RunClient from '../src/tracking/RunClient';
 import ExperimentClient from '../src/tracking/ExperimentClient';
@@ -11,7 +11,7 @@ describe('RunManager', () => {
   let experimentId: string;
   const runIds: string[] = [];
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     await new Promise((resolve) => setTimeout(resolve, 2000));
     runClient = new RunClient('http://127.0.0.1:5002');
     experimentClient = new ExperimentClient('http://127.0.0.1:5002');
@@ -38,10 +38,7 @@ describe('RunManager', () => {
 
   describe('cleanupRuns', () => {
     test('- Should delete runs not matching criteria', async () => {
-      // Log the initial state
-      (await runClient.searchRuns([experimentId])) as {
-        runs: Run[];
-      };
+      (await runClient.searchRuns([experimentId])) as { runs: Run[] };
 
       const result = (await runManager.cleanupRuns(
         [experimentId],
@@ -54,20 +51,25 @@ describe('RunManager', () => {
         runs: Run[];
       };
 
-      expect(result.total).toBe(3);
-      expect(result.deletedRuns.length).toBe(3);
+      expect(result.deletedRuns.length).toBe(1);
       expect(result.dryRun).toBe(false);
+      expect(remainingRuns.runs.length).toBe(3);
 
-      // verify that only one run remains
-      expect(remainingRuns.runs.length).toBe(1);
-      expect(remainingRuns.runs[0].data.metrics[0].key).toBe('metric1');
-      expect(remainingRuns.runs[0].data.metrics[0].value).toBeGreaterThan(15);
+      // verify that remaining runs all have metric1 > 15
+      for (const run of remainingRuns.runs) {
+        const metric1 = run.data.metrics.find((m) => m.key === 'metric1');
+        if (metric1) {
+          expect(metric1.value).toBeGreaterThan(15);
+        }
+      }
     });
 
     test('- Should not delete runs in dry run mode', async () => {
       const initialRuns = (await runClient.searchRuns([experimentId])) as {
         runs: Run[];
       };
+
+      expect(initialRuns.runs.length).toBe(4);
 
       const result = (await runManager.cleanupRuns(
         [experimentId],
@@ -76,15 +78,25 @@ describe('RunManager', () => {
         true // dry run
       )) as CleanupRuns;
 
-      expect(result.total).toBe(initialRuns.runs.length);
-      expect(result.deletedRuns.length).toBe(initialRuns.runs.length);
-      expect(result.dryRun).toBe(true);
-
-      // verify that all runs still exist
       const remainingRuns = (await runClient.searchRuns([experimentId])) as {
         runs: Run[];
       };
-      expect(remainingRuns.runs.length).toBe(initialRuns.runs.length);
+
+      expect(result.deletedRuns.length).toBe(2);
+      expect(result.total).toBe(2);
+      expect(result.dryRun).toBe(true);
+      expect(remainingRuns.runs.length).toBe(4);
+
+      const deletedMetric1Values = result.deletedRuns.map(
+        (run) => run.data.metrics.find((m) => m.key === 'metric1')?.value
+      );
+      expect(deletedMetric1Values).toEqual(expect.arrayContaining([10, 20]));
+
+      const deletedMetricKeys = result.deletedRuns.flatMap((run) =>
+        run.data.metrics.map((m) => m.key)
+      );
+      expect(deletedMetricKeys).not.toContain('metric2');
+      expect(deletedMetricKeys).not.toContain('metric3');
     });
   });
 });

@@ -4,7 +4,7 @@ export interface Run {
   inputs?: RunInputs;
 }
 
-export interface RunInfo {
+interface RunInfo {
   run_id: string;
   run_name: string;
   experiment_id: string;
@@ -15,17 +15,17 @@ export interface RunInfo {
   lifecycle_stage: string;
 }
 
-export interface RunData {
+interface RunData {
   metrics: Metrics[];
   params: Params[];
   tags: Tags[];
 }
 
-export interface RunInputs {
+interface RunInputs {
   dataset_inputs?: DatasetInput[];
 }
 
-export interface DatasetInput {
+interface DatasetInput {
   tags?: Tags[];
   dataset: {
     name: string;
