@@ -78,7 +78,7 @@ describe('ModelVersionClient', () => {
     });
 
     test('Should throw if no parameters are passed to the method', async () => {
-      // @ts-expect-error: Trying to pass a number instead of a string for name
+      // @ts-expect-error: Trying to 0 parameters when parameters are required
       await expect(modelVersionClient.createModelVersion()).rejects.toThrow();
     });
   });
@@ -103,7 +103,7 @@ describe('ModelVersionClient', () => {
     });
 
     test('Should throw if no parameters are passed to the method', async () => {
-      // @ts-expect-error: Trying to pass a number instead of a string for name
+      // @ts-expect-error: Trying to 0 parameters when parameters are required
       await expect(modelVersionClient.getModelVersion()).rejects.toThrow();
     });
   });
@@ -135,7 +135,7 @@ describe('ModelVersionClient', () => {
     });
 
     test('Should throw if no parameters are passed to the method', async () => {
-      // @ts-expect-error: Trying to pass a number instead of a string for name
+      // @ts-expect-error: Trying to 0 parameters when parameters are required
       await expect(modelVersionClient.updateModelVersion()).rejects.toThrow();
     });
   });
@@ -214,7 +214,7 @@ describe('ModelVersionClient', () => {
 
     test('Should throw if no parameters are passed to the method', async () => {
       await expect(
-        // @ts-expect-error: Trying to pass a number instead of a string for name
+        // @ts-expect-error: Trying to 0 parameters when parameters are required
         modelVersionClient.getDownloadUriForModelVersionArtifacts()
       ).rejects.toThrow();
     });
@@ -250,7 +250,7 @@ describe('ModelVersionClient', () => {
 
     test('Should throw if no parameters are passed to the method', async () => {
       await expect(
-        // @ts-expect-error: Trying to pass a number instead of a string for name
+        // @ts-expect-error: Trying to 0 parameters when parameters are required
         modelVersionClient.transitionModelVersionStage()
       ).rejects.toThrow();
     });
@@ -297,7 +297,7 @@ describe('ModelVersionClient', () => {
     });
 
     test('Should throw if no parameters are passed to the method', async () => {
-      // @ts-expect-error: Trying to pass a number instead of a string for name
+      // @ts-expect-error: Trying to 0 parameters when parameters are required
       await expect(modelVersionClient.setModelVersionTag()).rejects.toThrow();
     });
   });
@@ -337,7 +337,7 @@ describe('ModelVersionClient', () => {
 
     test('Should throw if no parameters are passed to the method', async () => {
       await expect(
-        // @ts-expect-error: Trying to pass a number instead of a string for name
+        // @ts-expect-error: Trying to 0 parameters when parameters are required
         modelVersionClient.deleteModelVersionTag()
       ).rejects.toThrow();
     });
@@ -372,7 +372,7 @@ describe('ModelVersionClient', () => {
 
     test('Should throw if no parameters are passed to the method', async () => {
       await expect(
-        // @ts-expect-error: Trying to pass a number instead of a string for name
+        // @ts-expect-error: Trying to 0 parameters when parameters are required
         modelVersionClient.deleteModelVersion()
       ).rejects.toThrow();
     });
