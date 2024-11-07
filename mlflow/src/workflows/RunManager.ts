@@ -1,11 +1,7 @@
 import RunClient from '@tracking/RunClient';
 import ModelVersionClient from '@model-registry/ModelVersionClient';
-import { Run } from '@utils/interface';
+import { Run, SearchedRuns } from '@utils/interface';
 import { ApiError } from '@utils/apiError';
-
-interface keyable {
-  [key: string]: any;
-}
 
 class RunManager {
   private runClient: RunClient;
@@ -34,65 +30,61 @@ class RunManager {
   ): Promise<object> {
     const deletedRuns = [];
     const keepRunIds = new Set();
-    let pageToken = null;
+    const runViewType = undefined;
+    let pageToken = undefined;
     const maxResults = 1000;
 
     try {
       do {
         // get all runs
-        const searchResult: keyable = await this.runClient.searchRuns(
+        const searchResult = (await this.runClient.searchRuns(
           experimentIds,
           '',
-          undefined, // run_view_type
+          runViewType,
           maxResults,
           ['start_time DESC'],
           pageToken
-        );
+        )) as SearchedRuns;
 
         // get runs that match the keep crteria
-        const keepRunsResult: keyable = await this.runClient.searchRuns(
+        const keepRunsResult = (await this.runClient.searchRuns(
           experimentIds,
           query_string,
-          undefined, // run_view_type
+          runViewType,
           maxResults,
           ['start_time DESC'],
           pageToken
-        );
+        )) as SearchedRuns;
 
         // Add runs from keepRunsResult to keepResult
-        keepRunsResult.runs.forEach((run: Run) =>
+        keepRunsResult.runs?.forEach((run: Run) =>
           keepRunIds.add(run.info.run_id)
         );
 
         // Add runs without the specified metric key to keepRunIds
         for (const run of searchResult.runs) {
-          if (Array.isArray(run.data.metrics)) {
-            const hasMetricKey = run.data.metrics.some(
-              (metric: { key: string }) => metric.key === metric_key
-            );
-            if (!hasMetricKey) {
-              keepRunIds.add(run.info.run_id);
-            }
-          } else {
-            // If run.data.metrics is not an array (e.g., undefined), keep the run
-            keepRunIds.add(run.info.run_id);
-          }
-        }
+          const metrics = run.data.metrics;
+          const hasMetricKey = Array.isArray(metrics)
+            ? metrics.some((metric) => metric.key === metric.key)
+            : metric_key in metrics;
 
-        // Delete runs that are not in keepRunIds
-        for (const run of searchResult.runs) {
-          if (!keepRunIds.has(run.info.run_id)) {
+          if (!hasMetricKey || keepRunIds.has(run.info.run_id)) {
+            keepRunIds.add(run.info.run_id);
+          } else {
+            deletedRuns.push(run);
             if (!dryRun) {
               await this.runClient.deleteRun(run.info.run_id);
             }
-            deletedRuns.push(run);
           }
         }
-
-        pageToken = searchResult.page_token;
+        pageToken = searchResult.next_page_token;
       } while (pageToken);
 
-      return { deletedRuns, total: deletedRuns.length, dryRun };
+      return {
+        deletedRuns: deletedRuns,
+        total: deletedRuns.length,
+        dryRun,
+      };
     } catch (error) {
       if (error instanceof ApiError) {
         console.error(`API Error (${error.statusCode}): ${error.message}`);
@@ -119,14 +111,14 @@ class RunManager {
   ): Promise<object> {
     try {
       // get original run
-      const originalRun: keyable = await this.runClient.getRun(runId);
+      const originalRun = (await this.runClient.getRun(runId)) as Run;
 
       // create a new run in the target experiment
-      const newRun: keyable = await this.runClient.createRun(
+      const newRun = (await this.runClient.createRun(
         targetExperimentId,
         undefined,
         originalRun.info.start_time
-      );
+      )) as Run;
 
       const newRunId = newRun.info.run_id;
 
@@ -138,6 +130,7 @@ class RunManager {
         originalRun.info.status,
         endTime
       );
+
       if (originalRun.info.lifecycle_stage !== 'active') {
         await this.runClient.setTag(
           newRunId,
