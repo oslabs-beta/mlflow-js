@@ -76,6 +76,11 @@ describe('ModelVersionClient', () => {
         );
       expect(createdModelVersion2.version).toBe('2');
     });
+
+    test('Should throw if no parameters are passed to the method', async () => {
+      // @ts-expect-error: Trying to pass a number instead of a string for name
+      await expect(modelVersionClient.createModelVersion()).rejects.toThrow();
+    });
   });
 
   describe('getModelVersion', () => {
@@ -95,6 +100,11 @@ describe('ModelVersionClient', () => {
       expect(retrievedModelVersion.version).toBe(
         getModelVersionCreatedVersion.version
       );
+    });
+
+    test('Should throw if no parameters are passed to the method', async () => {
+      // @ts-expect-error: Trying to pass a number instead of a string for name
+      await expect(modelVersionClient.getModelVersion()).rejects.toThrow();
     });
   });
 
@@ -122,6 +132,11 @@ describe('ModelVersionClient', () => {
       expect(updatedModelVersionDescriptionObject.description).toBe(
         updatedModelVersionDescription
       );
+    });
+
+    test('Should throw if no parameters are passed to the method', async () => {
+      // @ts-expect-error: Trying to pass a number instead of a string for name
+      await expect(modelVersionClient.updateModelVersion()).rejects.toThrow();
     });
   });
 
@@ -155,6 +170,22 @@ describe('ModelVersionClient', () => {
         expect(filteredModelVersions[x].name).toBe(modelName);
       }
     });
+
+    test('Should return up to 200,000 models if no input is passed', async () => {
+      await modelVersionClient.createModelVersion(
+        modelName,
+        run.info.artifact_uri,
+        run.info.run_id,
+        [
+          { key: 'test-tag', value: 'test-value' },
+          { key: 'test-tag2', value: 'test-value2' },
+        ],
+        modelVersionRunLink,
+        modelVersionDescription
+      );
+      const testData = await modelVersionClient.searchModelVersions();
+      expect(testData).not.toHaveLength(0);
+    });
   });
 
   describe('getDownloadUriForModelVersionArtifacts', () => {
@@ -179,6 +210,13 @@ describe('ModelVersionClient', () => {
       expect(artifact_uri).toBe(
         getDownloadUriForModelVersionArtifactsModelVersion.source
       );
+    });
+
+    test('Should throw if no parameters are passed to the method', async () => {
+      await expect(
+        // @ts-expect-error: Trying to pass a number instead of a string for name
+        modelVersionClient.getDownloadUriForModelVersionArtifacts()
+      ).rejects.toThrow();
     });
   });
 
@@ -208,6 +246,13 @@ describe('ModelVersionClient', () => {
           true
         );
       expect(transitionedModelVersion.current_stage).toBe('Production');
+    });
+
+    test('Should throw if no parameters are passed to the method', async () => {
+      await expect(
+        // @ts-expect-error: Trying to pass a number instead of a string for name
+        modelVersionClient.transitionModelVersionStage()
+      ).rejects.toThrow();
     });
   });
 
@@ -250,6 +295,11 @@ describe('ModelVersionClient', () => {
       }
       expect(tagExists).toBe(true);
     });
+
+    test('Should throw if no parameters are passed to the method', async () => {
+      // @ts-expect-error: Trying to pass a number instead of a string for name
+      await expect(modelVersionClient.setModelVersionTag()).rejects.toThrow();
+    });
   });
 
   describe('deleteModelVersionTag', () => {
@@ -284,6 +334,13 @@ describe('ModelVersionClient', () => {
       }
       expect(tagExists).toBe(false);
     });
+
+    test('Should throw if no parameters are passed to the method', async () => {
+      await expect(
+        // @ts-expect-error: Trying to pass a number instead of a string for name
+        modelVersionClient.deleteModelVersionTag()
+      ).rejects.toThrow();
+    });
   });
 
   describe('deleteModelVersion', () => {
@@ -310,6 +367,13 @@ describe('ModelVersionClient', () => {
           modelName,
           deleteModelVersionModelVersion.version
         )
+      ).rejects.toThrow();
+    });
+
+    test('Should throw if no parameters are passed to the method', async () => {
+      await expect(
+        // @ts-expect-error: Trying to pass a number instead of a string for name
+        modelVersionClient.deleteModelVersion()
       ).rejects.toThrow();
     });
   });

@@ -63,6 +63,20 @@ describe('ModelManager', () => {
       // restoring the console to show console.error again to not affect other tests
       consoleErrorMock.mockRestore();
     });
+    test('Should throw and console.error if no parameters are passed to the method', async () => {
+      // Making it so console.error doesn't show up in the console
+      const consoleErrorMock = jest
+        .spyOn(global.console, 'error')
+        .mockImplementation(() => {});
+      await expect(
+        // @ts-expect-error: Trying to pass a number instead of a string for name
+        modelManager.createRegisteredModelWithVersion()
+      ).rejects.toThrow();
+      // testing is a console.error was mocked
+      expect(consoleErrorMock).toHaveBeenCalled();
+      // restoring the console to show console.error again to not affect other tests
+      consoleErrorMock.mockRestore();
+    });
   });
 
   describe('updateRegisteredModelDescriptionAndTag', () => {
@@ -85,6 +99,20 @@ describe('ModelManager', () => {
       );
       expect(updatedModelDescriptionAndTag.tags[0].key).toBe('modelTagKey');
       expect(updatedModelDescriptionAndTag.tags[0].value).toBe('modelTagValue');
+    });
+    test('Should throw and console.error if no parameters are passed to the method', async () => {
+      // Making it so console.error doesn't show up in the console
+      const consoleErrorMock = jest
+        .spyOn(global.console, 'error')
+        .mockImplementation(() => {});
+      await expect(
+        // @ts-expect-error: Trying to pass a number instead of a string for name
+        modelManager.updateRegisteredModelDescriptionAndTag()
+      ).rejects.toThrow();
+      // testing is a console.error was mocked
+      expect(consoleErrorMock).toHaveBeenCalled();
+      // restoring the console to show console.error again to not affect other tests
+      consoleErrorMock.mockRestore();
     });
   });
 
@@ -124,6 +152,20 @@ describe('ModelManager', () => {
         'modelVersionTagValue'
       );
     });
+    test('Should throw and console.error if no parameters are passed to the method', async () => {
+      // Making it so console.error doesn't show up in the console
+      const consoleErrorMock = jest
+        .spyOn(global.console, 'error')
+        .mockImplementation(() => {});
+      await expect(
+        // @ts-expect-error: Trying to pass a number instead of a string for name
+        modelManager.updateAllLatestModelVersion()
+      ).rejects.toThrow();
+      // testing is a console.error was mocked
+      expect(consoleErrorMock).toHaveBeenCalled();
+      // restoring the console to show console.error again to not affect other tests
+      consoleErrorMock.mockRestore();
+    });
   });
 
   describe('setLatestModelVersionTag', () => {
@@ -151,6 +193,20 @@ describe('ModelManager', () => {
       expect(latestModelVersion[0].tags[0].key).toBe('modelVersionTagKey');
       expect(latestModelVersion[0].tags[0].value).toBe('modelVersionTagValue');
     });
+    test('Should throw and console.error if no parameters are passed to the method', async () => {
+      // Making it so console.error doesn't show up in the console
+      const consoleErrorMock = jest
+        .spyOn(global.console, 'error')
+        .mockImplementation(() => {});
+      await expect(
+        // @ts-expect-error: Trying to pass a number instead of a string for name
+        modelManager.setLatestModelVersionTag()
+      ).rejects.toThrow();
+      // testing is a console.error was mocked
+      expect(consoleErrorMock).toHaveBeenCalled();
+      // restoring the console to show console.error again to not affect other tests
+      consoleErrorMock.mockRestore();
+    });
   });
 
   describe('setLatestModelVersionAlias', () => {
@@ -176,6 +232,20 @@ describe('ModelManager', () => {
       expect(latestModelVersion[0].name).toBe(modelName2);
       expect(latestModelVersion[0].aliases[0]).toBe('modelVersionAlias');
     });
+    test('Should throw and console.error if no parameters are passed to the method', async () => {
+      // Making it so console.error doesn't show up in the console
+      const consoleErrorMock = jest
+        .spyOn(global.console, 'error')
+        .mockImplementation(() => {});
+      await expect(
+        // @ts-expect-error: Trying to pass a number instead of a string for name
+        modelManager.setLatestModelVersionAlias()
+      ).rejects.toThrow();
+      // testing is a console.error was mocked
+      expect(consoleErrorMock).toHaveBeenCalled();
+      // restoring the console to show console.error again to not affect other tests
+      consoleErrorMock.mockRestore();
+    });
   });
 
   describe('updateLatestModelVersion', () => {
@@ -199,6 +269,20 @@ describe('ModelManager', () => {
       expect(latestModelVersion.version).toBe('2');
       expect(latestModelVersion.name).toBe(modelName2);
       expect(latestModelVersion.description).toBe('modelDescription');
+    });
+    test('Should throw and console.error if no parameters are passed to the method', async () => {
+      // Making it so console.error doesn't show up in the console
+      const consoleErrorMock = jest
+        .spyOn(global.console, 'error')
+        .mockImplementation(() => {});
+      await expect(
+        // @ts-expect-error: Trying to pass a number instead of a string for name
+        modelManager.updateLatestModelVersion()
+      ).rejects.toThrow();
+      // testing is a console.error was mocked
+      expect(consoleErrorMock).toHaveBeenCalled();
+      // restoring the console to show console.error again to not affect other tests
+      consoleErrorMock.mockRestore();
     });
   });
 
@@ -232,6 +316,20 @@ describe('ModelManager', () => {
         'modelVersionDescription'
       );
     });
+    test('Should throw and console.error if no parameters are passed to the method', async () => {
+      // Making it so console.error doesn't show up in the console
+      const consoleErrorMock = jest
+        .spyOn(global.console, 'error')
+        .mockImplementation(() => {});
+      await expect(
+        // @ts-expect-error: Trying to pass a number instead of a string for name
+        modelManager.updateAllModelVersion()
+      ).rejects.toThrow();
+      // testing is a console.error was mocked
+      expect(consoleErrorMock).toHaveBeenCalled();
+      // restoring the console to show console.error again to not affect other tests
+      consoleErrorMock.mockRestore();
+    });
   });
 
   describe('deleteLatestModelVersion', () => {
@@ -251,6 +349,20 @@ describe('ModelManager', () => {
       const latestModelVersion: keyable =
         await modelRegistryClient.getLatestModelVersions(modelName2);
       expect(latestModelVersion[0].version).toBe('1');
+    });
+    test('Should throw and console.error if no parameters are passed to the method', async () => {
+      // Making it so console.error doesn't show up in the console
+      const consoleErrorMock = jest
+        .spyOn(global.console, 'error')
+        .mockImplementation(() => {});
+      await expect(
+        // @ts-expect-error: Trying to pass a number instead of a string for name
+        modelManager.deleteLatestModelVersion()
+      ).rejects.toThrow();
+      // testing is a console.error was mocked
+      expect(consoleErrorMock).toHaveBeenCalled();
+      // restoring the console to show console.error again to not affect other tests
+      consoleErrorMock.mockRestore();
     });
   });
 
@@ -297,6 +409,21 @@ describe('ModelManager', () => {
       expect(minModel.latest_versions[0].source).toBe(
         runData2.info.artifact_uri
       );
+    });
+
+    test('Should throw and console.error if no parameters are passed to the method', async () => {
+      // Making it so console.error doesn't show up in the console
+      const consoleErrorMock = jest
+        .spyOn(global.console, 'error')
+        .mockImplementation(() => {});
+      await expect(
+        // @ts-expect-error: Trying to pass a number instead of a string for name
+        modelManager.createModelFromRunWithBestMetric()
+      ).rejects.toThrow();
+      // testing is a console.error was mocked
+      expect(consoleErrorMock).toHaveBeenCalled();
+      // restoring the console to show console.error again to not affect other tests
+      consoleErrorMock.mockRestore();
     });
   });
 });
