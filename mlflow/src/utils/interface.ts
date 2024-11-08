@@ -68,3 +68,9 @@ export interface CleanupRuns {
   total: number;
   dryRun: boolean;
 }
+
+export interface CopyRun {
+  originalRunId: string;
+  newRunId: string;
+  targetExperimentId: string;
+}
