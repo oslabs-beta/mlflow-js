@@ -1567,7 +1567,7 @@ export default function Documentation() {
             >
               https://mlflow.org/docs/latest/rest-api.html
             </a>
-            )
+            ).
           </span>
           <div id='experimentClientHeader' className='methodsHeader2'>
             Experiment Client Methods
