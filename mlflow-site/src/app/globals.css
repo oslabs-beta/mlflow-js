@@ -336,6 +336,8 @@ body {
   margin-left: 0.2rem;
   margin-right: 0.2rem;
   background-color: rgb(217, 225, 210);
+  width: 170px;
+  border-radius: 5px;
 }
 
 .teamCardImg {
