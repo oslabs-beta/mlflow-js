@@ -20,7 +20,7 @@ const Method: React.FC<MethodIndividualProps> = ({
       <div className='methodName'>{name}</div>
       <div className='methodDescription'>{description}</div>
       <div>
-        <div className='responseStructure'>Request Structure</div>
+        <div className='responseStructure'>Parameters</div>
         <div className='requestStructureWrapper'>
           <div className='methodRequest mRHeader'>
             <div className='methodRequestLeft textLeftPadding'>Field Name</div>
@@ -39,7 +39,7 @@ const Method: React.FC<MethodIndividualProps> = ({
             />
           ))}
         </div>
-        <div className='responseStructure'>Response</div>
+        <div className='responseStructure'>Returns</div>
         <div className='responseFormat responseFormatHeader'>
           <div className='methodRequestLeft textLeftPadding'>Type</div>
           <div className='methodRequestMid textLeftPadding'>Description</div>
