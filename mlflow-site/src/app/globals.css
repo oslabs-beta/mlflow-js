@@ -182,13 +182,13 @@ body {
 }
 
 .homeButton {
-  padding: clamp(0.1875rem, 0.830625vw, 0.328125rem);
+  width: clamp(8rem, 24vw, 20rem);
   padding-left: clamp(0.375rem, 1.66125vw, 0.65625rem);
   padding-right: clamp(0.375rem, 1.66125vw, 0.65625rem);
   padding-top: clamp(0.375rem, 1.66125vw, 0.65625rem);
   padding-bottom: clamp(0.375rem, 1.66125vw, 0.65625rem);
   border-radius: clamp(0.3125rem, 1.384375vw, 0.546875rem);
-  font-size: clamp(0.8rem, 3.544vw, 1.6rem);
+  font-size: clamp(0.8rem, 3.544vw, 2rem);
 }
 
 .homeButton:hover {
