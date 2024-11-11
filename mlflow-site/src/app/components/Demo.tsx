@@ -13,8 +13,9 @@ const Demo = () => {
     'Description for what\'s happening in Demo 3.  This block of text will contain all the info needed to understand the demo.'
   ];
   const demoCardVideos = [
-    "https://player.vimeo.com/video/1022732764",
-    "https://player.vimeo.com/video/1022732772",
+    'https://player.vimeo.com/video/1023585657',
+    '',
+    '',
   ];
   for (let i = 0; i < 3; i++) {
     demos.push(
