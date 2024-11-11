@@ -81,23 +81,36 @@ describe('ExperimentClient', () => {
       await experimentClient.createExperiment(name5);
     });
 
-    test('SEARCH', async () => {
-      const results = await experimentClient.searchExperiment(
+    test('should return', async () => {
+      type searchResults = {
+        experiment_id: string
+        name: string
+        artifact_location: string
+        lifecycle_stage: string
+        last_update_time: string
+        creation_time: string
+      };
+      const results: {
+        experiments?: searchResults[]
+        next_page_token?: string
+      } = await experimentClient.searchExperiment(
         "name LIKE 'Search test%'",
         4
       );
       
+      expect(results.experiments).toBeDefined();
+      expect(results.next_page_token).toBeDefined();
       expect(results.experiments).toHaveLength(4);
-
-      results.experiments.forEach(result => {
+      results.experiments?.forEach(result => {
         expect(result).toHaveProperty('experiment_id');
         expect(result).toHaveProperty('name');
         expect(result).toHaveProperty('artifact_location');
         expect(result).toHaveProperty('lifecycle_stage');
         expect(result).toHaveProperty('last_update_time');
         expect(result).toHaveProperty('creation_time');
-
-      })
+      });
+      const nextPageTokenIsString: boolean = typeof results.next_page_token === 'string'
+      expect(nextPageTokenIsString).toBeTruthy;
 
       // could write add'l tests to expect name1, name2, name3, etc
     });
