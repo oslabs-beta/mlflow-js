@@ -1,7 +1,7 @@
 /**
  * @fileoverview Example of using MLflow.js for machine learning projects
- * The example creates a synthetic dataset and trains a linear regression model using TensorFlow.js,
- * tracking various metrics and parameters throughout the training process with MLflow tracking server.
+ * The example creates a synthetic dataset and trains a linear regression model using TensorFlow.js, 
+ * tracking various metrics, hyperparameters and other meta data throughout the training process with MLflow tracking server.
  * It showcases:
  * - Experiment and run management
  * - Hyperparameter logging
@@ -12,6 +12,7 @@
  * - Artifact storage
  *
  * @requires @tensorflow/tfjs-node
+ * @requires @mlflow.js
  *
  * @note Ensure MLflow server is running at http://localhost:5001 before executing
  */
@@ -24,7 +25,7 @@ import { dirname } from 'path';
 const mlflow = new MLflow('http://localhost:5001');
 
 const HYPERPARAMETERS = {
-  learningRate: 0.1,
+  learningRate: 0.25,
   epochs: 10,
   batchSize: 32,
   validationSplit: 0.2,
@@ -175,6 +176,18 @@ async function main() {
     const runId = run.info.run_id;
     console.log(`MLflow Run ID: ${runId}`);
 
+    // Generate and prepare data
+    console.log('Generating data...');
+    const { xTrain, yTrain, xTest, yTest } = generateData();
+
+    // Log dataset info
+    const datasetInfo = {
+      dataset: {
+        name: 'synthetic_linear_regression_data',
+      },
+    };
+    await mlflow.logInputs(runId, [datasetInfo]);
+
     // Log hyperparameters
     const params = [
       { key: 'learning_rate', value: HYPERPARAMETERS.learningRate.toString() },
@@ -189,18 +202,6 @@ async function main() {
     ];
     await mlflow.logBatch(runId, undefined, params);
 
-    // Log dataset info
-    const datasetInfo = {
-      dataset: {
-        name: 'synthetic_linear_regression_data',
-      },
-    };
-    await mlflow.logInputs(runId, [datasetInfo]);
-
-    // Generate and prepare data
-    console.log('Generating data...');
-    const { xTrain, yTrain, xTest, yTest } = generateData();
-
     // Train model
     console.log('Creating and training model...');
     const model = createModel();
@@ -208,12 +209,6 @@ async function main() {
 
     // Evaluate model
     const evaluation = evaluateModel(model, xTest, yTest);
-
-    // Save model artifects
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = dirname(__filename);
-    const artifactsPath = `${__dirname}/../mlruns/${experimentId}/${runId}/artifacts`;
-    await model.save(`file://${artifactsPath}`);
 
     // Log evaluation metrics
     const finalMetrics = [
@@ -234,6 +229,12 @@ async function main() {
       { key: 'model_bias', value: evaluation.parameters.bias.toString() },
     ];
     await mlflow.logBatch(runId, undefined, undefined, paramTags);
+
+    // Save model artifects
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = dirname(__filename);
+    const artifactsPath = `${__dirname}/../mlruns/${experimentId}/${runId}/artifacts`;
+    await model.save(`file://${artifactsPath}`);
 
     // Register model if performance meets threshold
     if (evaluation.metrics.r2 > 0.9) {
@@ -259,7 +260,10 @@ async function main() {
           `runs:/${runId}/model`,
           runId,
           [
-            { key: 'r2', value: evaluation.metrics.r2.toString() },
+            {
+              key: 'learning_rate',
+              value: HYPERPARAMETERS.learningRate.toString(),
+            },
             { key: 'rmse', value: evaluation.metrics.rmse.toString() },
           ]
         );
@@ -276,13 +280,6 @@ async function main() {
         console.error('Model registration error:', e.message);
       }
     }
-
-    // Log additional metadata
-    const tags = [
-      { key: 'model_type', value: 'linear_regression' },
-      { key: 'data_source', value: 'synthetic' },
-    ];
-    await mlflow.logBatch(runId, undefined, undefined, tags);
 
     // Finish run
     await mlflow.updateRun(runId, 'FINISHED');
