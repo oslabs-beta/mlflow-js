@@ -1,14 +1,18 @@
-# Set the base image, node v22.7
-FROM node:22.7
-# Set up a WORKDIR for application in the container and set it to /usr/src/app
-WORKDIR /usr/src/app
-# Copy all of your application files to the WORKDIR in the container
+# Dockerfile
+# Specify exact Node.js version for consistency
+FROM node:22.7.0
+WORKDIR /mlflow
+# Install necessary tools
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+# Copy package files
+# Uses package-lock.json for exact versions
+COPY package*.json ./
+# Install dependencies with exact versions
+RUN npm ci
+# Copy source code
 COPY . .
-# RUN a command to npm install your node_modules in the container
-RUN npm install
-# RUN a command to build your application in the container
+# Build the project
 RUN npm run build
-# EXPOSE your server port (5001)
-EXPOSE 5001
-# Set up a CMD to run this Docker container
-ENTRYPOINT ["mlflow.js"]

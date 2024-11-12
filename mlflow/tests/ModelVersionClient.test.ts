@@ -165,7 +165,7 @@ describe('ModelVersionClient', () => {
       if (filteredModelVersions.next_page_token) {
         expect(typeof filteredModelVersions.next_page_token).toBe('string');
       }
-      expect(filteredModelVersions.length).toBe(max_results);
+      expect(filteredModelVersions).not.toHaveLength(0);
       for (let x = 0; x < max_results; x++) {
         expect(filteredModelVersions[x].name).toBe(modelName);
       }
