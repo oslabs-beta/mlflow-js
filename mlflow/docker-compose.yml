@@ -11,7 +11,6 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 15s
   # Development environment to ensure consistency across contributors
   dev:
     build: 
