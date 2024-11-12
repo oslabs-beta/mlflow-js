@@ -144,11 +144,8 @@ describe('ExperimentManager', () => {
         'DESC'
       );
 
-      console.log('summary - ', summary);
-
       expect(Array.isArray(summary)).toBe(true);
       expect(summary.length).toBe(5);
-
       expect(summary[0].metric1).toBe(0.5);
       expect(summary[1].metric1).toBe(0.4);
       expect(summary[2].metric1).toBe(0.3);
