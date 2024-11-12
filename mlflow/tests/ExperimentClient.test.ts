@@ -1,7 +1,6 @@
 import { describe, test, expect, beforeAll, afterAll } from '@jest/globals';
 import ExperimentClient from '../src/tracking/ExperimentClient';
 import { ApiError } from '../src/utils/apiError';
-import { before } from 'node:test';
 
 describe('ExperimentClient', () => {
   let experimentClient: ExperimentClient;
@@ -21,7 +20,7 @@ describe('ExperimentClient', () => {
   beforeAll(async () => {
     // Add a small delay to ensure MLflow is fully ready
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    experimentClient = new ExperimentClient('http://127.0.0.1:5001');
+    experimentClient = new ExperimentClient('http://127.0.0.1:5002');
 
     // Generate the experiment ID to be used generically in later tests
     const timestamp = Date.now();
@@ -149,6 +148,7 @@ describe('ExperimentClient', () => {
       const num = Math.random().toString().slice(2, 11);
       const name = `Test experiment ${num}`;
       const idToDelete = await experimentClient.createExperiment(name);
+      testIds.push(idToDelete);
       await experimentClient.deleteExperiment(idToDelete);
       await experimentClient.restoreExperiment(idToDelete);
       const results: {
@@ -176,6 +176,26 @@ describe('ExperimentClient', () => {
         next_page_token?: string;
       } = await experimentClient.searchExperiment(
         `name LIKE '${updatedName}'`,
+        4
+      );
+      expect(results.experiments).toBeDefined();
+      expect(results.experiments).toHaveLength(1);
+      expect(results.experiments?.[0].experiment_id).toBe(exp);
+    });
+  });
+
+  describe('setExperimentTag', () => {
+    test('should set a tag on an experiment', async () => {
+      const num = Math.random().toString().slice(2, 11);
+      const name = `Test experiment ${num}`;
+      const exp = await experimentClient.createExperiment(name);
+      testIds.push(exp);
+      await experimentClient.setExperimentTag(exp, 'tag1', `value${num}`);
+      const results: {
+        experiments?: experiment[];
+        next_page_token?: string;
+      } = await experimentClient.searchExperiment(
+        `tags.tag1 = "value${num}"`,
         4
       );
       expect(results.experiments).toBeDefined();
