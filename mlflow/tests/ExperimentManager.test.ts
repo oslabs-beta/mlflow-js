@@ -1,4 +1,5 @@
 import { describe, test, expect, beforeAll, afterAll } from '@jest/globals';
+import { ApiError } from '../src/utils/apiError';
 import ExperimentClient from '../src/tracking/ExperimentClient';
 import ExperimentManager from '../src/workflows/ExperimentManager';
 
@@ -34,22 +35,11 @@ describe('ExperimentManager', () => {
     mlflow_version: 'STRING',
   };
   const metricsAll = [
-    [
-      { key: 'metric1', value: 0.1, timestamp: Date.now() }
-    ],
-    [
-      { key: 'metric1', value: 0.2, timestamp: Date.now() }
-    ],
-    [
-      { key: 'metric1', value: 0.3, timestamp: Date.now() }
-    ],
-    [
-      { key: 'metric1', value: 0.4, timestamp: Date.now() }
-    ],
-    [
-      { key: 'metric1', value: 0.5, timestamp: Date.now() }
-    ],
-
+    [{ key: 'metric1', value: 0.1, timestamp: Date.now() }],
+    [{ key: 'metric1', value: 0.2, timestamp: Date.now() }],
+    [{ key: 'metric1', value: 0.3, timestamp: Date.now() }],
+    [{ key: 'metric1', value: 0.4, timestamp: Date.now() }],
+    [{ key: 'metric1', value: 0.5, timestamp: Date.now() }],
   ];
 
   beforeAll(async () => {
@@ -85,14 +75,32 @@ describe('ExperimentManager', () => {
       expect(run).toHaveProperty('artifact_uri');
       expect(run).toHaveProperty('lifecycle_stage');
     });
+
+    test('should throw error if an invalid experiment ID is passed in', async () => {
+      const num = Math.random().toString().slice(2, 11);
+      const name = `Test experiment ${num}`;
+      const exp = await experimentClient.createExperiment(name);
+      testIds.push(exp);
+
+      await expect(
+        experimentManager.runExistingExperiment(
+          'invalidExperimentId',
+          undefined,
+          metrics,
+          params,
+          tags,
+          model
+        )
+      ).rejects.toThrow(ApiError);
+    });
   });
 
   describe('runNewExperiment', () => {
     test('should run a new experiment and return the run object', async () => {
       const num = Math.random().toString().slice(2, 11);
       const name = `Test experiment ${num}`;
-      const run: { 
-        experiment_id?: string
+      const run: {
+        experiment_id?: string;
       } = await experimentManager.runNewExperiment(
         name,
         undefined,
@@ -115,10 +123,27 @@ describe('ExperimentManager', () => {
       expect(run).toHaveProperty('artifact_uri');
       expect(run).toHaveProperty('lifecycle_stage');
     });
+
+    test('should throw error if an invalid experiment name is passed in', async () => {
+      const num = Math.random().toString().slice(2, 11);
+      const name = `Test experiment ${num}`;
+      const exp = await experimentClient.createExperiment(name);
+      testIds.push(exp);
+      await expect(
+        experimentManager.runNewExperiment(
+          name,
+          undefined,
+          metrics,
+          params,
+          tags,
+          model
+        )
+      ).rejects.toThrow(ApiError);
+    });
   });
 
   describe('experimentSummary', () => {
-    test('should return an array of all the passed-in experiment\'s runs, sorted according to the passed-in metric', async () => {
+    test("should return an array of all the passed-in experiment's runs, sorted according to the passed-in metric", async () => {
       const num = Math.random().toString().slice(2, 11);
       const name = `Test experiment ${num}`;
       const exp = await experimentClient.createExperiment(name);
@@ -132,17 +157,14 @@ describe('ExperimentManager', () => {
           tags,
           model
         );
-      };
+      }
 
       type ExperimentSummaryResult = {
         metric1?: number;
       };
 
-      const summary: ExperimentSummaryResult[] = await experimentManager.experimentSummary(
-        exp,
-        'metric1',
-        'DESC'
-      );
+      const summary: ExperimentSummaryResult[] =
+        await experimentManager.experimentSummary(exp, 'metric1', 'DESC');
 
       expect(Array.isArray(summary)).toBe(true);
       expect(summary.length).toBe(5);
