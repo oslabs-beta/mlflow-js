@@ -128,8 +128,12 @@ describe('RunClient', () => {
 
   // POST - Restore a deleted run
   describe('restoreRun', () => {
+    let run: Run;
+    beforeEach(async () => {
+      run = (await runClient.createRun(experimentId)) as Run;
+    });
+
     test('- Should restore a deleted run with run_id', async () => {
-      const run = (await runClient.createRun(experimentId)) as Run;
       await runClient.deleteRun(run.info.run_id);
 
       // check if the run is marked as deleted
@@ -147,8 +151,6 @@ describe('RunClient', () => {
     });
 
     test('- Should not throw error when trying to restore a non-deleted run', async () => {
-      const run = (await runClient.createRun(experimentId)) as Run;
-
       // Attempt to restore a non-deleted run
       await expect(
         runClient.restoreRun(run.info.run_id)
@@ -403,17 +405,19 @@ describe('RunClient', () => {
 
   // POST - Log a batch of metrics, params, and tags for a run
   describe('logBatch', () => {
-    test('- Should not throw error with just run_id', async () => {
-      const run = (await runClient.createRun(experimentId)) as Run;
+    let run: Run;
 
+    beforeEach(async () => {
+      run = (await runClient.createRun(experimentId)) as Run;
+    });
+
+    test('- Should not throw error with just run_id', async () => {
       await expect(
         runClient.logBatch(run.info.run_id)
       ).resolves.toBeUndefined();
     });
 
     test('- Should log batch with optional metrics', async () => {
-      const run = (await runClient.createRun(experimentId)) as Run;
-
       const metrics: Metrics[] = [
         { key: 'accuracy', value: 0.83, timestamp: 1694000700000 },
         { key: 'loss', value: 0.18, timestamp: 1694000700000 },
@@ -448,8 +452,6 @@ describe('RunClient', () => {
     });
 
     test('- Should log batch with optional params', async () => {
-      const run = (await runClient.createRun(experimentId)) as Run;
-
       const params: Params[] = [
         { key: 'learning_rate', value: '0.0001' },
         { key: 'batch_size', value: '256' },
@@ -464,8 +466,6 @@ describe('RunClient', () => {
     });
 
     test('- Should log batch with optional tags', async () => {
-      const run = (await runClient.createRun(experimentId)) as Run;
-
       const tags: Tags[] = [
         { key: 'model_type', value: 'GradientBoosting' },
         { key: 'data_version', value: 'v1.7' },
@@ -480,8 +480,6 @@ describe('RunClient', () => {
     });
 
     test('- Should be able to log up to 1000 metrics', async () => {
-      const run = (await runClient.createRun(experimentId)) as Run;
-
       const metrics = Array.from({ length: 1000 }, (_, index) => ({
         key: `metric${index}`,
         value: index,
@@ -495,8 +493,6 @@ describe('RunClient', () => {
     });
 
     test('- Should throw error when exceeding 1000 metrics', async () => {
-      const run = (await runClient.createRun(experimentId)) as Run;
-
       const metrics = Array.from({ length: 1001 }, (_, index) => ({
         key: `metric${index}`,
         value: index,
@@ -510,8 +506,6 @@ describe('RunClient', () => {
     });
 
     test('- Should be able to log up to 100 params', async () => {
-      const run = (await runClient.createRun(experimentId)) as Run;
-
       const params = Array.from({ length: 100 }, (_, index) => ({
         key: `param${index}`,
         value: `value${index}`,
@@ -523,8 +517,6 @@ describe('RunClient', () => {
     });
 
     test('- Should throw error when exceeding 100 params', async () => {
-      const run = (await runClient.createRun(experimentId)) as Run;
-
       const params = Array.from({ length: 101 }, (_, index) => ({
         key: `param${index}`,
         value: `value${index}`,
@@ -536,8 +528,6 @@ describe('RunClient', () => {
     });
 
     test('- Should be able to log up to 100 tags', async () => {
-      const run = (await runClient.createRun(experimentId)) as Run;
-
       const tags = Array.from({ length: 100 }, (_, index) => ({
         key: `tag${index}`,
         value: `value${index}`,
@@ -549,8 +539,6 @@ describe('RunClient', () => {
     });
 
     test('- Should throw error when exceeding 100 tags', async () => {
-      const run = (await runClient.createRun(experimentId)) as Run;
-
       const tags = Array.from({ length: 101 }, (_, index) => ({
         key: `tag${index}`,
         value: `value${index}`,
