@@ -1,4 +1,4 @@
-## Contributing
+# Contribution Guidelines
 
 We are always open to accepting any potential contributions. Here is how you can contribute:
 
@@ -6,10 +6,10 @@ We are always open to accepting any potential contributions. Here is how you can
 2. Clone your forked repository
 
 ```bash
-git clone https://github.com/your-username/respository-name.git
+git clone https://github.com/your-username/repository-name.git
 ```
 
-3. Install dependencies for both mlflow and mlfow-site directories
+3. Install dependencies for both mlflow and mlflow-site directories
 
 ```bash
 cd mlflow && npm install
@@ -30,24 +30,33 @@ git checkout -b feature/AmazingFeature
 
 6. Make your changes
 
-7. Run tests to ensure your changes don't break existing functionality
-
-   (Make sure you have mlflow UI server running on port 5002: `mlflow ui --port 5002`)
+7. Run ESLint to check code style
 
 ```bash
+npm run lint
+```
+
+8. Run tests to ensure your changes don't break existing functionality
+
+   (Make sure you have mlflow UI server running on port 5002. We set 5002 as our default port for testing.)
+
+```bash
+mlflow ui --port 5002 # Run this in a separate terminal
 npm run test
 ```
 
-8. Commit your changes
+9. Commit your changes
 
 ```bash
 git commit -m 'Add AmazingFeature'
 ```
 
-9. Push to the branch
+10. Push to the branch
 
 ```bash
 git push origin feature/AmazingFeature
 ```
 
-10. Open a Pull Request
+11. Open a Pull Request
+
+**Note:** Please ensure your code adheres to our style guidelines and includes appropriate documentation for any new features.
