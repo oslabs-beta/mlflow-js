@@ -1,21 +1,13 @@
 import { describe, test, expect, beforeAll, afterAll } from '@jest/globals';
 import ExperimentClient from '../src/tracking/ExperimentClient';
 import { ApiError } from '../src/utils/apiError';
+import { Experiment } from '../src/utils/interface';
 
 describe('ExperimentClient', () => {
   let experimentClient: ExperimentClient;
   let experimentId: string;
   let experimentName: string;
   const testIds: string[] = [];
-
-  type experiment = {
-    experiment_id: string;
-    name: string;
-    artifact_location: string;
-    lifecycle_stage: string;
-    last_update_time: string;
-    creation_time: string;
-  };
 
   beforeAll(async () => {
     // Add a small delay to ensure MLflow is fully ready
@@ -70,7 +62,7 @@ describe('ExperimentClient', () => {
 
     test('should return valid search results', async () => {
       const results: {
-        experiments?: experiment[];
+        experiments?: Experiment[];
         next_page_token?: string;
       } = await experimentClient.searchExperiment(
         "name LIKE 'Search test%'",
@@ -133,7 +125,7 @@ describe('ExperimentClient', () => {
       const idToDelete = await experimentClient.createExperiment(name);
       await experimentClient.deleteExperiment(idToDelete);
       const results: {
-        experiments?: experiment[];
+        experiments?: Experiment[];
         next_page_token?: string;
       } = await experimentClient.searchExperiment(
         `name LIKE '${idToDelete}'`,
@@ -152,7 +144,7 @@ describe('ExperimentClient', () => {
       await experimentClient.deleteExperiment(idToDelete);
       await experimentClient.restoreExperiment(idToDelete);
       const results: {
-        experiments?: experiment[];
+        experiments?: Experiment[];
         next_page_token?: string;
       } = await experimentClient.searchExperiment(
         `name LIKE '${name}'`,
@@ -172,7 +164,7 @@ describe('ExperimentClient', () => {
       const updatedName = `${name}_UPDATE`
       await experimentClient.updateExperiment(exp, updatedName);
       const results: {
-        experiments?: experiment[];
+        experiments?: Experiment[];
         next_page_token?: string;
       } = await experimentClient.searchExperiment(
         `name LIKE '${updatedName}'`,
@@ -192,7 +184,7 @@ describe('ExperimentClient', () => {
       testIds.push(exp);
       await experimentClient.setExperimentTag(exp, 'tag1', `value${num}`);
       const results: {
-        experiments?: experiment[];
+        experiments?: Experiment[];
         next_page_token?: string;
       } = await experimentClient.searchExperiment(
         `tags.tag1 = "value${num}"`,

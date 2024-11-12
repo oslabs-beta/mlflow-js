@@ -1,39 +1,11 @@
 import { describe, test, expect, beforeAll, afterAll } from '@jest/globals';
-import { ApiError } from '../src/utils/apiError';
 import ExperimentClient from '../src/tracking/ExperimentClient';
 import ExperimentManager from '../src/workflows/ExperimentManager';
-import { Run, RunInfo } from '../src/utils/interface';
 
 describe('ExperimentManager', () => {
   let experimentClient: ExperimentClient;
   let experimentManager: ExperimentManager;
   const testIds: string[] = [];
-
-  // type experiment = {
-  //   experiment_id: string;
-  //   name: string;
-  //   artifact_location: string;
-  //   lifecycle_stage: string;
-  //   last_update_time: string;
-  //   creation_time: string;
-  // };
-
-  // type RunInfo = {
-  //   run_id?: string;
-  //   run_uuid?: string;
-  //   run_name?: string;
-  //   experiment_id?: string;
-  //   user_id?: string;
-  //   status?: 'RUNNING' | 'FINISHED' | 'SCHEDULED' | 'FAILED' | 'KILLED';
-  //   start_time?: number;
-  //   end_time?: number;
-  //   artifact_uri?: string;
-  //   lifecycle_stage?: string;
-  // };
-
-  interface ExperimentSummaryResults extends Run {
-    metric1: number;
-  };
 
   const metrics = [
     { key: 'metric1', value: 0.111, timestamp: Date.now() },
@@ -94,7 +66,7 @@ describe('ExperimentManager', () => {
       const exp = await experimentClient.createExperiment(name);
       testIds.push(exp);
 
-      const run: RunInfo = await experimentManager.runExistingExperiment(
+      const run = await experimentManager.runExistingExperiment(
         exp,
         undefined,
         metrics,
@@ -119,7 +91,9 @@ describe('ExperimentManager', () => {
     test('should run a new experiment and return the run object', async () => {
       const num = Math.random().toString().slice(2, 11);
       const name = `Test experiment ${num}`;
-      const run: RunInfo = await experimentManager.runNewExperiment(
+      const run: { 
+        experiment_id?: string
+      } = await experimentManager.runNewExperiment(
         name,
         undefined,
         metrics,
@@ -159,7 +133,12 @@ describe('ExperimentManager', () => {
           model
         );
       };
-      const summary = await experimentManager.experimentSummary(
+
+      type ExperimentSummaryResult = {
+        metric1?: number;
+      };
+
+      const summary: ExperimentSummaryResult[] = await experimentManager.experimentSummary(
         exp,
         'metric1',
         'DESC'
@@ -170,7 +149,11 @@ describe('ExperimentManager', () => {
       expect(Array.isArray(summary)).toBe(true);
       expect(summary.length).toBe(5);
 
-      expect(summary[0].metric1.value).toBe(0.5);
+      expect(summary[0].metric1).toBe(0.5);
+      expect(summary[1].metric1).toBe(0.4);
+      expect(summary[2].metric1).toBe(0.3);
+      expect(summary[3].metric1).toBe(0.2);
+      expect(summary[4].metric1).toBe(0.1);
     });
   });
 
