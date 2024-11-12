@@ -1,6 +1,6 @@
 import ExperimentManager from '../src/workflows/ExperimentManager';
 import ExperimentClient from '../src/tracking/ExperimentClient';
-const MLFLOW_TRACKING_URI = 'http://localhost:5001';
+const MLFLOW_TRACKING_URI = 'http://localhost:5002';
 const experimentManager = new ExperimentManager(MLFLOW_TRACKING_URI);
 const experimentClient = new ExperimentClient(MLFLOW_TRACKING_URI);
 
@@ -97,7 +97,7 @@ const testRunNewExperiment = async () => {
   );
   return console.log(log);
 };
-testRunNewExperiment();
+// testRunNewExperiment();
 
 const testExperimentSummary = async () => {
   const log = await experimentManager.experimentSummary(
@@ -107,4 +107,4 @@ const testExperimentSummary = async () => {
   );
   return console.log(log);
 };
-testExperimentSummary();
+// testExperimentSummary();
