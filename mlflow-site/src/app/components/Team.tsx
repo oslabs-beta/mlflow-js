@@ -6,7 +6,7 @@ const Team = () => {
       name: 'Yiqun Zheng',
       github: 'https://github.com/yiqunzheng',
       linkedIn: 'https://www.linkedin.com/in/yiqunzheng/',
-      pfp: '',
+      pfp: '/assets/yiqun.png',
     },
     {
       name: 'Kyler Chiago',
@@ -26,12 +26,12 @@ const Team = () => {
       linkedIn: 'https://www.linkedin.com/in/stephanyho/',
       pfp: '',
     },
-    {
-      name: 'Winston Ludlam',
-      github: 'https://github.com/winjolu/',
-      linkedIn: 'https://www.linkedin.com/in/wjludlam/',
-      pfp: '',
-    },
+    // {
+    //   name: 'Winston Ludlam',
+    //   github: 'https://github.com/winjolu/',
+    //   linkedIn: 'https://www.linkedin.com/in/wjludlam/',
+    //   pfp: '',
+    // },
   ];
   
   return (
