@@ -133,6 +133,10 @@ describe('ExperimentClient', () => {
       );
       expect(results).toEqual({});
     });
+
+    test('should throw error if invalid experiment ID is passed in', async () => {
+      await expect(experimentClient.deleteExperiment('invalidExperimentId')).rejects.toThrow(ApiError);
+    });
   });
 
   describe('restoreExperiment', () => {
@@ -152,6 +156,10 @@ describe('ExperimentClient', () => {
       );
       expect(results.experiments).toBeDefined();
       expect(results.experiments).toHaveLength(1);
+    });
+
+    test('should throw error if invalid experiment ID is passed in', async () => {
+      await expect(experimentClient.restoreExperiment('invalidExperimentId')).rejects.toThrow(ApiError);
     });
   });
 
@@ -174,6 +182,10 @@ describe('ExperimentClient', () => {
       expect(results.experiments).toHaveLength(1);
       expect(results.experiments?.[0].experiment_id).toBe(exp);
     });
+
+    test('should throw error if invalid experiment ID is passed in', async () => {
+      await expect(experimentClient.updateExperiment('invalidExperimentId', 'invalidExperimentIdUpdate')).rejects.toThrow(ApiError);
+    });
   });
 
   describe('setExperimentTag', () => {
@@ -193,6 +205,10 @@ describe('ExperimentClient', () => {
       expect(results.experiments).toBeDefined();
       expect(results.experiments).toHaveLength(1);
       expect(results.experiments?.[0].experiment_id).toBe(exp);
+    });
+
+    test('should throw error if invalid experiment ID is passed in', async () => {
+      await expect(experimentClient.setExperimentTag('invalidExperimentId', 'tag1', 'value1')).rejects.toThrow(ApiError);
     });
   });
 
