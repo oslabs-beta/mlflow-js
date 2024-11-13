@@ -1,7 +1,7 @@
-import RunClient from "@tracking/RunClient";
-import ModelVersionClient from "@model-registry/ModelVersionClient";
-import { Run, SearchedRuns } from "@utils/interface";
-import { ApiError } from "@utils/apiError";
+import RunClient from '@tracking/RunClient';
+import ModelVersionClient from '@model-registry/ModelVersionClient';
+import { Run, SearchedRuns } from '@utils/interface';
+import { ApiError } from '@utils/apiError';
 
 class RunManager {
   private runClient: RunClient;
@@ -39,10 +39,10 @@ class RunManager {
         // get all runs
         const searchResult = (await this.runClient.searchRuns(
           experiment_ids,
-          "",
+          '',
           runViewType,
           maxResults,
-          ["start_time DESC"],
+          ['start_time DESC'],
           pageToken
         )) as SearchedRuns;
 
@@ -52,7 +52,7 @@ class RunManager {
           query_string,
           runViewType,
           maxResults,
-          ["start_time DESC"],
+          ['start_time DESC'],
           pageToken
         )) as SearchedRuns;
 
@@ -89,7 +89,7 @@ class RunManager {
       if (error instanceof ApiError) {
         console.error(`API Error (${error.statusCode}): ${error.message}`);
       } else {
-        console.error("An unexpected error occurred: ", error);
+        console.error('An unexpected error occurred: ', error);
       }
       throw error;
     }
@@ -131,10 +131,10 @@ class RunManager {
         endTime
       );
 
-      if (originalRun.info.lifecycle_stage !== "active") {
+      if (originalRun.info.lifecycle_stage !== 'active') {
         await this.runClient.setTag(
           newRunId,
-          "mlflow.lifecycleStage",
+          'mlflow.lifecycleStage',
           originalRun.info.lifecycle_stage
         );
       }
@@ -174,7 +174,7 @@ class RunManager {
 
       // update the new run name
       if (run_name) {
-        await this.runClient.setTag(newRunId, "mlflow.runName", run_name);
+        await this.runClient.setTag(newRunId, 'mlflow.runName', run_name);
       }
 
       // handle models (reference only)
@@ -184,12 +184,12 @@ class RunManager {
       if (modelVersions && modelVersions.length > 0) {
         for (const model of modelVersions) {
           if (
-            typeof model === "object" &&
+            typeof model === 'object' &&
             model !== null &&
-            "name" in model &&
-            "version" in model &&
-            "current_stage" in model &&
-            "source" in model
+            'name' in model &&
+            'version' in model &&
+            'current_stage' in model &&
+            'source' in model
           ) {
             await this.runClient.setTag(
               newRunId,
@@ -205,8 +205,8 @@ class RunManager {
         }
         await this.runClient.setTag(
           newRunId,
-          "mlflow.note.models",
-          "Models not copied, see original run."
+          'mlflow.note.models',
+          'Models not copied, see original run.'
         );
       }
 
@@ -215,21 +215,21 @@ class RunManager {
         `This run was copied from experiment ${originalRun.info.experiment_id}, original run ID: ${run_id}. ` +
         `Original artifact URI: ${originalRun.info.artifact_uri}.`;
 
-      await this.runClient.setTag(newRunId, "mlflow.note.content", description);
+      await this.runClient.setTag(newRunId, 'mlflow.note.content', description);
 
       // set additional tags for the new run
-      await this.runClient.setTag(newRunId, "mlflow.source.run_id", run_id);
+      await this.runClient.setTag(newRunId, 'mlflow.source.run_id', run_id);
 
       await this.runClient.setTag(
         newRunId,
-        "mlflow.source.experiment_id",
+        'mlflow.source.experiment_id',
         originalRun.info.experiment_id
       );
 
       await this.runClient.setTag(
         newRunId,
-        "mlflow.note.artifacts",
-        "Artifacts not copied - reference original run"
+        'mlflow.note.artifacts',
+        'Artifacts not copied - reference original run'
       );
 
       // return copy run details
@@ -242,7 +242,7 @@ class RunManager {
       if (error instanceof ApiError) {
         console.error(`API Error (${error.statusCode}): ${error.message}`);
       } else {
-        console.error("An unexpected error occurred: ", error);
+        console.error('An unexpected error occurred: ', error);
       }
       throw error;
     }
