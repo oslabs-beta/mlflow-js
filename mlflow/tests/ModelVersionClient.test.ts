@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeAll } from '@jest/globals';
+import { describe, test, expect, beforeAll, afterAll } from '@jest/globals';
 import ModelVersionClient from '../src/model-registry/ModelVersionClient';
 import ModelRegistryClient from '../src/model-registry/ModelRegistryClient';
 import RunClient from '../src/tracking/RunClient';
@@ -376,5 +376,10 @@ describe('ModelVersionClient', () => {
         modelVersionClient.deleteModelVersion()
       ).rejects.toThrow();
     });
+  });
+
+  afterAll(async () => {
+    await modelRegistryClient.deleteRegisteredModel(modelName);
+    await runClient.deleteRun(run.info.run_id);
   });
 });

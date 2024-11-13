@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeAll, jest } from '@jest/globals';
+import { describe, test, expect, beforeAll, jest, afterAll } from '@jest/globals';
 import RunClient from '../src/tracking/RunClient';
 import ModelManager from '../src/workflows/ModelManager';
 import ModelRegistryClient from '../src/model-registry/ModelRegistryClient';
@@ -38,6 +38,7 @@ describe('ModelManager', () => {
         );
       expect(newModelVersion.name).toBe(modelName2);
       expect(newModelVersion.version).toBe('1');
+      // await modelRegistryClient.deleteRegisteredModel(modelName2);
     });
     test('Should throw an error for duplicate model name', async () => {
       // Making it so console.error doesn't show up in the console
@@ -62,6 +63,7 @@ describe('ModelManager', () => {
       expect(consoleErrorMock).toHaveBeenCalled();
       // restoring the console to show console.error again to not affect other tests
       consoleErrorMock.mockRestore();
+      // await modelRegistryClient.deleteRegisteredModel(modelName3);
     });
     test('Should throw and console.error if no parameters are passed to the method', async () => {
       // Making it so console.error doesn't show up in the console
@@ -99,6 +101,7 @@ describe('ModelManager', () => {
       );
       expect(updatedModelDescriptionAndTag.tags[0].key).toBe('modelTagKey');
       expect(updatedModelDescriptionAndTag.tags[0].value).toBe('modelTagValue');
+      // await modelRegistryClient.deleteRegisteredModel(modelName2);
     });
     test('Should throw and console.error if no parameters are passed to the method', async () => {
       // Making it so console.error doesn't show up in the console
@@ -151,6 +154,7 @@ describe('ModelManager', () => {
       expect(updateAllLatestModelVersionObject.tags[0].value).toBe(
         'modelVersionTagValue'
       );
+      // await modelRegistryClient.deleteRegisteredModel(modelName2);
     });
     test('Should throw and console.error if no parameters are passed to the method', async () => {
       // Making it so console.error doesn't show up in the console
@@ -192,6 +196,7 @@ describe('ModelManager', () => {
       expect(latestModelVersion[0].name).toBe(modelName2);
       expect(latestModelVersion[0].tags[0].key).toBe('modelVersionTagKey');
       expect(latestModelVersion[0].tags[0].value).toBe('modelVersionTagValue');
+      // await modelRegistryClient.deleteRegisteredModel(modelName2);
     });
     test('Should throw and console.error if no parameters are passed to the method', async () => {
       // Making it so console.error doesn't show up in the console
@@ -231,6 +236,7 @@ describe('ModelManager', () => {
       expect(latestModelVersion[0].version).toBe('2');
       expect(latestModelVersion[0].name).toBe(modelName2);
       expect(latestModelVersion[0].aliases[0]).toBe('modelVersionAlias');
+      // await modelRegistryClient.deleteRegisteredModel(modelName2);
     });
     test('Should throw and console.error if no parameters are passed to the method', async () => {
       // Making it so console.error doesn't show up in the console
@@ -269,6 +275,7 @@ describe('ModelManager', () => {
       expect(latestModelVersion.version).toBe('2');
       expect(latestModelVersion.name).toBe(modelName2);
       expect(latestModelVersion.description).toBe('modelDescription');
+      // await modelRegistryClient.deleteRegisteredModel(modelName2);
     });
     test('Should throw and console.error if no parameters are passed to the method', async () => {
       // Making it so console.error doesn't show up in the console
@@ -315,6 +322,7 @@ describe('ModelManager', () => {
       expect(updatedModelVersionAll.description).toBe(
         'modelVersionDescription'
       );
+      // await modelRegistryClient.deleteRegisteredModel(modelName2);
     });
     test('Should throw and console.error if no parameters are passed to the method', async () => {
       // Making it so console.error doesn't show up in the console
@@ -349,6 +357,7 @@ describe('ModelManager', () => {
       const latestModelVersion: keyable =
         await modelRegistryClient.getLatestModelVersions(modelName2);
       expect(latestModelVersion[0].version).toBe('1');
+      // await modelRegistryClient.deleteRegisteredModel(modelName2);
     });
     test('Should throw and console.error if no parameters are passed to the method', async () => {
       // Making it so console.error doesn't show up in the console
@@ -387,6 +396,8 @@ describe('ModelManager', () => {
       expect(maxModel.latest_versions[0].source).toBe(
         runData.info.artifact_uri
       );
+      // await modelRegistryClient.deleteRegisteredModel(modelName2);
+      // await runClient.deleteRun(run2.info.run_id);
     });
 
     test('Should create model from run with best(minimum) metric', async () => {
@@ -409,6 +420,8 @@ describe('ModelManager', () => {
       expect(minModel.latest_versions[0].source).toBe(
         runData2.info.artifact_uri
       );
+      // await modelRegistryClient.deleteRegisteredModel(modelName2);
+      // await runClient.deleteRun(run2.info.run_id);
     });
 
     test('Should throw and console.error if no parameters are passed to the method', async () => {
@@ -426,4 +439,8 @@ describe('ModelManager', () => {
       consoleErrorMock.mockRestore();
     });
   });
+
+  // afterAll(async () => {
+  //   await runClient.deleteRun(run.info.run_id);
+  // });
 });
