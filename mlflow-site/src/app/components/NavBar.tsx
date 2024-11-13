@@ -1,16 +1,24 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
+import Image from "next/image";
 
 const NavBar = () => {
   return (
     <div className='navBar'>
-      <div className='navBarMlflow'><Image src={'/assets/MLflow-js-logo.png'} width={64} height={32} alt='G' className='mlflow-logo'/></div>
+      <div className='navBarMlflow'>
+        <Image
+          src={"/assets/MLflow-js-logo.png"}
+          width={100}
+          height={32}
+          alt='G'
+          className='mlflow-logo'
+        />
+      </div>
       <div className='navBarLinks'>
         <button
           onClick={() => {
-            const element = document.getElementById('headline');
-            element?.scrollIntoView({ behavior: 'smooth' });
+            const element = document.getElementById("headline");
+            element?.scrollIntoView({ behavior: "smooth" });
           }}
           className='navBarLinksHome'
         >
@@ -18,8 +26,8 @@ const NavBar = () => {
         </button>
         <button
           onClick={() => {
-            const element = document.getElementById('features');
-            element?.scrollIntoView({ behavior: 'smooth' });
+            const element = document.getElementById("features");
+            element?.scrollIntoView({ behavior: "smooth" });
           }}
           className='navBarLinksFeatures'
         >
@@ -27,8 +35,8 @@ const NavBar = () => {
         </button>
         <button
           onClick={() => {
-            const element = document.getElementById('demo');
-            element?.scrollIntoView({ behavior: 'smooth' });
+            const element = document.getElementById("demo");
+            element?.scrollIntoView({ behavior: "smooth" });
           }}
           className='navBarLinksDemo'
         >
@@ -36,8 +44,8 @@ const NavBar = () => {
         </button>
         <button
           onClick={() => {
-            const element = document.getElementById('team');
-            element?.scrollIntoView({ behavior: 'smooth' });
+            const element = document.getElementById("team");
+            element?.scrollIntoView({ behavior: "smooth" });
           }}
           className='navBarLinksTeam'
         >
@@ -47,7 +55,13 @@ const NavBar = () => {
           href='https://github.com/oslabs-beta/mlflow-js'
           className='navBarLinksGithub'
         >
-          <Image src={'/assets/GithubLogo.png'} width={24} height={24} alt='G' className='navbarGithub'/>
+          <Image
+            src={"/assets/GithubLogo.png"}
+            width={24}
+            height={24}
+            alt='G'
+            className='navbarGithub'
+          />
         </a>
       </div>
     </div>
