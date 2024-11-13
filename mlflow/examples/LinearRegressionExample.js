@@ -169,10 +169,7 @@ async function main() {
     console.log(`MLflow Experiment ID: ${experimentId}`);
 
     // Create run
-    const run = await mlflow.createRun(
-      experimentId,
-      'Simple Linear Regression'
-    );
+    const run = await mlflow.createRun(experimentId);
     const runId = run.info.run_id;
     console.log(`MLflow Run ID: ${runId}`);
 
