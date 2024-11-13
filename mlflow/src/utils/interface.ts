@@ -74,3 +74,12 @@ export interface CopyRun {
   newRunId: string;
   targetExperimentId: string;
 }
+
+export interface Experiment {
+  experiment_id: string;
+  name: string;
+  artifact_location: string;
+  lifecycle_stage: string;
+  last_update_time: string;
+  creation_time: string;
+}
