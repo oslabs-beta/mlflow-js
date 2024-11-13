@@ -67,7 +67,7 @@ class ExperimentManager {
       // updateRun to finish it
       const latestRun = await this.runClient.updateRun(run_id, 'FINISHED');
 
-      return latestRun;
+      return (latestRun as { run_info: object }).run_info;
     } catch (error) {
       if (error instanceof ApiError) {
         console.error(`API Error (${error.statusCode}): ${error.message}`);
@@ -93,8 +93,8 @@ class ExperimentManager {
    */
   async runNewExperiment(
     experiment_name: string,
-    run_name: string,
-    metrics: Array<{
+    run_name?: string,
+    metrics?: Array<{
       key: string;
       value: number;
       timestamp: number;
@@ -133,9 +133,9 @@ class ExperimentManager {
       }
 
       // updateRun to finish it
-      const latest_run = await this.runClient.updateRun(run_id, 'FINISHED');
+      const latestRun = await this.runClient.updateRun(run_id, 'FINISHED');
 
-      return latest_run;
+      return (latestRun as { run_info: object }).run_info;
     } catch (error) {
       if (error instanceof ApiError) {
         console.error(`API Error (${error.statusCode}): ${error.message}`);
