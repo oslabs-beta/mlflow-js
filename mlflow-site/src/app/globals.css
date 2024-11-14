@@ -283,7 +283,7 @@ body {
   width: 100%;
   display: grid;
   grid-template-columns: 100%;
-  grid-template-rows: calc(100% / 3) calc(100% / 3) calc(100% / 3);
+  grid-template-rows: calc(100% / 2) calc(100% / 2) calc(100% / 2);
   color: black;
   background-color: white;
   margin-bottom: clamp(1rem, 4.43vw, 3rem);

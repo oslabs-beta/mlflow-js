@@ -15,7 +15,7 @@ const Demo = () => {
     'https://player.vimeo.com/video/1029068988',
     
   ];
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 2; i++) {
     demos.push(
       <DemoCard
         key={`demoCard${i}`}
