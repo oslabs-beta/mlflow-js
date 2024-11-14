@@ -24,7 +24,7 @@ const Team = () => {
       name: 'Stephany Ho',
       github: 'https://github.com/seneyu/',
       linkedIn: 'https://www.linkedin.com/in/stephanyho/',
-      pfp: '',
+      pfp: '/assets/stephanypfp.png',
     },
     {
       name: 'Winston Ludlam',
@@ -33,17 +33,17 @@ const Team = () => {
       pfp: '',
     },
   ];
-  
+
   return (
     <div className='team' id='team'>
       <div className='centered teamHead'>Meet the team</div>
       <div className='teamCards'>
         {teamArray.map((member, index) => (
-          <TeamCard 
-            key={index} 
-            name={member.name} 
-            github={member.github} 
-            linkedIn={member.linkedIn} 
+          <TeamCard
+            key={index}
+            name={member.name}
+            github={member.github}
+            linkedIn={member.linkedIn}
             pfp={member.pfp}
           />
         ))}
@@ -53,4 +53,3 @@ const Team = () => {
 };
 
 export default Team;
-
