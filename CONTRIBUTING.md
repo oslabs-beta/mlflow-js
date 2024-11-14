@@ -16,6 +16,13 @@ cd mlflow && npm install
 cd ../mlflow-site && npm install
 ```
 
+3a. Optional: MLflow Tracking Server container using Docker
+
+```bash
+cd mlflow
+npm run docker
+```
+
 4. Run the mlflow-site
 
 ```bash

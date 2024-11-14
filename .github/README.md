@@ -73,7 +73,7 @@ Ensure MLflow is installed on your system:
 pip install mlflow
 ```
 
-Note: MLflow is compatible with MacOS. If you encounter issues with the default system Python, consider installing Python 3 via the Homebrew package manger using `brew install python`. In this case, installing MLflow is now `pip3 install mlflow`.
+**Note:** MLflow is compatible with MacOS. If you encounter issues with the default system Python, consider installing Python 3 via the Homebrew package manger using `brew install python`. In this case, installing MLflow is now `pip3 install mlflow`.
 
 ### Start the MLflow Tracking Server
 
@@ -105,7 +105,7 @@ Here is an example of how to use the <i>mlflow.js</i> library to create an exper
 import Mlflow from 'mlflow-js';
 
 // Initialize the MLflow client
-const mlflow = new Mlflow('http://127.0.0.1:5000');
+const mlflow = new Mlflow(process.env.MLFLOW_TRACKING_URI);
 
 // Create a new experiment
 async function createExperiment(){
