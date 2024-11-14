@@ -56,7 +56,7 @@ class ModelVersionClient {
    * 
    * @param {string} modelName - the name of the registered model (Required)
    * @param {string} version - the version number of the model to fetch (Required)
-   * @returns {Promise<ModelVersion>} - the created model version object
+   * @returns {Promise<ModelVersion>} - the model version object
    * @throws {ApiError} If the API request fails
    */
   async getModelVersion(modelName: string, version: string): Promise<object> {
@@ -88,7 +88,7 @@ class ModelVersionClient {
    * @param {string} modelName - the name of the registered model (Required)
    * @param {string} version - the version number of the model to update (Required)
    * @param {string} description - The description of the model version (Optional)
-   * @returns {Promise<ModelVersion>} - the created model version object
+   * @returns {Promise<ModelVersion>} - the updated model version object
    * @throws {ApiError} If the API request fails
    */
   async updateModelVersion(

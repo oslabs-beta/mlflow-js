@@ -29,7 +29,7 @@ describe('ModelManager', () => {
 
   describe('createRegisteredModelWithVersion', () => {
     test('Should create a new registered model with a version 1', async () => {
-      const modelName2 = `createRegisteredModelWithVersion-test-model-${timestamp}`;
+      const modelName2 = `createRegisteredModelWithVersion-model-${timestamp}`;
       const newModelVersion: keyable =
         await modelManager.createRegisteredModelWithVersion(
           modelName2,
@@ -45,7 +45,7 @@ describe('ModelManager', () => {
       const consoleErrorMock = jest
         .spyOn(global.console, 'error')
         .mockImplementation(() => {});
-      const modelName3 = `createRegisteredModelWithVersionDup-test-model-${timestamp}`;
+      const modelName3 = `createRegisteredModelWithVersionDup-model-${timestamp}`;
       await modelManager.createRegisteredModelWithVersion(
         modelName3,
         run.info.artifact_uri,
@@ -83,7 +83,7 @@ describe('ModelManager', () => {
 
   describe('updateRegisteredModelDescriptionAndTag', () => {
     test("Should update a registered model's description and tag", async () => {
-      const modelName2 = `updateRegisteredModelDescriptionAndTag-test-model-${timestamp}`;
+      const modelName2 = `updateRegisteredModelDescriptionAndTag-model-${timestamp}`;
       const updateRegisteredModelDescriptionAndTagObject: keyable =
         await modelRegistryClient.createRegisteredModel(modelName2);
       expect(updateRegisteredModelDescriptionAndTagObject.description).toBe(
@@ -121,7 +121,7 @@ describe('ModelManager', () => {
 
   describe('updateAllLatestModelVersion', () => {
     test("Should update the latest model version's alias, tag, and description", async () => {
-      const modelName2 = `updateAllLatestModelVersion-test-model-${timestamp}`;
+      const modelName2 = `updateAllLatestModelVersion-model-${timestamp}`;
       await modelManager.createRegisteredModelWithVersion(
         modelName2,
         run.info.artifact_uri,
@@ -174,7 +174,7 @@ describe('ModelManager', () => {
 
   describe('setLatestModelVersionTag', () => {
     test('Should add a new tag key/value for the latest version of the specified registered model', async () => {
-      const modelName2 = `setLatestModelVersionTag-test-model-${timestamp}`;
+      const modelName2 = `setLatestModelVersionTag-model-${timestamp}`;
       await modelManager.createRegisteredModelWithVersion(
         modelName2,
         run.info.artifact_uri,
@@ -216,7 +216,7 @@ describe('ModelManager', () => {
 
   describe('setLatestModelVersionAlias', () => {
     test('Should add an alias for the latest version of the specified registered model', async () => {
-      const modelName2 = `setLatestModelVersionAlias-test-model-${timestamp}`;
+      const modelName2 = `setLatestModelVersionAlias-model-${timestamp}`;
       await modelManager.createRegisteredModelWithVersion(
         modelName2,
         run.info.artifact_uri,
@@ -256,7 +256,7 @@ describe('ModelManager', () => {
 
   describe('updateLatestModelVersion', () => {
     test('Should update the description of the latest model version', async () => {
-      const modelName2 = `updateLatestModelVersion-test-model-${timestamp}`;
+      const modelName2 = `updateLatestModelVersion-model-${timestamp}`;
       await modelManager.createRegisteredModelWithVersion(
         modelName2,
         run.info.artifact_uri,
@@ -295,7 +295,7 @@ describe('ModelManager', () => {
 
   describe('updateAllModelVersion', () => {
     test("Should update the specified version's alias, tag, and description", async () => {
-      const modelName2 = `updateAllModelVersion-test-model-${timestamp}`;
+      const modelName2 = `updateAllModelVersion-model-${timestamp}`;
       await modelManager.createRegisteredModelWithVersion(
         modelName2,
         run.info.artifact_uri,
@@ -342,7 +342,7 @@ describe('ModelManager', () => {
 
   describe('deleteLatestModelVersion', () => {
     test('Should delete the latest version of the model', async () => {
-      const modelName2 = `deleteLatestModelVersion-test-model-${timestamp}`;
+      const modelName2 = `deleteLatestModelVersion-model-${timestamp}`;
       await modelManager.createRegisteredModelWithVersion(
         modelName2,
         run.info.artifact_uri,
@@ -383,7 +383,7 @@ describe('ModelManager', () => {
 
       const runData: keyable = await runClient.getRun(run.info.run_id);
 
-      const modelName2 = `createModelFromRunWithBestMetric-test-modelMax-${timestamp}`;
+      const modelName2 = `createModelFromRunWithBestMetric-modelMax-${timestamp}`;
       await modelManager.createModelFromRunWithBestMetric(
         [run.info.experiment_id],
         runData.data.metrics[0].key,
@@ -407,7 +407,7 @@ describe('ModelManager', () => {
 
       const runData2: keyable = await runClient.getRun(run2.info.run_id);
 
-      const modelName2 = `createModelFromRunWithBestMetric-test-modelMin-${timestamp}`;
+      const modelName2 = `createModelFromRunWithBestMetric-modelMin-${timestamp}`;
       await modelManager.createModelFromRunWithBestMetric(
         [run2.info.experiment_id],
         runData2.data.metrics[0].key,

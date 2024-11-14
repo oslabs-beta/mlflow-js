@@ -23,7 +23,7 @@ describe('ModelVersionClient', () => {
     runClient = new RunClient('http://localhost:5002');
 
     const timestamp = Date.now();
-    modelName = `test-model-${timestamp}`;
+    modelName = `modelVersionClient-model-${timestamp}`;
     modelVersionRunLink = 'test-run-link';
     modelVersionDescription = 'test-model-version-description';
     // Creating a new registered model to test on
