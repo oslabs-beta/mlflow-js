@@ -6,7 +6,7 @@ const Team = () => {
       name: 'Yiqun Zheng',
       github: 'https://github.com/yiqunzheng',
       linkedIn: 'https://www.linkedin.com/in/yiqunzheng/',
-      pfp: '',
+      pfp: '/assets/yiqun.png',
     },
     {
       name: 'Kyler Chiago',
