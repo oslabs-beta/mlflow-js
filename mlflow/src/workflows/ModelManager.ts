@@ -156,7 +156,7 @@ class ModelManager {
         throw new Error('Model has no version to set tag for.');
       } else {
         const version = data[0].version;
-        this.modelVersion.setModelVersionTag(name, version, key, value);
+        await this.modelVersion.setModelVersionTag(name, version, key, value);
         return;
       }
     } catch (error) {
@@ -187,7 +187,7 @@ class ModelManager {
         throw new Error('Model has no version to set alias for.');
       } else {
         const version = data[0].version;
-        this.modelRegistry.setRegisteredModelAlias(name, alias, version);
+        await this.modelRegistry.setRegisteredModelAlias(name, alias, version);
         return;
       }
     } catch (error) {

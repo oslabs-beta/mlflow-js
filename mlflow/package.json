@@ -15,7 +15,8 @@
     "clean": "rimraf lib",
     "build": "npm run clean && tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
     "test": "jest",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "docker": "docker-compose pull && docker-compose -f docker-compose.yml up"
   },
   "keywords": [
     "mlflow",
