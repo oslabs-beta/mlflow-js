@@ -30,7 +30,7 @@ Visit our LinkedIn page below:
 **Experiment Manager**
 
 - runExistingExperiment - Full workflow of creating, naming, and starting a run under an existing experiment, logging metrics, params, tags, and the model, and finishing the run
-- runNewExperiment - Full workflow of creating, naming, and starting a run under a new experiment, logging metrics, params,tags, and the model, and finishing the run
+- runNewExperiment - Full workflow of creating, naming, and starting a run under a new experiment, logging metrics, params, tags, and the model, and finishing the run
 - experimentSummary - Returns an array of all the passed-in experiment's runs, sorted according to the passed-in metric
 
 **Run Manager**
