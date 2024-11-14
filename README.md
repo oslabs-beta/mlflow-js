@@ -107,17 +107,10 @@ import Mlflow from 'mlflow-js';
 // Initialize the MLflow client
 const mlflow = new Mlflow('http://127.0.0.1:5000');
 
-// Get the experiment client
-const experimentClient = mlflow.getExperimentClient();
-
 // Create a new experiment
 async function createExperiment(){
-	try {
-  	await experimentClient.createExperiment('My Experiment');
+  	await mlflow.createExperiment('My Experiment');
   	console.log('Experiment created successfully');
-	} catch (error) {
-  	console.error('Error creating experiment:', error);
-	}
 }
 
 createExperiment();
