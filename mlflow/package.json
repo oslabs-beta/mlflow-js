@@ -2,11 +2,24 @@
   "name": "mlflow-js",
   "version": "1.0.0",
   "description": "JavaScript library for MLflow",
+  "homepage": "https://www.mlflow-js.org/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oslabs-beta/mlflow-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/oslabs-beta/mlflow-js/issues"
+  },
+  "pull_request": {
+    "url": "https://github.com/oslabs-beta/mlflow-js/pulls"
+  },
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
-    "lib"
+    "lib/",
+    "README.md",
+    "LINCENSE"
   ],
   "exports": {
     ".": "./lib/index.js"
@@ -15,7 +28,8 @@
     "clean": "rimraf lib",
     "build": "npm run clean && tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
     "test": "jest",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "docker": "docker-compose pull && docker-compose -f docker-compose.yml up"
   },
   "keywords": [
     "mlflow",

@@ -3,19 +3,17 @@ import DemoCard from "./DemoCard";
 const Demo = () => {
   const demos = [];
   const demoCardHeaders = [
-    'Demo 1',
-    'Demo 2',
-    'Demo 3'
+    'Manage experiments',
+    'Complete workflow',
   ];
   const demoCardBlurbs = [
-    'Description for what\'s happening in Demo 1.  This block of text will contain all the info needed to understand the demo.',
-    'Description for what\'s happening in Demo 2.  This block of text will contain all the info needed to understand the demo.',
-    'Description for what\'s happening in Demo 3.  This block of text will contain all the info needed to understand the demo.'
+    'Create experiments with MLflow.js.  Using built-in workflows, manage complex operations easily.',
+    'Use MLflow.js to support a full ML project with TensorFlow.js.  Log hyperparameters and key metrics during each training step.  Evaluate model performance and register succesful models.',
   ];
   const demoCardVideos = [
     'https://player.vimeo.com/video/1023585657',
-    '',
-    '',
+    'https://player.vimeo.com/video/1029068988',
+    
   ];
   for (let i = 0; i < 3; i++) {
     demos.push(

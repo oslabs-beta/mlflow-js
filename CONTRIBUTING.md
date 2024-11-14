@@ -16,16 +16,17 @@ cd mlflow && npm install
 cd ../mlflow-site && npm install
 ```
 
-4. Run the mlflow-site
-
-```bash
-npm run dev
-```
-
-5. Create your feature branch
+4. Create your feature branch
 
 ```bash
 git checkout -b feature/AmazingFeature
+```
+
+5. Run MLflow Tracking Server container with Docker
+
+```bash
+cd mlflow
+npm run docker
 ```
 
 6. Make your changes

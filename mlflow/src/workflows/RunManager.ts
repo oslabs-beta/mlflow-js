@@ -16,14 +16,14 @@ class RunManager {
    * Delete runs that do not meet certain criteria and return deleted runs.
    * Dry run is set to true by default. To delete, set dry run to false.
    *
-   * @param {Array<string>} [experimentIds] - The IDs of the associated experiments. (required)
+   * @param {Array<string>} [experiment_ids] - The IDs of the associated experiments. (required)
    * @param {string} query_string - SQL-like query string to filter runs to keep. (required)
    * @param {string} metric_key - The metric key for comparison. (required)
    * @param {boolean} [dryRun=true] - If true, only simulate the deletion. Defaults to true. (optional)
    * @returns {Promise<DeletedRuns>} - An object of deleted runs.
    */
   async cleanupRuns(
-    experimentIds: Array<string>,
+    experiment_ids: Array<string>,
     query_string: string,
     metric_key: string,
     dryRun = true
@@ -38,7 +38,7 @@ class RunManager {
       do {
         // get all runs
         const searchResult = (await this.runClient.searchRuns(
-          experimentIds,
+          experiment_ids,
           '',
           runViewType,
           maxResults,
@@ -48,7 +48,7 @@ class RunManager {
 
         // get runs that match the keep crteria
         const keepRunsResult = (await this.runClient.searchRuns(
-          experimentIds,
+          experiment_ids,
           query_string,
           runViewType,
           maxResults,
@@ -99,23 +99,23 @@ class RunManager {
    * Copy run from one experiment to another without artifactss and models.
    * Artifacts and models detail tagged in new run as reference.
    *
-   * @param {string} runId - The ID of the run to be copied. (required)
-   * @param {string} targetExperimentId - The ID of the target experiment. (required)
-   * @param {string} runName - The name of the new run in target experiment. (optional)
+   * @param {string} run_id - The ID of the run to be copied. (required)
+   * @param {string} target_experiment_id - The ID of the target experiment. (required)
+   * @param {string} run_name - The name of the new run in target experiment. (optional)
    * @returns {Promise<CopiedRun>} - An object detail of the copied run.
    */
   async copyRun(
-    runId: string,
-    targetExperimentId: string,
-    runName = null
+    run_id: string,
+    target_experiment_id: string,
+    run_name = null
   ): Promise<object> {
     try {
       // get original run
-      const originalRun = (await this.runClient.getRun(runId)) as Run;
+      const originalRun = (await this.runClient.getRun(run_id)) as Run;
 
       // create a new run in the target experiment
       const newRun = (await this.runClient.createRun(
-        targetExperimentId,
+        target_experiment_id,
         undefined,
         originalRun.info.start_time
       )) as Run;
@@ -173,13 +173,13 @@ class RunManager {
       }
 
       // update the new run name
-      if (runName) {
-        await this.runClient.setTag(newRunId, 'mlflow.runName', runName);
+      if (run_name) {
+        await this.runClient.setTag(newRunId, 'mlflow.runName', run_name);
       }
 
       // handle models (reference only)
       const modelVersions = await this.modelVersion.searchModelVersions(
-        `run_id = '${runId}'`
+        `run_id = '${run_id}'`
       );
       if (modelVersions && modelVersions.length > 0) {
         for (const model of modelVersions) {
@@ -212,13 +212,13 @@ class RunManager {
 
       // set description for the new run
       const description =
-        `This run was copied from experiment ${originalRun.info.experiment_id}, original run ID: ${runId}. ` +
+        `This run was copied from experiment ${originalRun.info.experiment_id}, original run ID: ${run_id}. ` +
         `Original artifact URI: ${originalRun.info.artifact_uri}.`;
 
       await this.runClient.setTag(newRunId, 'mlflow.note.content', description);
 
       // set additional tags for the new run
-      await this.runClient.setTag(newRunId, 'mlflow.source.run_id', runId);
+      await this.runClient.setTag(newRunId, 'mlflow.source.run_id', run_id);
 
       await this.runClient.setTag(
         newRunId,
@@ -234,9 +234,9 @@ class RunManager {
 
       // return copy run details
       return {
-        originalRunId: runId,
+        originalRunId: run_id,
         newRunId: newRunId,
-        targetExperimentId: targetExperimentId,
+        targetExperimentId: target_experiment_id,
       };
     } catch (error) {
       if (error instanceof ApiError) {

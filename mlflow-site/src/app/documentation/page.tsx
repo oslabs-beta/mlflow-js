@@ -9,7 +9,7 @@ export default function Documentation() {
     {
       name: 'Create Experiment',
       description:
-        'Create an experiment with a name. Returns the ID of the newly created experiment.',
+        'Creates an experiment with a name. Returns the ID of the newly created experiment.',
       requestProps: [
         {
           name: 'name',
@@ -35,7 +35,7 @@ export default function Documentation() {
     {
       name: 'Search Experiments',
       description:
-        'Search experiments using a filter expression over experiment attributes and tags.',
+        'Searches experiments using a filter expression over experiment attributes and tags.',
       requestProps: [
         {
           name: 'filter',
@@ -66,14 +66,14 @@ export default function Documentation() {
             'Optional qualifier for type of experiments to be returned.',
         },
       ],
-      responseType: 'Promise<Object>',
+      responseType: 'Promise<object>',
       responseDescription:
         'Returns object containing an array of experiment objects matching the filter, and optionally a next_page_token that can be used to retrieve the next page of experiments.',
     },
     {
       name: 'Get Experiment',
       description:
-        'Get metadata for an experiment, querying by experiment ID. This method works on deleted experiments.',
+        'Gets metadata for an experiment, querying by experiment ID. This method works on deleted experiments.',
       requestProps: [
         {
           name: 'experiment_id',
@@ -81,13 +81,13 @@ export default function Documentation() {
           description: 'ID of the associated experiment. (required)',
         },
       ],
-      responseType: 'Promise<Object>',
+      responseType: 'Promise<object>',
       responseDescription: 'Returns object containing the matched experiment.',
     },
     {
       name: 'Get Experiment By Name',
       description:
-        'Get metadata for an experiment, querying by experiment name. This endpoint will return deleted experiments, but prefers the active experiment if an active and deleted experiment share the same name.',
+        'Gets metadata for an experiment, querying by experiment name. This endpoint will return deleted experiments, but prefers the active experiment if an active and deleted experiment share the same name.',
       requestProps: [
         {
           name: 'experiment_name',
@@ -95,12 +95,12 @@ export default function Documentation() {
           description: 'ID of the associated experiment. (required)',
         },
       ],
-      responseType: 'Promise<Object>',
+      responseType: 'Promise<object>',
       responseDescription: 'Returns object containing the matched experiment.',
     },
     {
       name: 'Delete Experiment',
-      description: 'Mark an experiment for deletion.',
+      description: 'Marks an experiment for deletion.',
       requestProps: [
         {
           name: 'experiment_id',
@@ -113,7 +113,7 @@ export default function Documentation() {
     },
     {
       name: 'Restore Experiment',
-      description: 'Restore an experiment marked for deletion.',
+      description: 'Restores an experiment marked for deletion.',
       requestProps: [
         {
           name: 'experiment_id',
@@ -126,7 +126,7 @@ export default function Documentation() {
     },
     {
       name: 'Update Experiment',
-      description: 'Update experiment name.',
+      description: 'Updates experiment name.',
       requestProps: [
         {
           name: 'experiment_id',
@@ -145,7 +145,7 @@ export default function Documentation() {
     },
     {
       name: 'Set Experiment Tag',
-      description: 'Set a tag on an experiment.',
+      description: 'Sets 1 or more tags on an experiment.',
       requestProps: [
         {
           name: 'experiment_id',
@@ -172,7 +172,7 @@ export default function Documentation() {
   const runClientMethods = [
     {
       name: 'Create Run',
-      description: 'Create a new run within an experiment.',
+      description: 'Creates a new run within an experiment.',
       requestProps: [
         {
           name: 'experiment_id',
@@ -196,13 +196,12 @@ export default function Documentation() {
           description: 'Additional metadata for the run.',
         },
       ],
-      responseType: 'Promise<Object>',
-      responseDescription:
-        'A promise that resolves with the created run object.',
+      responseType: 'Promise<object>',
+      responseDescription: 'The newly created run object.',
     },
     {
       name: 'Delete Run',
-      description: 'Mark a run for deletion.',
+      description: 'Marks a run for deletion.',
       requestProps: [
         {
           name: 'run_id',
@@ -210,12 +209,12 @@ export default function Documentation() {
           description: 'ID of the run to delete. (required)',
         },
       ],
-      responseType: 'Promise<Void>',
+      responseType: 'Promise<void>',
       responseDescription: 'No response.',
     },
     {
       name: 'Restore Run',
-      description: 'Restore a deleted run.',
+      description: 'Restores a deleted run.',
       requestProps: [
         {
           name: 'run_id',
@@ -223,12 +222,12 @@ export default function Documentation() {
           description: 'ID of the run to restore. (required)',
         },
       ],
-      responseType: 'Promise<Void>',
+      responseType: 'Promise<void>',
       responseDescription: 'No response.',
     },
     {
       name: 'Get Run',
-      description: 'Get metadata, metrics, params, and tags for a run.',
+      description: 'Gets metadata, metrics, params, and tags for a run.',
       requestProps: [
         {
           name: 'run_id',
@@ -236,13 +235,13 @@ export default function Documentation() {
           description: 'ID of the run to fetch. (required)',
         },
       ],
-      responseType: 'Promise<Object>',
+      responseType: 'Promise<object>',
       responseDescription:
-        'A promise that resolves with the fetched run object.',
+        'Run metadata (name, start time, etc) and data (metrics, params, and tags).',
     },
     {
       name: 'Update Run',
-      description: 'Update run metadata.',
+      description: 'Updates run metadata.',
       requestProps: [
         {
           name: 'run_id',
@@ -265,13 +264,12 @@ export default function Documentation() {
           description: 'Updated name of the run.',
         },
       ],
-      responseType: 'Promise<Object>',
-      responseDescription:
-        'A promise that resolves with the updated metadata of the run.',
+      responseType: 'Promise<object>',
+      responseDescription: 'Updated metadata of the run.',
     },
     {
       name: 'Log Metric',
-      description: 'Log a metric for a run.',
+      description: 'Logs a metric for a run.',
       requestProps: [
         {
           name: 'run_id',
@@ -301,12 +299,12 @@ export default function Documentation() {
           description: 'Step at which to log the metric.',
         },
       ],
-      responseType: 'Promise<Void>',
+      responseType: 'Promise<void>',
       responseDescription: 'No response.',
     },
     {
       name: 'Log Batch',
-      description: 'Log a batch of metrics, params, and tags for a run.',
+      description: 'Logs a batch of metrics, params, and tags for a run.',
       requestProps: [
         {
           name: 'run_id',
@@ -315,7 +313,7 @@ export default function Documentation() {
         },
         {
           name: 'metrics',
-          type: 'ARRAY<{ key: string; value: number; timestamp: number; step: number }>',
+          type: 'ARRAY<{ key: string; value: number; timestamp: number; step?: number }>',
           description: 'Metrics to log.',
         },
         {
@@ -329,7 +327,7 @@ export default function Documentation() {
           description: 'Tags to log.',
         },
       ],
-      responseType: 'Promise<Void>',
+      responseType: 'Promise<void>',
       responseDescription: 'No response.',
     },
     {
@@ -347,7 +345,7 @@ export default function Documentation() {
           description: 'MLmodel file in json format. (required)',
         },
       ],
-      responseType: 'Promise<Void>',
+      responseType: 'Promise<void>',
       responseDescription: 'No response.',
     },
     {
@@ -361,16 +359,16 @@ export default function Documentation() {
         },
         {
           name: 'datasets',
-          type: 'ARRAY<Object>',
+          type: 'ARRAY<{tags?: { key: string, value: string }[], dataset: {name: string, digest: string, source_type: string, source: string, schema?: string, profile?: string}}>',
           description: 'Dataset inputs. (required)',
         },
       ],
-      responseType: 'Promise<Void>',
+      responseType: 'Promise<void>',
       responseDescription: 'No response.',
     },
     {
       name: 'Set Tag',
-      description: 'Set a tag on a run.',
+      description: 'Sets a tag on a run.',
       requestProps: [
         {
           name: 'run_id',
@@ -388,12 +386,12 @@ export default function Documentation() {
           description: 'String value of the tag being logged. (required)',
         },
       ],
-      responseType: 'Promise<Void>',
+      responseType: 'Promise<void>',
       responseDescription: 'No response.',
     },
     {
       name: 'Delete Tag',
-      description: 'Delete a tag on a run.',
+      description: 'Deletes a tag on a run.',
       requestProps: [
         {
           name: 'run_id',
@@ -407,12 +405,12 @@ export default function Documentation() {
           description: 'Name of the tag. (required)',
         },
       ],
-      responseType: 'Promise<Void>',
+      responseType: 'Promise<void>',
       responseDescription: 'No response.',
     },
     {
       name: 'Log Param',
-      description: 'Log a param used for a run.',
+      description: 'Logs a param used for a run.',
       requestProps: [
         {
           name: 'run_id',
@@ -430,13 +428,13 @@ export default function Documentation() {
           description: 'String value of the param being logged. (required)',
         },
       ],
-      responseType: 'Promise<Void>',
+      responseType: 'Promise<void>',
       responseDescription: 'No response.',
     },
     {
       name: 'Get Metric History',
       description:
-        'Get a list of all values for the specified metric for a given run.',
+        'Gets a list of all values for the specified metric for a given run.',
       requestProps: [
         {
           name: 'run_id',
@@ -461,17 +459,17 @@ export default function Documentation() {
             'Maximum number of logged instances of a metric for a run to return per call.',
         },
       ],
-      responseType: 'Promise<Object>',
+      responseType: 'Promise<object>',
       responseDescription:
-        'A promise that resolves with the values for the specified metric.',
+        'All logged values for this metric, along with a token that can be used to issue a query for the next page of metric history values. A missing token indicates that no additional metrics are available to fetch.',
     },
     {
       name: 'Search Runs',
-      description: 'Search for runs that satisfy expressions.',
+      description: 'Searches for runs that satisfy expressions.',
       requestProps: [
         {
           name: 'experiment_ids',
-          type: 'ARRAY<string>',
+          type: 'ARRAY<STRING>',
           description: 'List of experiment IDs to search over.',
         },
         {
@@ -492,7 +490,7 @@ export default function Documentation() {
         },
         {
           name: 'order_by',
-          type: 'ARRAY<string>',
+          type: 'ARRAY<STRING>',
           description: 'List of columns to be ordered by.',
         },
         {
@@ -502,38 +500,36 @@ export default function Documentation() {
             'Token that can be used to retrieve the next page of run results.',
         },
       ],
-      responseType: 'Promise<Object>',
+      responseType: 'Promise<object>',
       responseDescription:
-        'A promise that resolves with the runs that match the search criteria.',
+        'Runs that match the search criteria, along with a token that can be used to issue a query for the next page of search. A missing token indicates that no additional runs are available to fetch.',
     },
     {
       name: 'List Artifacts',
-      description: 'List artifacts for a run.',
+      description: 'Lists artifacts for a run.',
       requestProps: [
         {
           name: 'run_id',
           type: 'STRING',
-          description: 'ID of the run for which to list artifacts. (required)',
+          description: 'ID of the run whose artifacts to list. (required)',
         },
         {
-          name: 'artifact_type',
+          name: 'path',
           type: 'STRING',
-          description: 'Optional filter for specific artifact types.',
+          description:
+            'Filter artifacts matching this path (a relative path from the root artifact directory).',
         },
-        {
-          name: 'max_results',
-          type: 'NUMBER',
-          description: 'Maximum number of artifacts to return.',
-        },
+
         {
           name: 'page_token',
           type: 'STRING',
-          description: 'Token for pagination.',
+          description:
+            'Token indicating the page of artifact results to fetch.',
         },
       ],
-      responseType: 'Promise<Object>',
+      responseType: 'Promise<object>',
       responseDescription:
-        'A promise that resolves with the list of artifacts.',
+        'Root artifact directory for the run, file location and metadata for artifacts, and a token that can be used to retrieve the next page of artifact results. A missing token indicates that no additional artifacts are available to fetch.',
     },
   ];
 
@@ -1051,7 +1047,7 @@ export default function Documentation() {
             'The ML model data to log to the run, represented as a Javascript object. (optional)',
         },
       ],
-      responseType: 'Promise<Object>',
+      responseType: 'Promise<object>',
       responseDescription: 'The created run object with updated metadata.',
     },
     {
@@ -1092,7 +1088,7 @@ export default function Documentation() {
             'The ML model data to log to the run, represented as a Javascript object. (optional)',
         },
       ],
-      responseType: 'Promise<Object>',
+      responseType: 'Promise<object>',
       responseDescription: 'The created run object with updated metadata.',
     },
     {
@@ -1119,7 +1115,7 @@ export default function Documentation() {
             "Sort order for the array: pass in 'DESC' or 1 for descending; 'ASC' or -1 for ascending. (optional)",
         },
       ],
-      responseType: 'Promise<Array<Object>>',
+      responseType: 'Promise<Array<object>>',
       responseDescription:
         'An array of run objects belonging to the passed-in experiment ID, sorted according to the primary metric.',
     },
@@ -1148,7 +1144,7 @@ export default function Documentation() {
             'MLflow run ID for correlation, if versionSource was generated by an experiment run in MLflow tracking server. (required)',
         },
       ],
-      responseType: 'Promise<Object>',
+      responseType: 'Promise<object>',
       responseDescription: 'The updated model version object.',
     },
     {
@@ -1176,7 +1172,7 @@ export default function Documentation() {
           description: 'Description of the registered model. (optional)',
         },
       ],
-      responseType: 'Promise<Object>',
+      responseType: 'Promise<object>',
       responseDescription: 'The updated registered model object.',
     },
     {
@@ -1210,7 +1206,7 @@ export default function Documentation() {
           description: 'Name of the value of the tag being logged. (required)',
         },
       ],
-      responseType: 'Promise<Object>',
+      responseType: 'Promise<object>',
       responseDescription: 'The updated model version object.',
     },
     {
@@ -1272,7 +1268,7 @@ export default function Documentation() {
           description: 'The description for the model version. (required)',
         },
       ],
-      responseType: 'Promise<Object>',
+      responseType: 'Promise<object>',
       responseDescription: 'The updated model version object.',
     },
     {
@@ -1311,7 +1307,7 @@ export default function Documentation() {
           description: 'The description for the model version. (required)',
         },
       ],
-      responseType: 'Promise<Object>',
+      responseType: 'Promise<object>',
       responseDescription: 'The updated model version object.',
     },
     {
@@ -1368,8 +1364,8 @@ export default function Documentation() {
         'Delete runs that do not meet certain criteria and return deleted runs.',
       requestProps: [
         {
-          name: 'experimentIds',
-          type: 'ARRAY',
+          name: 'experiment_ids',
+          type: 'ARRAY<STRING>',
           description: 'The IDs of the associated experiments. (required)',
         },
         {
@@ -1399,20 +1395,19 @@ export default function Documentation() {
         'Copy run from one experiment to another without artifacts and models. Artifacts and models detail tagged in new run as reference.',
       requestProps: [
         {
-          name: 'runId',
+          name: 'run_id',
           type: 'STRING',
           description: 'The ID of the run to be copied. (required)',
         },
         {
-          name: 'targetExperimentId',
+          name: 'target_experiment_id',
           type: 'STRING',
           description: 'The ID of the target experiment. (required)',
         },
         {
-          name: 'runName',
+          name: 'run_name',
           type: 'STRING',
-          description:
-            'The name of the new run in target experiment. (optional)',
+          description: 'The name of the new run in target experiment. ',
         },
       ],
       responseType: 'Promise<object>',
@@ -1523,21 +1518,6 @@ export default function Documentation() {
         <div
           className='documentationLeftHeader2'
           onClick={() => {
-            const element = document.getElementById(`modelManagerHeader`);
-            element?.scrollIntoView({ behavior: 'smooth' });
-          }}
-        >
-          Model Manager Methods
-        </div>
-        {modelManagerMethods.map((method, index) => (
-          <MethodBarIndividual
-            key={`modelManagerBarIndividual:${index}`}
-            name={method.name}
-          />
-        ))}
-        <div
-          className='documentationLeftHeader2'
-          onClick={() => {
             const element = document.getElementById(`runManagerHeader`);
             element?.scrollIntoView({ behavior: 'smooth' });
           }}
@@ -1547,6 +1527,21 @@ export default function Documentation() {
         {runManagerMethods.map((method, index) => (
           <MethodBarIndividual
             key={`runManagerBarIndividual:${index}`}
+            name={method.name}
+          />
+        ))}
+        <div
+          className='documentationLeftHeader2'
+          onClick={() => {
+            const element = document.getElementById(`modelManagerHeader`);
+            element?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
+          Model Manager Methods
+        </div>
+        {modelManagerMethods.map((method, index) => (
+          <MethodBarIndividual
+            key={`modelManagerBarIndividual:${index}`}
             name={method.name}
           />
         ))}
@@ -1634,12 +1629,12 @@ export default function Documentation() {
               responseDescription={method.responseDescription}
             />
           ))}
-          <div id='modelManagerHeader' className='methodsHeader2'>
-            Model Manager Methods
+          <div id='runManagerHeader' className='methodsHeader2'>
+            Run Manager Methods
           </div>
-          {modelManagerMethods.map((method, index) => (
+          {runManagerMethods.map((method, index) => (
             <Method
-              key={`modelManagerIndividual:${index}`}
+              key={`runManagerIndividual:${index}`}
               name={method.name}
               description={method.description}
               requestProps={method.requestProps}
@@ -1647,12 +1642,12 @@ export default function Documentation() {
               responseDescription={method.responseDescription}
             />
           ))}
-          <div id='runManagerHeader' className='methodsHeader2'>
-            Run Manager Methods
+          <div id='modelManagerHeader' className='methodsHeader2'>
+            Model Manager Methods
           </div>
-          {runManagerMethods.map((method, index) => (
+          {modelManagerMethods.map((method, index) => (
             <Method
-              key={`runManagerIndividual:${index}`}
+              key={`modelManagerIndividual:${index}`}
               name={method.name}
               description={method.description}
               requestProps={method.requestProps}
