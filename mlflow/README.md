@@ -31,7 +31,7 @@ createExperiment();
 
 # Documentation
 
-See [https://www.mlflow-js.org/](https://www.mlflow-js.org/)
+See [https://www.mlflow-js.org/documentation](https://www.mlflow-js.org/documentation)
 
 # API
 
