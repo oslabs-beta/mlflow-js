@@ -30,8 +30,8 @@ Visit our LinkedIn page below:
 **Experiment Manager**
 
 - runExistingExperiment - Full workflow of creating, naming, and starting a run under an existing experiment, logging metrics, params, tags, and the model, and finishing the run
-- runNewExperiment - Full workflow of creating, naming, and starting a run under a new experiment, ogging mettrics, params,tags, and the model, and finishing the run
-- experimentSummary - Returns an array of all the passed-in experiment's runs, sorted accoroding to the passed-in metric
+- runNewExperiment - Full workflow of creating, naming, and starting a run under a new experiment, logging metrics, params,tags, and the model, and finishing the run
+- experimentSummary - Returns an array of all the passed-in experiment's runs, sorted according to the passed-in metric
 
 **Run Manager**
 
@@ -40,9 +40,9 @@ Visit our LinkedIn page below:
 
 **Model Manager**
 
-- createRegisteredModelWithVersion - Creates a new registered model and the frist version of that model
+- createRegisteredModelWithVersion - Creates a new registered model and the first version of that model
 - updateRegisteredModelDescriptionAndTag - Updates a registered model's description and tags
-- updateAllLatestModelVersion - Updates the latest version of the specified registered model's description, adds a new alias, and tag key/value foro tthat latest version
+- updateAllLatestModelVersion - Updates the latest version of the specified registered model's description, adds a new alias, and tag key/value for the latest version
 
 <br>
 
