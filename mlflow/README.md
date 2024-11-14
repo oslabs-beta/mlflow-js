@@ -14,17 +14,17 @@ npm install mlflow-js
 
 An example of how to create an experiment:
 
-```bash
+```javascript
 import Mlflow from 'mlflow-js';
 
 // Initialize the MLflow client
 const mlflow = new Mlflow(process.env.MLFLOW_TRACKING_URI);
 
 // Create a new experiment
-async function createExperiment(){
-	await mlflow.createExperiment('My Experiment');
-	console.log('Experiment created successfully');
-};
+async function createExperiment() {
+  await mlflow.createExperiment('My Experiment');
+  console.log('Experiment created successfully');
+}
 
 createExperiment();
 ```
