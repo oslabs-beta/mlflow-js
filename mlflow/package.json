@@ -5,7 +5,7 @@
   "homepage": "https://www.mlflow-js.org/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/oslabs-beta/mlflow-js.git"
+    "url": "git+https://github.com/oslabs-beta/mlflow-js.git"
   },
   "bugs": {
     "url": "https://github.com/oslabs-beta/mlflow-js/issues"

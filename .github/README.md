@@ -43,6 +43,12 @@ Visit our LinkedIn page below:
 - createRegisteredModelWithVersion - Creates a new registered model and the frist version of that model
 - updateRegisteredModelDescriptionAndTag - Updates a registered model's description and tags
 - updateAllLatestModelVersion - Updates the latest version of the specified registered model's description, adds a new alias, and tag key/value foro tthat latest version
+- setLatestModelVersionTag - Adds a new tag key/value for the latest version of the specified registered model
+- setLatestModelVersionAlias - Adds an alias for the latest version of the specified registered model
+- updateLatestModelVersion - Updates the description of the latest version of a registered model
+- updateAllModelVersion - Updates the specified version of the specified registered model's description and adds a new alias and tag key/value for that specified version
+- deleteLatestModelVersion - Deletes the latest version of the specified registered model
+- createModelFromRunWithBestMetric - Creates a new model with the specified model name from the run with the best specified metric
 
 <br>
 
@@ -141,12 +147,8 @@ We welcome contributions to <i>mlflow.js</i>! Please see our [Contributing Guide
 
 | Name           | GitHub                                                                                                                    | LinkedIn                                                                                                                                                 |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Yiqun Zheng    | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github)](https://github.com/yiqunzheng)    | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/yiqunzheng/)   |
 | Kyler Chiago   | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github)](https://github.com/Kyler-Chiago)  | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/kyler-chiago/) |
 | Austin Fraser  | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github)](https://github.com/austinbfraser) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](http://www.linkedin.com/in/austin-fraser)  |
 | Stephany Ho    | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github)](https://github.com/seneyu)        | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/stephanyho/)   |
 | Winston Ludlam | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github)](https://github.com/winjolu/)      | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/wjludlam/)     |
-| Yiqun Zheng    | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github)](https://github.com/yiqunzheng)    | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/yiqunzheng/)   |
-
-```
-
-```
