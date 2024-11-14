@@ -18,7 +18,7 @@ const Team = () => {
       name: 'Austin Fraser',
       github: 'https://github.com/austinbfraser',
       linkedIn: 'http://www.linkedin.com/in/austin-fraser',
-      pfp: '',
+      pfp: '/assets/austinpfp.png',
     },
     {
       name: 'Stephany Ho',
