@@ -3,20 +3,20 @@ import FeatureCard from "./FeatureCard";
 const Features = () => {
   const featureHeader = 'MLOps in Javascript, made simple.';
   const featureLongBlurb = `
-    Longer blurb about MLFlow.js\'s feature set.  Longer blurb about MLFlow.js\'s feature set.  Longer blurb about MLFlow.js\'s feature set.  Longer blurb about MLFlow.js\'s feature set.  Longer blurb about MLFlow.js\'s feature set.  Longer blurb about MLFlow.js\'s feature set.  
+    MLflow.js makes ML experimentation and model management seamless for JavaScript developers. Built with TypeScript, it provides intuitive access to MLflow\'s complete REST API while adding powerful abstractions for common ML workflows. Whether you\'re training models with TensorFlow.js, managing A/B tests, or monitoring production models, MLflow.js helps you track everything in one place.
   `;
   const cards = [];
   const featureCardHeaders = [
-    'Feature 1',
-    'Feature 2',
-    'Feature 3',
-    'Feature 4',
+    'Effortless integration',
+    'Streamlined MLOps',
+    'For the modern web developer',
+    'Dive deeper',
   ];
   const featureCardBlurbs = [
-    'Feature Card Blurb 1.  Feature Card Blurb 1.  Feature Card Blurb 1.  Feature Card Blurb 1. Feature Card Blurb 1. Feature Card Blurb 1. Feature Card Blurb 1. Feature Card Blurb 1. ',
-    'Feature Card Blurb 2.  Feature Card Blurb 2.  Feature Card Blurb 2.  Feature Card Blurb 2.  ',
-    'Feature Card Blurb 3.  Feature Card Blurb 3.  Feature Card Blurb 3.  Feature Card Blurb 3.  ',
-    'Feature Card Blurb 4.  Feature Card Blurb 4.  Feature Card Blurb 4.  Feature Card Blurb 4.  '
+    'Connect your JavaScript stack directly to MLflow with minimal setup.',
+    'Automate key MLOps tasks directly from Node.js, simplifying workflow management.  Manage experiments, runs, model registry and model version management with dedicated methods.',
+    'Designed specifically for JavaScript developers: no Python knowledge required.',
+    'Execute complex MLOps tasks with a single function call with MLflow.js\'s powerful built-in workflows.'
 
   ];
   for (let i = 0; i < 4; i++) {
