@@ -1,0 +1,26 @@
+# docker-compose.yml
+services:
+  # MLflow server for testing
+  mlflowtest:
+    # The latest mlflow docker image
+    image: ghcr.io/mlflow/mlflow
+    ports:
+      - "5002:5002"
+    command: mlflow server --host 0.0.0.0 --port 5002
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5002/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+  # Development environment to ensure consistency across contributors
+  devtest:
+    build: 
+      context: .
+      dockerfile: Dockerfile-test
+    volumes:
+      - .:/mlflowTest  # Mount code for live development
+      - /mlflowTest/node_modules  # Keep node_modules in container
+    command: /bin/sh -c "while sleep 1000; do :; done"  # Keep container running
+    depends_on:
+      mlflowtest:
+        condition: service_healthy

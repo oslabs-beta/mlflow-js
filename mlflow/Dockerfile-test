@@ -1,7 +1,7 @@
 # Dockerfile
 # Specify exact Node.js version for consistency
 FROM node:22.7.0
-WORKDIR /mlflow
+WORKDIR /mlflowTest
 # Install necessary tools
 RUN apt-get update && apt-get install -y \
     curl \
@@ -13,6 +13,6 @@ COPY package*.json ./
 # Install dependencies with exact versions
 RUN npm ci
 # Copy source code
-COPY lib .
+COPY . .
 # Build the project
 RUN npm run build
