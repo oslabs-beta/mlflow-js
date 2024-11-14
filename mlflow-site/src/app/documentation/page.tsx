@@ -145,7 +145,7 @@ export default function Documentation() {
     },
     {
       name: 'Set Experiment Tag',
-      description: 'Sets a tag on an experiment.',
+      description: 'Sets 1 or more tags on an experiment.',
       requestProps: [
         {
           name: 'experiment_id',
