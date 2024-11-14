@@ -4,7 +4,7 @@ const Button = () => {
   return (
     <div className='button'>
       <a
-        href='https://github.com/oslabs-beta/mlflow-js'
+        href='https://www.npmjs.com/package/mlflow-js'
       >
         <button className='homeButton homeButtonDownload text-white'>Download</button>
       </a>
