@@ -1,6 +1,6 @@
 <!-- README for NPM; the one for GitHub is in .github directory. -->
 
-# mlflow.js
+# MLflow.js
 
 A JavaScript library designed to provide seamless integration with MLflow's REST API. This package offers access to all the essential endpoints for both the MLflow Tracking Server and Model Registry, along with high-level abstraction workflows, enabling efficient management of machine learning experiments and model lifecycle.
 
@@ -31,7 +31,7 @@ createExperiment();
 
 # Documentation
 
-See [https://www.mlflow-js.org/](https://www.mlflow-js.org/)
+See [https://www.mlflow-js.org/documentation](https://www.mlflow-js.org/documentation)
 
 # API
 

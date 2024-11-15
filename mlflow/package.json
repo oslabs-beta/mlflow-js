@@ -19,7 +19,7 @@
   "files": [
     "lib/",
     "README.md",
-    "LINCENSE"
+    "LICENSE"
   ],
   "exports": {
     ".": "./lib/index.js"
