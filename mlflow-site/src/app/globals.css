@@ -164,6 +164,7 @@ body {
   grid-row: 3;
   width: 100%;
   height: 100%;
+  text-align: center;
 }
 
 .team {
@@ -309,6 +310,7 @@ body {
 @media (max-width: 1000px) {
   .demoCardText {
     margin-top: 0.8rem;
+    margin-bottom: 4rem;
   }
 }
 
@@ -325,6 +327,14 @@ body {
   display: grid;
   grid-template-columns: 100%;
   grid-template-rows: min-content;
+}
+
+.vimeoPlayer {
+  margin-top: -35px;
+}
+
+#MLflow-ui-screenshot {
+  margin-bottom: 10rem;
 }
 
 .teamHead {

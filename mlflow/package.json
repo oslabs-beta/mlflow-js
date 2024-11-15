@@ -2,11 +2,24 @@
   "name": "mlflow-js",
   "version": "1.0.0",
   "description": "JavaScript library for MLflow",
+  "homepage": "https://www.mlflow-js.org/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oslabs-beta/mlflow-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/oslabs-beta/mlflow-js/issues"
+  },
+  "pull_request": {
+    "url": "https://github.com/oslabs-beta/mlflow-js/pulls"
+  },
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
-    "lib"
+    "lib/",
+    "README.md",
+    "LICENSE"
   ],
   "exports": {
     ".": "./lib/index.js"

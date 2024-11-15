@@ -8,8 +8,8 @@ const NavBar = () => {
       <div className='navBarMlflow'>
         <Image
           src={'/assets/MLflow-js-logo.png'}
-          width={100}
-          height={32}
+          width={965}
+          height={289}
           alt='G'
           className='mlflow-logo'
         />
