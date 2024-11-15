@@ -365,6 +365,7 @@ body {
 
 .teamCardImg {
   width: clamp(80px, 22.155vw, 100px);
+  height: clamp(80px, 22.155vw, 100px);
   border: 1px solid black;
 }
 
