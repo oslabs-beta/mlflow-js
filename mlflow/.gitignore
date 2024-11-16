@@ -1,6 +1,12 @@
 # Dependencies
 node_modules/
 
+# Environment variables
+.env
+
+# IDE
+.vscode
+
 # Misc
 .DS_Store
 ../.DS_Store
@@ -9,8 +15,12 @@ node_modules/
 .venv/
 mlruns/
 
-# Build output
-lib/
-
 # Temporary files
 temp/
+
+# Test coverage 
+coverage/
+
+
+
+=
