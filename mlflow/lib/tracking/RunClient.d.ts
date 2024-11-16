@@ -1,3 +1,4 @@
+import { MetricHistoryResponse } from '../utils/interface.js';
 declare class RunClient {
     private baseUrl;
     constructor(trackingUri: string);
@@ -172,7 +173,7 @@ declare class RunClient {
      * @returns {Promise<MetricHistory>} A promise that resolves with the values for the specified metric.
      * @throws {ApiError} If the API request fails.
      */
-    getMetricHistory(run_id: string, metric_key: string, page_token?: string, max_results?: number): Promise<object>;
+    getMetricHistory(run_id: string, metric_key: string, page_token?: string, max_results?: number): Promise<MetricHistoryResponse>;
     /**
      * Search for runs that satisfy expressions. Search expressions can use Metric and Param keys.
      *
@@ -197,7 +198,7 @@ declare class RunClient {
      * @returns {Promise<SearchedRuns>} A promise that resovles with the runs that match the search criteria.
      * @throws {ApiError} If the API request fails.
      */
-    searchRuns(experiment_ids: Array<string>, filter: string, run_view_type?: 'ACTIVE_ONLY' | 'DELETED_ONLY' | 'ALL', max_results?: number, order_by?: Array<string>, page_token?: string): Promise<object>;
+    searchRuns(experiment_ids: Array<string>, filter?: string, run_view_type?: 'ACTIVE_ONLY' | 'DELETED_ONLY' | 'ALL', max_results?: number, order_by?: Array<string>, page_token?: string): Promise<object>;
     /**
      * List artifacts for a run. Takes an optional artifact_path prefix which if specified, the response contains only
      * artifacts with the specified prefix.

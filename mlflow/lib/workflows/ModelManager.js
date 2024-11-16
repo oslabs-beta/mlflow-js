@@ -116,7 +116,7 @@ class ModelManager {
             }
             else {
                 const version = data[0].version;
-                this.modelVersion.setModelVersionTag(name, version, key, value);
+                await this.modelVersion.setModelVersionTag(name, version, key, value);
                 return;
             }
         }
@@ -147,7 +147,7 @@ class ModelManager {
             }
             else {
                 const version = data[0].version;
-                this.modelRegistry.setRegisteredModelAlias(name, alias, version);
+                await this.modelRegistry.setRegisteredModelAlias(name, alias, version);
                 return;
             }
         }
@@ -239,7 +239,7 @@ class ModelManager {
             }
             else {
                 const version = data[0].version;
-                this.modelVersion.deleteModelVersion(name, version);
+                await this.modelVersion.deleteModelVersion(name, version);
                 return;
             }
         }
@@ -304,9 +304,11 @@ class ModelManager {
         catch (error) {
             if (error instanceof ApiError) {
                 console.error(`API Error (${error.statusCode}): ${error.message}`);
+                throw error;
             }
             else {
                 console.error('An unexpected error occurred:', error);
+                throw new Error();
             }
         }
     }

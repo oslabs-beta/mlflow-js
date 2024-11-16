@@ -34,7 +34,7 @@ class ExperimentManager {
             }
             // updateRun to finish it
             const latestRun = await this.runClient.updateRun(run_id, 'FINISHED');
-            return latestRun;
+            return latestRun.run_info;
         }
         catch (error) {
             if (error instanceof ApiError) {
@@ -75,8 +75,8 @@ class ExperimentManager {
                 await this.runClient.logModel(run_id, model_json);
             }
             // updateRun to finish it
-            const latest_run = await this.runClient.updateRun(run_id, 'FINISHED');
-            return latest_run;
+            const latestRun = await this.runClient.updateRun(run_id, 'FINISHED');
+            return latestRun.run_info;
         }
         catch (error) {
             if (error instanceof ApiError) {

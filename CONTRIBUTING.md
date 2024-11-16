@@ -9,25 +9,26 @@ We are always open to accepting any potential contributions. Here is how you can
 git clone https://github.com/your-username/repository-name.git
 ```
 
-3. Install dependencies for both mlflow and mlflow-site directories
-
-```bash
-cd mlflow && npm install
-cd ../mlflow-site && npm install
-```
-
-4. Create your feature branch
+3. Create your feature branch
 
 ```bash
 git checkout -b feature/AmazingFeature
 ```
 
-5. Run MLflow Tracking Server container with Docker
+4. Install dependencies for both mlflow and mlflow-site directories
 
 ```bash
-cd mlflow
-npm run docker
+cd /mlflow && npm install
+cd ../mlflow-site && npm install
 ```
+
+5. Start the MLflow Tracking Server
+
+```bash
+cd ../mlflow && npm run docker
+```
+
+This will launch the MLflow UI on your local machine at `http://localhost:5001`.
 
 6. Make your changes
 
@@ -42,13 +43,18 @@ npm run lint
    (Make sure you have mlflow UI server running on port 5002. We set 5002 as our default port for testing.)
 
 ```bash
-mlflow ui --port 5002 # Run this in a separate terminal
+cd /mlflow && npm run dockerTest # Run this in a separate terminal
 npm run test
 ```
 
-9. Commit your changes
+This will launch the MLflow UI on your local machine at `http://localhost:5002`, and run the Jest tests.
+
+9. Add and commit your changes
+
+If the tests all pass:
 
 ```bash
+git add .
 git commit -m 'Add AmazingFeature'
 ```
 
