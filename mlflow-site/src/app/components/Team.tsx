@@ -30,7 +30,7 @@ const Team = () => {
       name: 'Winston Ludlam',
       github: 'https://github.com/winjolu/',
       linkedIn: 'https://www.linkedin.com/in/wjludlam/',
-      pfp: '/assets/winstonpfp.png',
+      pfp: '/assets/winstonpfp-square.png',
     },
   ];
 
