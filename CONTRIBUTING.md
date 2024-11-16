@@ -59,8 +59,7 @@ docker run -p 5002:5002 ghcr.io/mlflow/mlflow:latest mlflow server --host 0.0.0.
 npm run test
 ```
 
-This will launch the MLflow UI on your local machine at `http://localhost:5002`.
-Then run the Jest tests. 
+This will launch the MLflow UI on your local machine at `http://localhost:5002`, and run the Jest tests.
 
 9. Commit your changes
 
