@@ -5,7 +5,15 @@ import Image from 'next/image';
 const NavBar = () => {
   return (
     <div className='navBar'>
-      <div className='navBarMlflow'>MLflow.js</div>
+      <div className='navBarMlflow'>
+        <Image
+          src={'/assets/MLflow-js-logo.png'}
+          width={965}
+          height={289}
+          alt='G'
+          className='mlflow-logo'
+        />
+      </div>
       <div className='navBarLinks'>
         <button
           onClick={() => {
@@ -47,7 +55,13 @@ const NavBar = () => {
           href='https://github.com/oslabs-beta/mlflow-js'
           className='navBarLinksGithub'
         >
-          <Image src={'/assets/GithubLogo.png'} width={24} height={24} alt='G' className='navbarGithub'/>
+          <Image
+            src={'/assets/GithubLogo.png'}
+            width={24}
+            height={24}
+            alt='G'
+            className='navbarGithub'
+          />
         </a>
       </div>
     </div>
