@@ -1,15 +1,15 @@
 <div style="text-align: center">
-<img src="../mlflow-site/public/assets/mlflow-js-logo-whitebg.png" width=600px;"/></div>
+<img src="/mlflow-site/public/assets/mlflow-js-logo-whitebg.png" width=600px;"/></div>
 
 <br>
 
 ## About
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](../LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](/mlflow/LICENSE)
 ![Release](https://img.shields.io/badge/Release-v1.0.0-426B20)
 ![Build](https://img.shields.io/badge/Build-Passing-brightgreen.svg)
 ![Coverage](https://img.shields.io/badge/Coverage-87%25-c7ea46.svg)
-[![Contributions](https://img.shields.io/badge/Contributions-Welcome-brightgreen.svg)](../CONTRIBUTING.md)
+[![Contributions](https://img.shields.io/badge/Contributions-Welcome-brightgreen.svg)](/CONTRIBUTING.md)
 
 <i>MLflow.js</i> is an open-source JavaScript library that helps developers track machine learning experiments and manage models with MLflow, providing functionalities for machine learning lifecycle in JavaScript/TypeScript environments.
 
@@ -17,7 +17,7 @@
 
 ## Features
 
-<i>MLflow.js</i> covers all REST API endpoints under MLflow's Tracking Server and Model Registry. Moreover, high-level abstractions have been developed to facilitate developers' common ML workflows. It provides some key advantages: 
+<i>MLflow.js</i> covers all REST API endpoints under MLflow's Tracking Server and Model Registry. Moreover, high-level abstractions have been developed to facilitate developers' common ML workflows. It provides some key advantages:
 
 - Native JavaScript Integration: Seamlessly integrate MLflow capabilities within JavaScript codebases
 - Type Safety: Built with TypeScript for enhanced developer experience and code reliability
@@ -66,7 +66,8 @@ mlflow ui --port 5000
 This will launch the MLflow UI on your local machine at `http://localhost:5000`.
 
 ### Development Setup
-For development environment setup instructions, please refer to our [Contributing Guide](../CONTRIBUTING.md).
+
+For development environment setup instructions, please refer to our [Contributing Guide](/CONTRIBUTING.md).
 
 <br>
 
@@ -99,12 +100,14 @@ async function createExperiment(){
 createExperiment();
 
 ```
+
 <br>
 
 ## Resources
-- [Example Repository](https://github.com/oslabs-beta/mlflow-js/tree/dev/mlflow/examples) - Practical examples demonstrating MLflow.js’s functionality 
+
+- [Example Repository](https://github.com/oslabs-beta/mlflow-js/tree/dev/mlflow/examples) - Practical examples demonstrating <i>MLflow.js</i>'s functionality
 - [Quick Tutorials](https://www.mlflow-js.org/) - Video walkthrough of the example code with MLflow UI
-- [Read our Medium Article](link) - Overview on why we built MLflow.js and how it enhances ML workflows in JavaScript environments
+- [Read our Medium Article](link) - Overview on why we built <i>MLflow.js</i> and how it enhances ML workflows in JavaScript environments
 
 <br>
 
@@ -141,13 +144,13 @@ Official documentation for <i>MLflow.js</i> can be found <a href="https://www.ml
 
 ## Contributing
 
-We welcome contributions to <i>MLflow.js</i>! Please see our [Contributing Guide](../CONTRIBUTING.md) for more details on how to get started.
+We welcome contributions to <i>MLflow.js</i>! Please see our [Contributing Guide](/CONTRIBUTING.md) for more details on how to get started.
 
 <br>
 
 ## License
 
-[MIT License](../LICENSE)
+[MIT License](/mlflow/LICENSE)
 
 <br>
 
