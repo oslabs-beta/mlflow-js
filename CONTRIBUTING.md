@@ -43,7 +43,7 @@ npm run lint
    (Make sure you have mlflow UI server running on port 5002. We set 5002 as our default port for testing.)
 
 ```bash
-cd /mlflow && npm run dockerTest
+cd /mlflow && npm run dockerTest # Run this in a separate terminal
 npm run test
 ```
 
