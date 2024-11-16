@@ -49,11 +49,12 @@ npm run test
 
 This will launch the MLflow UI on your local machine at `http://localhost:5002`, and run the Jest tests.
 
-9. Commit your changes
+9. Add and commit your changes
 
 If the tests all pass:
 
 ```bash
+git add .
 git commit -m 'Add AmazingFeature'
 ```
 
