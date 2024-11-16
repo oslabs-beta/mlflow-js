@@ -7,9 +7,9 @@ const mlflow = new MLflow('http://localhost:5001');
 
 const HYPERPARAMETER_SPACE = {
   networkArchitectures: [
-    [16, 8], // Small network
-    [32, 16], // Medium network
-    [64, 32], // Larger network
+    [16, 8],
+    [32, 16],
+    [64, 32],
   ],
   learningRates: [0.001, 0.01],
   batchSizes: [32, 64],
@@ -23,7 +23,7 @@ const TRAINING_CONFIG = {
   datasetSize: 2000,
   inputFeatures: 5,
   outputClasses: 3,
-  minibatchSize: 128, // Added for faster training
+  minibatchSize: 128,
 };
 
 // Data generation
@@ -252,7 +252,7 @@ async function main() {
   try {
     console.time('Total Execution Time');
 
-    const experimentName = 'Neural_Network_Hyperparameter_Tuning_Fast';
+    const experimentName = 'Neural_Network_Hyperparameter_Tuning';
     let experimentId;
     try {
       const experiment = await mlflow.getExperimentByName(experimentName);
