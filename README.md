@@ -86,10 +86,10 @@ npm install mlflow-js
 Here is an example of how to use the <i>mlflow.js</i> library to create an experiment:
 
 ```JavaScript
-import Mlflow from 'mlflow-js';
+import MLflow from 'mlflow-js';
 
 // Initialize the MLflow client
-const mlflow = new Mlflow(process.env.MLFLOW_TRACKING_URI);
+const mlflow = new MLflow(process.env.MLFLOW_TRACKING_URI);
 
 // Create a new experiment
 async function createExperiment(){
