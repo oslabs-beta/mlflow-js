@@ -60,10 +60,10 @@ pip install mlflow
 To start the MLflow tracking server locally, use the following command:
 
 ```bash
-mlflow ui --port 5000
+mlflow ui --port 5001
 ```
 
-This will launch the MLflow UI on your local machine at `http://localhost:5000`.
+This will launch the MLflow UI on your local machine at `http://localhost:5001`.
 
 ### Alternative Docker approach to the MLflow Tracking Server
 
