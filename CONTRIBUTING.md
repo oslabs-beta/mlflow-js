@@ -29,6 +29,11 @@ cd mlflow
 npm run docker
 ```
 
+This will launch the MLflow UI on your local machine at `http://localhost:5001`.
+The port 
+```npm run docker``` 
+launches on can be changed in the docker-compose.yml file. 
+
 6. Make your changes
 
 7. Run ESLint to check code style
@@ -45,6 +50,17 @@ npm run lint
 mlflow ui --port 5002 # Run this in a separate terminal
 npm run test
 ```
+
+Alternative Docker Approach:
+
+```bash
+docker pull ghcr.io/mlflow/mlflow
+docker run -p 5002:5002 ghcr.io/mlflow/mlflow:latest mlflow server --host 0.0.0.0 --port 5002
+npm run test
+```
+
+This will launch the MLflow UI on your local machine at `http://localhost:5002`.
+Then run the Jest tests. 
 
 9. Commit your changes
 
