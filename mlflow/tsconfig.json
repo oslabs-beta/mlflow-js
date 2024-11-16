@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    // Basic Options
+    "target": "ES2018",
+    "module": "ESNext",
+    "rootDir": "./src",
+    "outDir": "./lib",
+
+    // Module Resolution Options
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    "paths": {
+      "@src/*": ["src/*"],
+      "@model-registry/*": ["src/model-registry/*"],
+      "@tracking/*": ["src/tracking/*"],
+      "@utils/*": ["src/utils/*"],
+      "@workflows/*": ["src/workflows/*"]
+    },
+    "esModuleInterop": true,
+    "strict": true,
+    "declaration": true,
+    "sourceMap": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"],
+  "tsc-alias": {
+    "resolveFullPaths": true,
+    "outDir": "./lib",
+    "extensionReplacement": [{ "from": ".ts", "to": ".js" }]
+  }
+}

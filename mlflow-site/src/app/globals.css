@@ -1,0 +1,383 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Inter;
+  font-size: 1rem;
+  color: rgb(0, 0, 0);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.fullScreen {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+.wrapper {
+  position: absolute;
+  background: rgb(51, 51, 58);
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 100vw 1fr;
+  grid-template-rows: 1fr;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #262626;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #5c5c5c;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #515151;
+}
+
+.mobileWrapper {
+  background: rgb(255, 255, 255);
+  width: 100%;
+  height: 100%;
+  grid-column: 2;
+  grid-row: 1;
+  display: grid;
+  grid-template-columns:
+    1vw clamp(1.3rem, 6vw, 8vw) 1fr clamp(1.3rem, 6vw, 8vw)
+    1vw;
+  grid-template-rows: 1.3rem min-content 1fr min-content 1.3rem;
+}
+
+@media (min-width: 1000px) {
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  .mobileWrapper {
+    grid-template-columns: 1vw 8vw 1fr calc(8vw + 10px) calc(1vw + 10px);
+  }
+}
+
+.navBar {
+  grid-column: 2/5;
+  grid-row: 2;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: 100%;
+  font-size: clamp(1rem, 4.43vw, 1.2rem);
+}
+
+.mlflow-logo {
+  width: clamp(4rem, 17.72vw, 9rem);
+  height: auto;
+}
+
+.navBarLinks {
+  grid-column: 2;
+  grid-row: 1;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(calc(100% / 5), 5);
+  grid-template-rows: 100%;
+  align-items: center;
+  justify-content: right;
+  column-gap: 2.8vw;
+}
+
+.navBarLinksFeatures {
+  grid-column: 2;
+}
+
+.navBarLinksDemo {
+  grid-column: 3;
+}
+
+.navBarLinksTeam {
+  grid-column: 4;
+}
+
+.navBarLinksGithub {
+  grid-column: 5;
+}
+
+.navBarLinksHome:hover, .navBarLinksFeatures:hover, .navBarLinksDemo:hover, .navBarLinksTeam:hover {
+  color: rgb(99, 158, 40);
+}
+
+.navbarGithub {
+  width: clamp(1.5rem, 6.645vw, 1.8rem);
+  transition: transform .7s ease-in-out;
+}
+
+.navbarGithub:hover {
+  transform: rotate(10deg);
+}
+
+.navBarMlflow {
+  color: rgb(66, 107, 31);
+  font-size: clamp(1.2rem, 5.316vw, 1.9rem);
+  font-family: Newsreader;
+  display: flex;
+  align-items: center;
+}
+
+.bigHeadline {
+  font-size: clamp(1.7rem, 6.531vw, 5.25rem);
+  margin-top: 7vw;
+  font-family: Newsreader;
+  align-self: center;
+}
+
+.headLineText {
+  font-size: clamp(1.1rem, 4.873vw, 2.25rem);
+  margin-bottom: 2vw;
+  font-family: Newsreader;
+  align-self: center;
+}
+
+.mobileInnerWrapper {
+  grid-column: 3;
+  grid-row: 3;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.team {
+  grid-column: 2/5;
+  grid-row: 4;
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.home {
+  margin-top: 0.3rem;
+  grid-column: 2/5;
+  grid-row: 3;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.homeButton {
+  width: clamp(8rem, 24vw, 20rem);
+  padding-left: clamp(0.375rem, 1.66125vw, 0.65625rem);
+  padding-right: clamp(0.375rem, 1.66125vw, 0.65625rem);
+  padding-top: clamp(0.375rem, 1.66125vw, 0.65625rem);
+  padding-bottom: clamp(0.375rem, 1.66125vw, 0.65625rem);
+  border-radius: clamp(0.3125rem, 1.384375vw, 0.546875rem);
+  font-size: clamp(0.7rem, 3vw, 1.8rem);
+}
+
+.homeButton:hover {
+  border: 1px solid black;
+}
+
+.homeButtonDownload {
+  background-color: rgb(66, 107, 31);
+  margin-right: 8px;
+  margin-bottom: 5vw;
+}
+
+.homeButtonRead {
+  background-color: rgb(204, 204, 204);
+}
+
+@media (min-width: 1000px) {
+  .button {
+    align-self: center;
+  }
+}
+
+.features {
+  grid-column: 2/5;
+  grid-row: 3;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  padding: 0.5rem;
+  margin-bottom: 4rem;
+  text-align: center;
+  color: black;
+  background-color: white;
+  margin-top: clamp(1rem, 4.43vw, 3rem);
+  font-family: Inter;
+}
+
+.featureHeader {
+  font-size: clamp(1.3rem, 5.759vw, 3rem);
+  margin-bottom: 0.5rem;
+  font-family: Inter;
+}
+
+.featureLongBlurb {
+  font-size: clamp(1rem, 4.43vw, 1.5rem);
+  margin-bottom: 0.5rem;
+  font-family: Inter;
+}
+
+.featureCard {
+  color: black;
+  width: 100%;
+  background-color: rgb(217, 225, 210);
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: min-content;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-family: Inter;
+}
+
+.featureCardHeader {
+  font-size: clamp(1.3rem, 5.316vw, 1.5rem);
+  font-family: Inter;
+}
+
+.featureCardsSection {
+  margin-top: 1rem;
+  font-family: Inter;
+}
+
+@media (min-width: 1000px) {
+  .featureCardsSection {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    column-gap: 10px;
+  }
+
+  .featureCard {
+    text-align: left;
+  }
+}
+
+.demo {
+  grid-column: 2/5;
+  grid-row: 3;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: calc(100% / 3) calc(100% / 3) calc(100% / 3);
+  color: black;
+  background-color: white;
+  margin-bottom: clamp(1rem, 4.43vw, 3rem);
+  margin-top: 10vw;
+}
+
+.demoCard {
+  gap: 1.25rem;
+  padding: 0.25rem;
+  margin-bottom: 4rem;
+  text-align: center;
+}
+
+@media (min-width: 1000px) {
+  .demoCard {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    column-gap: 10px;
+    text-align: left;
+  }
+}
+
+@media (max-width: 1000px) {
+  .demoCardText {
+    margin-top: 0.8rem;
+    margin-bottom: 4rem;
+  }
+}
+
+.demoCardHeader {
+  font-size: clamp(1.3rem, 5.759vw, 2rem);
+}
+
+.demoCardInfo {
+  font-size: clamp(1rem, 4vw, 1.25rem);
+}
+
+.demoSplit {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: min-content;
+}
+
+.vimeoPlayer {
+  margin-top: -35px;
+}
+
+#MLflow-ui-screenshot {
+  margin-bottom: 10rem;
+}
+
+.teamHead {
+  font-size: clamp(1.35rem, 5.9805vw, 2.376rem);
+}
+
+.teamCards {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.teamcard {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: clamp(1rem, 4.43vw, 1.3rem);
+  padding: clamp(0.22rem, 1.1927vw, 0.35rem);
+  margin-left: 0.2rem;
+  margin-right: 0.2rem;
+  background-color: rgb(217, 225, 210);
+  width: 170px;
+  border-radius: 5px;
+}
+
+.teamCardImg {
+  width: clamp(80px, 22.155vw, 100px);
+  border: 1px solid black;
+}
+
+.teamcardLinks {
+  display: grid;
+  grid-template-columns: 45% 10% 45%;
+  grid-template-rows: 100%;
+}
+
+.teamCardLink1 {
+  grid-column: 1;
+}
+
+.teamCardLink2 {
+  grid-column: 3;
+}

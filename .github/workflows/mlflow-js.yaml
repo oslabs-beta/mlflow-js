@@ -1,0 +1,44 @@
+name: mlflow
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.7'
+
+      - name: Install dependencies
+        working-directory: ./mlflow
+        run: npm ci
+
+      - name: Eslint
+        working-directory: ./mlflow
+        run: npm run lint
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Run MLflow server
+        run: |
+          docker run -d -p 5002:5002 --name mlflow-container ghcr.io/mlflow/mlflow:latest mlflow server --host 0.0.0.0 --port 5002
+          sleep 30
+
+      - name: Run tests
+        working-directory: ./mlflow
+        run: npm run test
+
+      - name: Stop MLflow server
+        run: docker stop mlflow-container
+
+      - name: Build
+        working-directory: ./mlflow
+        run: npm run build

@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# IDE
+.vscode
+
+# Misc
+.DS_Store
+../.DS_Store
+
+# Python / MLflow specific
+.venv/
+mlruns/
+
+# Temporary files
+temp/
+
+# Test coverage 
+coverage/
+
+
+
+=
