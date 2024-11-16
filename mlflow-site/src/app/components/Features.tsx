@@ -3,7 +3,8 @@ import FeatureCard from "./FeatureCard";
 const Features = () => {
   const featureHeader = 'MLOps in Javascript, made simple.';
   const featureLongBlurb = `
-    MLflow.js makes ML experimentation and model management seamless for JavaScript developers. Built with TypeScript, it provides intuitive access to MLflow\'s complete REST API while adding powerful abstractions for common ML workflows. Whether you\'re training models with TensorFlow.js, managing A/B tests, or monitoring production models, MLflow.js helps you track everything in one place.
+    MLflow.js is an open source JavaScript client library, bringing MLflow's powerful capabilities to JavaScript and TypeScript environments. It makes machine learning experimentation and model management intuitive for JavaScript developers through a clean, Promise-based API. Built with TypeScript, it provides comprehensive access to MLflow's REST API while adding streamlined abstractions for common ML workflows. Whether you're tracking experiments with TensorFlow.js, automating retraining pipelines, or managing A/B tests, MLflow.js helps you organize and version everything in one place.
+
   `;
   const cards = [];
   const featureCardHeaders = [

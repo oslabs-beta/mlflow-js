@@ -6,7 +6,7 @@ const DemoCard = ({
   video
 }: {
   key: string;
-  blurb: string;
+  blurb: string | React.JSX.Element;
   header: string;
   video: string;
 }) => {
