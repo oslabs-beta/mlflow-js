@@ -14,15 +14,23 @@
  * @requires @tensorflow/tfjs-node
  * @requires @mlflow.js
  *
- * @note Ensure MLflow server is running at http://localhost:5001 before executing
+ * @note Ensure MLflow server is running before executing
  */
 
 import * as tf from '@tensorflow/tfjs-node';
-import MLflow from 'mlflow-js';
+import Mlflow from 'mlflow-js';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { dirname, join } from 'path';
+import dotenv from 'dotenv';
 
-const mlflow = new MLflow('http://localhost:5001');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+dotenv.config({ path: join(__dirname, '../.env') });
+
+const MLFLOW_TRACKING_URI =
+  process.env.MLFLOW_TRACKING_URI || 'http://localhost:5001';
+const mlflow = new Mlflow(MLFLOW_TRACKING_URI);
+console.log('MLflow server URL:', MLFLOW_TRACKING_URI);
 
 const HYPERPARAMETERS = {
   learningRate: 0.25,

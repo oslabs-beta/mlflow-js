@@ -61,6 +61,7 @@
     "node": ">=22.7.0"
   },
   "dependencies": {
-    "@tensorflow/tfjs-node": "^4.22.0"
+    "@tensorflow/tfjs-node": "^4.22.0",
+    "dotenv": "^16.4.5"
   }
 }
