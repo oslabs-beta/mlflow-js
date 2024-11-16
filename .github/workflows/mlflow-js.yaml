@@ -1,9 +1,8 @@
 name: mlflow
 on:
-  push:
-    paths:
-      - '.github/workflows/**'
-      - 'mlflow/**'
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build-and-test:
