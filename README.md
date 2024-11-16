@@ -65,6 +65,19 @@ mlflow ui --port 5000
 
 This will launch the MLflow UI on your local machine at `http://localhost:5000`.
 
+### Alternative Docker approach to the MLflow Tracking Server
+
+Install [Docker](/https://www.docker.com/).
+
+To start the MLflow tracking server locally, use the following commands:
+
+```bash
+docker pull ghcr.io/mlflow/mlflow
+docker run -p 5001:5001 ghcr.io/mlflow/mlflow:latest mlflow server --host 0.0.0.0 --port 5001
+```
+
+This will launch the MLflow UI on your local machine at `http://localhost:5001`.
+
 ### Development Setup
 
 For development environment setup instructions, please refer to our [Contributing Guide](/CONTRIBUTING.md).
