@@ -1361,7 +1361,7 @@ export default function Documentation() {
     {
       name: 'Cleanup Runs',
       description:
-        'Delete runs that do not meet certain criteria and return deleted runs.',
+        'Deletes runs that do not meet certain criteria and return deleted runs.',
       requestProps: [
         {
           name: 'experiment_ids',
@@ -1392,7 +1392,7 @@ export default function Documentation() {
     {
       name: 'Copy Run',
       description:
-        'Copy run from one experiment to another without artifacts and models. Artifacts and models detail tagged in new run as reference.',
+        'Copies run from one experiment to another without artifacts and models. Artifacts and models detail tagged in new run as reference.',
       requestProps: [
         {
           name: 'run_id',
@@ -1416,21 +1416,21 @@ export default function Documentation() {
   ];
 
   return (
-    <div className='documentationWrapper'>
-      <div className='documentationHeader'>
-        <a href='/' className='documentationImageLink'>
+    <div className="documentationWrapper">
+      <div className="documentationHeader">
+        <a href="/" className="documentationImageLink">
           <Image
             src={'/assets/MLflow-js-logo.png'}
             width={144}
             height={38.4}
-            alt='G'
-            className='documentationImage'
+            alt="G"
+            className="documentationImage"
           />
         </a>
       </div>
-      <div className='documentationLeftSideBar'>
+      <div className="documentationLeftSideBar">
         <div
-          className='documentationLeftHeader'
+          className="documentationLeftHeader"
           onClick={() => {
             const element = document.getElementById(`methodsHeader`);
             element?.scrollIntoView({ behavior: 'smooth' });
@@ -1439,7 +1439,7 @@ export default function Documentation() {
           Mlflow.js Methods
         </div>
         <div
-          className='documentationLeftHeader2'
+          className="documentationLeftHeader2"
           onClick={() => {
             const element = document.getElementById(`experimentClientHeader`);
             element?.scrollIntoView({ behavior: 'smooth' });
@@ -1454,7 +1454,7 @@ export default function Documentation() {
           />
         ))}
         <div
-          className='documentationLeftHeader2'
+          className="documentationLeftHeader2"
           onClick={() => {
             const element = document.getElementById(`runClientHeader`);
             element?.scrollIntoView({ behavior: 'smooth' });
@@ -1469,7 +1469,7 @@ export default function Documentation() {
           />
         ))}
         <div
-          className='documentationLeftHeader2'
+          className="documentationLeftHeader2"
           onClick={() => {
             const element = document.getElementById(
               `modelRegistryClientHeader`
@@ -1486,7 +1486,7 @@ export default function Documentation() {
           />
         ))}
         <div
-          className='documentationLeftHeader2'
+          className="documentationLeftHeader2"
           onClick={() => {
             const element = document.getElementById(`modelVersionClientHeader`);
             element?.scrollIntoView({ behavior: 'smooth' });
@@ -1501,7 +1501,7 @@ export default function Documentation() {
           />
         ))}
         <div
-          className='documentationLeftHeader2'
+          className="documentationLeftHeader2"
           onClick={() => {
             const element = document.getElementById(`experimentManagerHeader`);
             element?.scrollIntoView({ behavior: 'smooth' });
@@ -1516,7 +1516,7 @@ export default function Documentation() {
           />
         ))}
         <div
-          className='documentationLeftHeader2'
+          className="documentationLeftHeader2"
           onClick={() => {
             const element = document.getElementById(`runManagerHeader`);
             element?.scrollIntoView({ behavior: 'smooth' });
@@ -1531,7 +1531,7 @@ export default function Documentation() {
           />
         ))}
         <div
-          className='documentationLeftHeader2'
+          className="documentationLeftHeader2"
           onClick={() => {
             const element = document.getElementById(`modelManagerHeader`);
             element?.scrollIntoView({ behavior: 'smooth' });
@@ -1546,25 +1546,28 @@ export default function Documentation() {
           />
         ))}
       </div>
-      <div className='documentationMainWrapper'>
-        <div className='documentationMain'>
-          <div className='methodsHeader' id='methodsHeader'>
+      <div className="documentationMainWrapper">
+        <div className="documentationMain">
+          <div className="methodsHeader" id="methodsHeader">
             Methods
           </div>
-          <span className='mlFlowReference'>
+          <span className="mlFlowReference">
             The Mlflow.js library implements a JavaScript interface to
             Mlflow&apos;s functionality by utilizing the official MLflow REST
             API. For detailed information about the underlying API endpoints,
-            please refer here (
+            please refer{' '}
             <a
-              href='https://mlflow.org/docs/latest/rest-api.html'
-              className='mlFlowOfficialLink'
+              href="https://mlflow.org/docs/latest/rest-api.html"
+              className="mlFlowOfficialLink"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              https://mlflow.org/docs/latest/rest-api.html
+              here
             </a>
-            ).
+            .
           </span>
-          <div id='experimentClientHeader' className='methodsHeader2'>
+
+          <div id="experimentClientHeader" className="methodsHeader2">
             Experiment Client Methods
           </div>
           {experimentClientMethods.map((method, index) => (
@@ -1577,7 +1580,7 @@ export default function Documentation() {
               responseDescription={method.responseDescription}
             />
           ))}
-          <div id='runClientHeader' className='methodsHeader2'>
+          <div id="runClientHeader" className="methodsHeader2">
             Run Client Methods
           </div>
           {runClientMethods.map((method, index) => (
@@ -1590,7 +1593,7 @@ export default function Documentation() {
               responseDescription={method.responseDescription}
             />
           ))}
-          <div id='modelRegistryClientHeader' className='methodsHeader2'>
+          <div id="modelRegistryClientHeader" className="methodsHeader2">
             Model Registry Client Methods
           </div>
           {modelRegistryClientMethods.map((method, index) => (
@@ -1603,7 +1606,7 @@ export default function Documentation() {
               responseDescription={method.responseDescription}
             />
           ))}
-          <div id='modelVersionClientHeader' className='methodsHeader2'>
+          <div id="modelVersionClientHeader" className="methodsHeader2">
             Model Version Client Methods
           </div>
           {modelVersionClientMethods.map((method, index) => (
@@ -1616,7 +1619,7 @@ export default function Documentation() {
               responseDescription={method.responseDescription}
             />
           ))}
-          <div id='experimentManagerHeader' className='methodsHeader2'>
+          <div id="experimentManagerHeader" className="methodsHeader2">
             Experiment Manager Methods
           </div>
           {experimentManagerMethods.map((method, index) => (
@@ -1629,7 +1632,7 @@ export default function Documentation() {
               responseDescription={method.responseDescription}
             />
           ))}
-          <div id='runManagerHeader' className='methodsHeader2'>
+          <div id="runManagerHeader" className="methodsHeader2">
             Run Manager Methods
           </div>
           {runManagerMethods.map((method, index) => (
@@ -1642,7 +1645,7 @@ export default function Documentation() {
               responseDescription={method.responseDescription}
             />
           ))}
-          <div id='modelManagerHeader' className='methodsHeader2'>
+          <div id="modelManagerHeader" className="methodsHeader2">
             Model Manager Methods
           </div>
           {modelManagerMethods.map((method, index) => (
