@@ -6,7 +6,7 @@
 ## About
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](/LICENSE)
-![Release](https://img.shields.io/badge/Release-v1.0.0-426B20)
+![Release](https://img.shields.io/badge/Release-v1.0.1-426B20)
 ![Build](https://img.shields.io/badge/Build-Passing-brightgreen.svg)
 ![Coverage](https://img.shields.io/badge/Coverage-87%25-c7ea46.svg)
 [![Contributions](https://img.shields.io/badge/Contributions-Welcome-brightgreen.svg)](/CONTRIBUTING.md)
