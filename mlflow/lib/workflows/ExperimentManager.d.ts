@@ -46,7 +46,7 @@ declare class ExperimentManager {
      * @param {Object} model The ML model data to log to the run, represented as a Javascript object (optional)
      * @returns {Promise<Object>} The created run object with updated metadata
      */
-    runNewExperiment(experiment_name: string, run_name: string, metrics: Array<{
+    runNewExperiment(experiment_name: string, run_name?: string, metrics?: Array<{
         key: string;
         value: number;
         timestamp: number;

@@ -87,7 +87,7 @@ class ExperimentClient {
      * Mark an experiment for deletion.
      *
      * @param {string} experiment_id ID of the associated experiment.  (required)
-     * @returns {void}
+     * @returns {Promise<void>}
      * @throws {ApiError} If the API request fails
      */
     async deleteExperiment(experiment_id) {
@@ -105,7 +105,7 @@ class ExperimentClient {
      * Restore an experiment marked for deletion.
      *
      * @param {string} experiment_id ID of the associated experiment.  (required)
-     * @returns {void}
+     * @returns {Promise<void>}
      * @throws {ApiError} If the API request fails
      */
     async restoreExperiment(experiment_id) {
@@ -123,7 +123,7 @@ class ExperimentClient {
      *
      * @param {string} experiment_id ID of the associated experiment. (required)
      * @param {string} new_name The experiment’s name is changed to the new name. The new name must be unique. (required)
-     * @returns {void}
+     * @returns {Promise<void>}
      * @throws {ApiError} If the API request fails
      */
     async updateExperiment(experiment_id, new_name) {
@@ -142,7 +142,7 @@ class ExperimentClient {
      * @param {string} experiment_id ID of the experiment under which to log the tag. (required)
      * @param {string} key Name of the tag.  (required)
      * @param {string} value String value of the tag being logged.  (required)
-     * @returns {void}
+     * @returns {Promise<void>}
      * @throws {ApiError} If the API request fails
      */
     async setExperimentTag(experiment_id, key, value) {
