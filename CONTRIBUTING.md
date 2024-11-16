@@ -18,32 +18,38 @@ git checkout -b feature/AmazingFeature
 4. Install dependencies for both mlflow and mlflow-site directories
 
 ```bash
-cd /mlflow-site && npm install
+cd /mlflow && npm install
+cd ../mlflow-site && npm install
+```
+
+5. Start the MLflow Tracking Server
+
+```bash
 cd ../mlflow && npm run docker
 ```
 
-This will also launch the MLflow UI on your local machine at `http://localhost:5001`.
+This will launch the MLflow UI on your local machine at `http://localhost:5001`.
 
-5. Make your changes
+6. Make your changes
 
-6. Run ESLint to check code style
+7. Run ESLint to check code style
 
 ```bash
 npm run lint
 ```
 
-7. Run tests to ensure your changes don't break existing functionality
+8. Run tests to ensure your changes don't break existing functionality
 
    (Make sure you have mlflow UI server running on port 5002. We set 5002 as our default port for testing.)
 
 ```bash
-cd mlflow && npm run dockerTest
+cd /mlflow && npm run dockerTest
 npm run test
 ```
 
 This will launch the MLflow UI on your local machine at `http://localhost:5002`, and run the Jest tests.
 
-8. Commit your changes
+9. Commit your changes
 
 If the tests all pass:
 
@@ -51,12 +57,12 @@ If the tests all pass:
 git commit -m 'Add AmazingFeature'
 ```
 
-9. Push to the branch
+10. Push to the branch
 
 ```bash
 git push origin feature/AmazingFeature
 ```
 
-10. Open a Pull Request
+11. Open a Pull Request
 
 **Note:** Please ensure your code adheres to our style guidelines and includes appropriate documentation for any new features.
