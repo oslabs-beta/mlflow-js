@@ -1553,9 +1553,9 @@ export default function Documentation() {
           </div>
           <span className="mlFlowReference">
             The Mlflow.js library implements a JavaScript interface to
-            Mlflow&apos;s functionality by utilizing the official MLflow REST
-            API. For detailed information about the underlying API endpoints,
-            please refer{' '}
+            Mlflow&apos;s functionality by utilizing the MLflow REST API. For
+            detailed information about the underlying API endpoints, please
+            refer the official MLflow documentation{' '}
             <a
               href="https://mlflow.org/docs/latest/rest-api.html"
               className="mlFlowOfficialLink"
