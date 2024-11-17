@@ -1,4 +1,11 @@
-import { describe, test, expect, beforeAll, beforeEach } from '@jest/globals';
+import {
+  describe,
+  test,
+  expect,
+  beforeAll,
+  beforeEach,
+  afterAll,
+} from '@jest/globals';
 import RunClient from '../src/tracking/RunClient';
 import ExperimentClient from '../src/tracking/ExperimentClient';
 import {
@@ -13,6 +20,8 @@ describe('RunClient', () => {
   let runClient: RunClient;
   let experimentClient: ExperimentClient;
   let experimentId: string;
+  let run: Run;
+  const testIds: string[] = [];
 
   beforeAll(async () => {
     await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -24,12 +33,22 @@ describe('RunClient', () => {
     experimentId = await experimentClient.createExperiment(
       `Testing ${timestamp}`
     );
+    testIds.push(experimentId);
+  });
+
+  beforeEach(async () => {
+    run = (await runClient.createRun(experimentId)) as Run;
+  });
+
+  afterAll(async () => {
+    for (const testId of testIds) {
+      await experimentClient.deleteExperiment(testId);
+    }
   });
 
   // POST - Create a new run within an experiment
   describe('createRun', () => {
     test('- Should create a run with experiment_id', async () => {
-      const run = (await runClient.createRun(experimentId)) as Run;
       expect(run.info.experiment_id).toBe(experimentId);
     });
 
@@ -101,8 +120,6 @@ describe('RunClient', () => {
   // DELETE - Mark a run for deletion
   describe('deleteRun', () => {
     test('- Should delete a run with run_id', async () => {
-      const run = (await runClient.createRun(experimentId)) as Run;
-
       await expect(runClient.deleteRun(run.info.run_id)).resolves.not.toThrow();
 
       // check if the run's lifecycle_stage has changed to "deleted"
@@ -128,11 +145,6 @@ describe('RunClient', () => {
 
   // POST - Restore a deleted run
   describe('restoreRun', () => {
-    let run: Run;
-    beforeEach(async () => {
-      run = (await runClient.createRun(experimentId)) as Run;
-    });
-
     test('- Should restore a deleted run with run_id', async () => {
       await runClient.deleteRun(run.info.run_id);
 
@@ -180,8 +192,6 @@ describe('RunClient', () => {
   // GET - Get metadata, metrics, params, and tags for a run
   describe('getRun', () => {
     test('- Should retrieve metadata for a run with run_id', async () => {
-      const run = (await runClient.createRun(experimentId)) as Run;
-
       // create dummy data for created run
       const metrics: Metrics[] = [
         { key: 'accuracy', value: 0.83, timestamp: 1694000700000 },
@@ -240,12 +250,6 @@ describe('RunClient', () => {
 
   // POST - Update run metadata
   describe('updateRun', () => {
-    let run: Run;
-
-    beforeEach(async () => {
-      run = (await runClient.createRun(experimentId)) as Run;
-    });
-
     // parameterized testing for input status
     const allStatuses = [
       'RUNNING',
@@ -330,13 +334,8 @@ describe('RunClient', () => {
 
   // POST - Log a metric for a run
   describe('logMetric', () => {
-    let run: Run;
     const key = 'accuracy';
     const value = 0.9;
-
-    beforeEach(async () => {
-      run = (await runClient.createRun(experimentId)) as Run;
-    });
 
     test('- Should log a metric with run_id, key, value, and timestamp', async () => {
       const timestamp = Date.now();
@@ -405,12 +404,6 @@ describe('RunClient', () => {
 
   // POST - Log a batch of metrics, params, and tags for a run
   describe('logBatch', () => {
-    let run: Run;
-
-    beforeEach(async () => {
-      run = (await runClient.createRun(experimentId)) as Run;
-    });
-
     test('- Should not throw error with just run_id', async () => {
       await expect(
         runClient.logBatch(run.info.run_id)
@@ -698,7 +691,6 @@ describe('RunClient', () => {
     ];
 
     test('- Should log inputs with run_id and datasets', async () => {
-      const run = (await runClient.createRun(experimentId)) as Run;
       await runClient.logInputs(run.info.run_id, datasets);
 
       // fetch run to confirm changes
@@ -709,8 +701,6 @@ describe('RunClient', () => {
     });
 
     test('- Should handle errors and edge cases', async () => {
-      const run = (await runClient.createRun(experimentId)) as Run;
-
       // test with invalid_id
       const invalid_id = 'invalid_id';
       await expect(runClient.logInputs(invalid_id, datasets)).rejects.toThrow();
@@ -733,11 +723,10 @@ describe('RunClient', () => {
 
   // POST - Set a tag on a run
   describe('setTag', () => {
-    test('- Should set a tag on a run with run_id, key, and value', async () => {
-      const run = (await runClient.createRun(experimentId)) as Run;
-      const key = 'accuracy';
-      const value = '0.99';
+    const key = 'accuracy';
+    const value = '0.99';
 
+    test('- Should set a tag on a run with run_id, key, and value', async () => {
       await runClient.setTag(run.info.run_id, key, value);
 
       // fetch run to confirm changes
@@ -748,10 +737,6 @@ describe('RunClient', () => {
     });
 
     test('- Should handle errors and edge cases', async () => {
-      const run = (await runClient.createRun(experimentId)) as Run;
-      const key = 'accuracy';
-      const value = '0.99';
-
       // test missing arguments
       // @ts-expect-error: testing for all missing arguments
       await expect(runClient.setTag()).rejects.toThrow();
@@ -793,8 +778,6 @@ describe('RunClient', () => {
     const key = 'test_key';
     const value = 'test_value';
     test('- Should delete a tag on a run with run_id and key', async () => {
-      const run = (await runClient.createRun(experimentId)) as Run;
-
       await runClient.setTag(run.info.run_id, key, value);
 
       await runClient.deleteTag(run.info.run_id, key);
@@ -808,8 +791,6 @@ describe('RunClient', () => {
     });
 
     test('- Should handle errors and edge cases', async () => {
-      const run = (await runClient.createRun(experimentId)) as Run;
-
       // testing missing arguments
       // @ts-expect-error: testing for all missing arguments
       await expect(runClient.deleteTag()).rejects.toThrow();
@@ -844,11 +825,10 @@ describe('RunClient', () => {
 
   // POST - Log a param used for a run
   describe('logParam', () => {
-    test('- Should log a param used for a run with run_id, key, and value', async () => {
-      const run = (await runClient.createRun(experimentId)) as Run;
+    const key = 'learning_rate';
+    const value = '0.001';
 
-      const key = 'learning_rate';
-      const value = '0.001';
+    test('- Should log a param used for a run with run_id, key, and value', async () => {
       await runClient.logParam(run.info.run_id, key, value);
 
       // fetch run to confirm changes
@@ -859,10 +839,6 @@ describe('RunClient', () => {
     });
 
     test('- Should handle errors and edge cases', async () => {
-      const run = (await runClient.createRun(experimentId)) as Run;
-      const key = 'learning_rate';
-      const value = '0.001';
-
       // @ts-expect-error: testing for all missing arguments
       await expect(runClient.logParam()).rejects.toThrow();
       // @ts-expect-error: testing for missing key and value
@@ -886,11 +862,10 @@ describe('RunClient', () => {
 
   // Get a list of all valuse for the specified metric for a given run
   describe('getMetricHisotry', () => {
-    test('- Should get a list of all values for the specified metric for a given run with run_id and metric_key', async () => {
-      const run = (await runClient.createRun(experimentId)) as Run;
-      const key = 'accuracy';
-      const value = 0.95;
+    const key = 'accuracy';
+    const value = 0.95;
 
+    test('- Should get a list of all values for the specified metric for a given run with run_id and metric_key', async () => {
       await runClient.logMetric(run.info.run_id, key, value);
       const metricHistory = (await runClient.getMetricHistory(
         run.info.run_id,
@@ -1008,6 +983,7 @@ describe('RunClient', () => {
       const searchRunsExpId = await experimentClient.createExperiment(
         `Search Runs Test ${Date.now()}`
       );
+      testIds.push(searchRunsExpId);
 
       const runA = (await runClient.createRun(searchRunsExpId)) as Run;
       await runClient.logMetric(runA.info.run_id, 'metric', 1.0);
@@ -1067,7 +1043,6 @@ describe('RunClient', () => {
   // List artifacts for a run
   describe('listArtifacts', () => {
     test('- Should list artifacts with run_id', async () => {
-      const run = (await runClient.createRun(experimentId)) as Run;
       const artifacts = await runClient.listArtifacts(run.info.run_id);
 
       expect(artifacts).toHaveProperty('root_uri');

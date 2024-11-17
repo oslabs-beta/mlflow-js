@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeEach } from '@jest/globals';
+import { describe, test, expect, beforeEach, afterAll } from '@jest/globals';
 import RunManager from '../src/workflows/RunManager';
 import RunClient from '../src/tracking/RunClient';
 import ExperimentClient from '../src/tracking/ExperimentClient';
@@ -10,6 +10,7 @@ describe('RunManager', () => {
   let experimentClient: ExperimentClient;
   let experimentId: string;
   const runIds: string[] = [];
+  const experimentsToDelete: string[] = [];
 
   beforeEach(async () => {
     await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -18,12 +19,23 @@ describe('RunManager', () => {
     runManager = new RunManager('http://127.0.0.1:5002');
   });
 
+  afterAll(async () => {
+    for (const runId of runIds) {
+      await runClient.deleteRun(runId);
+    }
+
+    for (const expId of experimentsToDelete) {
+      await experimentClient.deleteExperiment(expId);
+    }
+  });
+
   describe('cleanupRuns', () => {
     beforeEach(async () => {
       const timestamp = Date.now();
       experimentId = await experimentClient.createExperiment(
         `Testing ${timestamp}`
       );
+      experimentsToDelete.push(experimentId);
 
       // create test runs
       const createRun = async (metricKey: string, metricValue: number) => {
@@ -133,6 +145,7 @@ describe('RunManager', () => {
       targetExperimentId = await experimentClient.createExperiment(
         `Target Exp ${timestamp}`
       );
+      experimentsToDelete.push(sourceExperimentId, targetExperimentId);
 
       // log data for original run
       const run = (await runClient.createRun(sourceExperimentId)) as Run;
